@@ -381,16 +381,74 @@
       white-space: nowrap;
     }
 
-    /* --- Bio --- */
+    /* --- Bio Expand/Collapse --- */
+    .bio-wrapper {
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .bio-content {
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 100%;
+    }
+
+    .bio-content.collapsed {
+      max-height: 3.5rem; /* Exactly 2 lines (1.75 * 2) */
+      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    .bio-content.expanded {
+      /* max-height will be set dynamically by JS, mask fully visible */
+      -webkit-mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
+    }
+
     .profile-bio {
+      margin: 0;
       font-size: 0.875rem;
       font-weight: 400;
-      color: #d4d4e8;   /* brighter than --theme-text-secondary, softer than pure white */
+      color: #d4d4e8;
       line-height: 1.75;
-      max-width: 480px;
       letter-spacing: 0.01em;
       text-align: justify;
-      hyphens: auto;           /* soft hyphens on long words to keep justification clean */
+      hyphens: auto;
+    }
+
+    .bio-toggle-btn {
+      margin-top: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .bio-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--theme-text-primary);
+      transform: translateY(2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .bio-chevron {
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bio-toggle-btn.active .bio-chevron {
+      transform: rotate(180deg);
     }
 
     /* --- Location pill --- */
@@ -3062,17 +3120,24 @@
       </span>
 
       <!-- Bio — animation group 3 -->
-      <p class="profile-bio anim-ready" data-delay="280">
-        Began my journey by conquering my GCE O Levels with a clean sweep of A*s and As,
-        an academic foundation that led to me twice becoming a British Council nominee for
-        their world video competition. Beyond my studies, I operate as a digital architect,
-        commanding the terminal lines of Linux distros (Arch btw), incorporating AI automations
-        into my workflows, and building custom high-performance PCs (for fun ofc). My technical
-        side is balanced by a deep fascination with automotive engineering and PlayStation gaming,
-        alongside a passion for literature. As an avid reader, I actively refine my own narrative
-        voice with the ultimate aspiration of one day becoming a published author,
-        <span lang="ar" style="font-style:normal;">إن شاء الله</span>.
-      </p>
+      <div class="bio-wrapper anim-ready" data-delay="280">
+        <div class="bio-content collapsed" id="bio-content">
+          <p class="profile-bio">
+            Began my journey by conquering my GCE O Levels with a clean sweep of A*s and As,
+            an academic foundation that led to me twice becoming a British Council nominee for
+            their world video competition. Beyond my studies, I operate as a digital architect,
+            commanding the terminal lines of Linux distros (Arch btw), incorporating AI automations
+            into my workflows, and building custom high-performance PCs (for fun ofc). My technical
+            side is balanced by a deep fascination with automotive engineering and PlayStation gaming,
+            alongside a passion for literature. As an avid reader, I actively refine my own narrative
+            voice with the ultimate aspiration of one day becoming a published author,
+            <span lang="ar" style="font-style:normal;">إن شاء الله</span>.
+          </p>
+        </div>
+        <button class="bio-toggle-btn" id="bio-toggle-btn" aria-label="Read more">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bio-chevron"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
 
     </section>
 
@@ -3425,6 +3490,37 @@
       }
 
       /* ============================================================
+         BIO TOGGLE
+      ============================================================ */
+      function initBioToggle() {
+        const toggleBtn = document.getElementById('bio-toggle-btn');
+        const bioContent = document.getElementById('bio-content');
+        
+        if (!toggleBtn || !bioContent) return;
+        
+        toggleBtn.addEventListener('click', function() {
+          const isExpanded = bioContent.classList.contains('expanded');
+          
+          if (isExpanded) {
+            // Collapse
+            bioContent.style.maxHeight = '';
+            bioContent.classList.remove('expanded');
+            bioContent.classList.add('collapsed');
+            toggleBtn.classList.remove('active');
+            toggleBtn.setAttribute('aria-label', 'Read more');
+          } else {
+            // Expand: calculate full height and set it dynamically for smooth transition
+            const fullHeight = bioContent.scrollHeight + 'px';
+            bioContent.style.maxHeight = fullHeight;
+            bioContent.classList.remove('collapsed');
+            bioContent.classList.add('expanded');
+            toggleBtn.classList.add('active');
+            toggleBtn.setAttribute('aria-label', 'Show less');
+          }
+        });
+      }
+
+      /* ============================================================
          BOOT SEQUENCE — runs on DOMContentLoaded
       ============================================================ */
       function boot() {
@@ -3434,11 +3530,13 @@
           2. Kick off staggered entrance animations
           3. Set up spotlight cursor listener
           4. Avatar image fallback check
+          5. Setup bio toggle
         */
         renderLinks();
         initAnimations();
         initSpotlight();
         initAvatarFallback();
+        initBioToggle();
       }
 
       if (document.readyState === 'loading') {

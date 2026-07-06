@@ -6,498 +6,505 @@
   ============================================================ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="My Personal portfolio and link hub. Find me on GitHub, LinkedIn, Instagram, and more." />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Shahzeb Faisal — personal portfolio and link hub. Find me on GitHub, LinkedIn, Instagram, and more." />
+  <meta name="theme-color" content="#e0e5ec" />
   <meta property="og:title" content="Shahzeb Faisal" />
   <meta property="og:description" content="Personal portfolio and links." />
   <title>Shahzeb Faisal</title>
 
-  <!-- ============================================================
-       PERFORMANCE: Preload LCP image — fetchpriority="high" tells
-       the browser to fetch this before any render-blocking resources.
-  ============================================================ -->
-  <link
-    rel="preload"
-    as="image"
+  <link rel="preload" as="image"
     href="https://drive.google.com/thumbnail?id=1z73B4_S8Adg0LwwkuXcBYlBu2GnaHVgD&sz=w2000"
-    fetchpriority="high"
-  />
+    fetchpriority="high" />
 
-  <!-- ============================================================
-       GOOGLE FONTS — Inter (kept; not render-blocking since we
-       use display=swap and preconnect).
-       FontAwesome CDN has been REMOVED — icons are now inline SVGs
-       stored in the JS data array below.
-  ============================================================ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!--
-    Space Grotesk — modern geometric sans with optical quirks that make
-    it feel premium and unique on dark backgrounds. Weights 300–700
-    cover everything from muted labels to bold headings.
-    DM Mono — paired for any code / monospaced accents.
-  -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================================
-       DESIGN TOKEN SYSTEM — TWO-TIER ARCHITECTURE
-       ─────────────────────────────────────────────────────────────
-       TIER 1 — PRIMITIVE TOKENS
-         Raw, context-free values. Never used directly in component
-         CSS — only referenced by semantic tokens.
-
-       TIER 2 — SEMANTIC TOKENS
-         Meaningful aliases that map a primitive to a design intent.
-         All component CSS consumes only these tokens.
+       DESIGN TOKENS
     ============================================================ */
     :root {
+      /* ── Neumorphic base palette ── */
+      --neu-bg:           #e0e5ec;
+      --neu-shadow-light: #ffffff;
+      --neu-shadow-dark:  #a3b1c6;
+      --neu-shadow-out:   8px 8px 18px var(--neu-shadow-dark), -8px -8px 18px var(--neu-shadow-light);
+      --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
+      --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
 
-      /* ── TIER 1: Primitive Tokens ─────────────────────────── */
+      /* ── Glass palette ── */
+      --glass-bg:     rgba(255, 255, 255, 0.40);
+      --glass-bg-hov: rgba(255, 255, 255, 0.62);
+      --glass-border: rgba(255, 255, 255, 0.65);
+      --glass-blur:   blur(14px);
+      --glass-shadow: 0 8px 32px rgba(100, 120, 160, 0.18), 0 2px 8px rgba(100, 120, 160, 0.10);
+      --glass-shadow-hov: 0 16px 40px rgba(100, 120, 160, 0.26), 0 4px 12px rgba(100, 120, 160, 0.14);
 
-      /* Indigo scale */
-      --color-indigo-300: #a5b4fc;
-      --color-indigo-400: #818cf8;
-      --color-indigo-500: #6366f1;
-      --color-indigo-500-rgb: 99, 102, 241;      /* raw channels for rgba() */
+      /* ── Sheen overlays (pseudo-elements that need dark-mode overrides) ── */
+      --sheen-edge:   rgba(255, 255, 255, 0.90); /* top-edge highlight on neu cards */
+      --sheen-badge:  rgba(255, 255, 255, 0.35); /* top sheen on glass badges */
+      --sheen-card:   rgba(255, 255, 255, 0.28); /* top sheen on link cards */
+      --sheen-sweep-a: rgba(255, 255, 255, 0.18); /* hover sweep edges */
+      --sheen-sweep-b: rgba(255, 255, 255, 0.28); /* hover sweep centre */
 
-      /* Cyan scale */
-      --color-cyan-300:   #67e8f9;
-      --color-cyan-400:   #22d3ee;
-      --color-cyan-400-rgb: 34, 211, 238;
+      /* ── Icon wrapper ── */
+      --icon-bg:      rgba(255, 255, 255, 0.55);
+      --icon-border:  rgba(255, 255, 255, 0.70);
+      --icon-bg-hov:  rgba(255, 255, 255, 0.82);
 
-      /* Neutral (dark) scale */
-      --color-neutral-950: #0a0a0a;
-      --color-neutral-900: #111111;
-      --color-neutral-800: #1a1a2e;
+      /* ── Badge text colours ── */
+      --badge-indigo-text: #3730a3;
+      --badge-cyan-text:   #0e7490;
 
-      /* White with opacity levels */
-      --color-white-4:  rgba(255, 255, 255, 0.04);
-      --color-white-5:  rgba(255, 255, 255, 0.05);
-      --color-white-8:  rgba(255, 255, 255, 0.08);
+      /* ── Profile name gradient start ── */
+      --name-grad-start: #2d3250;
 
-      /* Text scale — bumped for stronger contrast on the star field */
-      --color-text-100: #f2f2ff;   /* primary — near-white with a cool blue hint */
-      --color-text-300: #b8b8d0;   /* secondary — was #a1a1b5, now visibly brighter */
-      --color-text-500: #7e7e9a;   /* muted — was #6b6b80, more readable on dark */
+      /* ── Accent colours ── */
+      --accent-indigo: #6366f1;
+      --accent-cyan:   #06b6d4;
+      --accent-pink:   #ec4899;
+      --accent-purple: #a855f7;
 
-      /* Easing & timing */
-      --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-standard:  cubic-bezier(0.4, 0, 0.2, 1);
-      --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-entrance:  cubic-bezier(0.22, 1, 0.36, 1);
+      /* ── Text ── */
+      --text-primary:   #2d3250;
+      --text-secondary: #5a6680;
+      --text-muted:     #8a97b0;
 
-      /* Spacing scale */
-      --space-3:  12px;
-      --space-4:  16px;
-      --space-5:  20px;
-      --space-6:  24px;
-      --space-7:  28px;
-      --space-9:  36px;
-      --space-14: 56px;
-      --space-18: 72px;
+      /* ── Radius ── */
+      --r-xs:   8px;
+      --r-sm:   14px;
+      --r-md:   20px;
+      --r-lg:   28px;
+      --r-full: 999px;
 
-      /* Radius scale */
-      --radius-sm:   10px;
-      --radius-md:   16px;
-      --radius-full: 999px;
+      /* ── Spacing ── */
+      --sp-3:  12px;
+      --sp-4:  16px;
+      --sp-5:  20px;
+      --sp-6:  24px;
+      --sp-8:  32px;
+      --sp-10: 40px;
+      --sp-14: 56px;
+      --sp-18: 72px;
 
-      /* ── TIER 2: Semantic Tokens ──────────────────────────── */
+      /* ── Typography ── */
+      --font:      'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'DM Mono', monospace;
 
-      /* Backgrounds */
-      --theme-bg-root:        var(--color-neutral-950);
-      --theme-bg-card:        var(--color-white-4);
-      --theme-bg-card-hover:  var(--color-white-8);
-      --theme-bg-glass:       var(--color-white-5);
-
-      /* Accent — primary (Indigo) */
-      --theme-accent-primary:        var(--color-indigo-500);
-      --theme-accent-primary-soft:   rgba(var(--color-indigo-500-rgb), 0.15);
-      --theme-accent-primary-border: rgba(var(--color-indigo-500-rgb), 0.40);
-      --theme-accent-primary-glow:   rgba(var(--color-indigo-500-rgb), 0.45);
-      --theme-accent-primary-text:   var(--color-indigo-300);
-
-      /* Accent — secondary (Cyan) */
-      --theme-accent-secondary:        var(--color-cyan-400);
-      --theme-accent-secondary-soft:   rgba(var(--color-cyan-400-rgb), 0.12);
-      --theme-accent-secondary-border: rgba(var(--color-cyan-400-rgb), 0.35);
-      --theme-accent-secondary-glow:   rgba(var(--color-cyan-400-rgb), 0.45);
-      --theme-accent-secondary-text:   var(--color-cyan-300);
-
-      /* Text */
-      --theme-text-primary:   var(--color-text-100);
-      --theme-text-secondary: var(--color-text-300);
-      --theme-text-muted:     var(--color-text-500);
-
-      /* Borders */
-      --theme-border-subtle: var(--color-white-8);
-      --theme-border-glow:   rgba(var(--color-indigo-500-rgb), 0.50);
-
-      /* Layout */
-      --theme-container-max: 560px;
-      --theme-side-padding:  var(--space-6);
-      --theme-gap-section:   var(--space-7);
-      --theme-gap-link:      var(--space-3);
-      --theme-radius-card:   var(--radius-md);
-      --theme-radius-pill:   var(--radius-full);
-
-      /* Typography */
-      --theme-font: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-      --theme-font-mono: 'DM Mono', 'Fira Code', monospace;
-
-      /* Transitions */
-      --theme-transition: all 0.3s var(--ease-standard);
-
-      /* Spotlight effect local vars (set per-card via JS) */
-      --mouse-x: 50%;
-      --mouse-y: 50%;
+      /* ── Easing ── */
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     /* ============================================================
-       ACCESSIBILITY UTILITY — Screen Reader Only
-       Hides content visually while keeping it fully accessible to
-       assistive technologies. Applied to sr-only spans inside badges.
+       DARK MODE TOKENS
+       Applied when <html> carries data-theme="dark".
+       Neumorphic shadows flip to deep dark colours.
+       Glass panels use near-black translucent backgrounds.
     ============================================================ */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+    [data-theme="dark"] {
+      /* Neumorphic base — deep slate */
+      --neu-bg:           #141624;
+      --neu-shadow-light: #1e2138;
+      --neu-shadow-dark:  #0b0d18;
+      --neu-shadow-out:   8px 8px 18px var(--neu-shadow-dark), -8px -8px 18px var(--neu-shadow-light);
+      --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
+      --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+
+      /*
+        Glass panels — dark mode uses a SOLID dark surface with white glass overlay,
+        NOT nearly-transparent white (which vanishes on dark backgrounds).
+        The effect: a raised dark slate panel that refracts the blob colours subtly.
+      */
+      --glass-bg:     rgba(30, 33, 56, 0.82);
+      --glass-bg-hov: rgba(36, 40, 66, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.10);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+      --glass-shadow-hov: 0 16px 40px rgba(0, 0, 0, 0.70), 0 4px 12px rgba(0, 0, 0, 0.40);
+
+      /* Sheen overlays — very subtle in dark mode */
+      --sheen-edge:    rgba(255, 255, 255, 0.05);
+      --sheen-badge:   rgba(255, 255, 255, 0.05);
+      --sheen-card:    rgba(255, 255, 255, 0.03);
+      --sheen-sweep-a: rgba(255, 255, 255, 0.03);
+      --sheen-sweep-b: rgba(255, 255, 255, 0.06);
+
+      /* Icon wrapper — dark translucent box */
+      --icon-bg:     rgba(255, 255, 255, 0.07);
+      --icon-border: rgba(255, 255, 255, 0.12);
+      --icon-bg-hov: rgba(255, 255, 255, 0.13);
+
+      /* Badge text — bright and readable on dark */
+      --badge-indigo-text: #c7d2fe;
+      --badge-cyan-text:   #a5f3fc;
+
+      /* Profile name gradient start */
+      --name-grad-start: #ffffff;
+
+      /* Text — high contrast on dark */
+      --text-primary:   #ffffff;
+      --text-secondary: #c2c9e0;
+      --text-muted:     #94a3b8;
     }
 
     /* ============================================================
        RESET & BASE
     ============================================================ */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
     }
 
     body {
-      font-family: var(--theme-font);
-      color: var(--theme-text-primary);
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: var(--neu-bg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
       overflow-x: hidden;
-
-      /*
-        Starfield background — updated .container gradient:
-        Inner stop: #0a1628  (very dark twilight blue — deep space)
-        Outer stop: #000000  (pure black — void of space)
-        Replaces the old indigo/cyan overlay gradients entirely.
-        The ellipse anchors at the bottom so the faint blue glow
-        sits low, like a distant horizon light.
-      */
-      background: radial-gradient(ellipse at bottom, #0a1628 0%, #000000 100%);
+      /* Smooth colour transition when toggling theme */
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
-    /*
-      NOISE OVERLAY — body::after
-      SVG feTurbulence fractal noise baked into a data URI, rendered
-      over the entire page at very low opacity to create a premium
-      film-grain / texture feel without any extra HTTP requests.
-      pointer-events: none ensures it never blocks interactions.
-    */
-    body::after {
-      content: '';
+    a { text-decoration: none; color: inherit; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-indigo);
+      outline-offset: 3px;
+      border-radius: var(--r-sm);
+    }
+
+    /* ============================================================
+       ANIMATED BACKGROUND BLOBS
+       Large, softly blurred colour orbs that drift slowly,
+       creating the colourful base for the glassmorphism refraction.
+    ============================================================ */
+    .blob-scene {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      z-index: 0;
       pointer-events: none;
-      opacity: 0.032;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 300px 300px;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      will-change: transform;
+    }
+
+    .blob-1 {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, #c084fc, #818cf8);
+      top: -120px; left: -100px;
+      animation-duration: 28s;
+      animation-name: drift-1;
+    }
+
+    .blob-2 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #67e8f9, #06b6d4);
+      top: 30%; right: -120px;
+      animation-duration: 34s;
+      animation-name: drift-2;
+    }
+
+    .blob-3 {
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, #f9a8d4, #ec4899);
+      bottom: 80px; left: 20%;
+      animation-duration: 38s;
+      animation-name: drift-3;
+    }
+
+    .blob-4 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #fde68a, #fb923c);
+      top: 55%; left: -60px;
+      animation-duration: 32s;
+      animation-name: drift-4;
+    }
+
+    /* GTA 5 style slow, organic, multi-directional panning & scaling */
+    @keyframes drift-1 {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(140px, 120px) scale(1.25); }
+      66%  { transform: translate(-40px, 180px) scale(0.85); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+    @keyframes drift-2 {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(-120px, -90px) scale(1.15); }
+      66%  { transform: translate(-220px, 50px) scale(0.9); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+    @keyframes drift-3 {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(100px, -150px) scale(1.2); }
+      66%  { transform: translate(180px, -50px) scale(0.95); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+    @keyframes drift-4 {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(-110px, 130px) scale(1.1); }
+      66%  { transform: translate(80px, 160px) scale(1.3); }
+      100% { transform: translate(0, 0) scale(1); }
     }
 
     /* ============================================================
-       ACCESSIBILITY — focus-visible keyboard ring
-    ============================================================ */
-    :focus-visible {
-      outline: 2px solid var(--theme-accent-primary);
-      outline-offset: 3px;
-      border-radius: var(--theme-radius-card);
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ============================================================
-       MAIN LAYOUT CONTAINER
+       PAGE CONTAINER
     ============================================================ */
     .page-container {
       width: 100%;
-      max-width: var(--theme-container-max);
+      max-width: 600px;
       margin: 0 auto;
-      padding: var(--space-14) var(--theme-side-padding) var(--space-18);
+      padding: var(--sp-14) var(--sp-6) var(--sp-18);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--theme-gap-section);
+      gap: 28px;
       position: relative;
-      z-index: 1; /* sits above the noise overlay's stacking layer */
+      z-index: 1;
     }
 
     /* ============================================================
-       PROFILE SECTION — avatar, name, bio
+       PROFILE CARD — Neumorphic extruded panel
     ============================================================ */
-    .profile-section {
+    .profile-card {
+      width: 100%;
+      background: var(--neu-bg);
+      border-radius: var(--r-lg);
+      box-shadow: var(--neu-shadow-out);
+      padding: var(--sp-8);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 18px;
       text-align: center;
-      width: 100%;
+      position: relative;
+      overflow: hidden;
+      /* Smooth background colour transition on theme switch */
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
-    /* --- Avatar wrapper with animated glow ring --- */
+    /* Slightly elevated surface in dark mode so card separates from body */
+    [data-theme="dark"] .profile-card {
+      background: #1c1f34;
+    }
+
+    /* Subtle inner highlight at the top edge — uses token so dark mode can dim it */
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--sheen-edge), transparent);
+    }
+
+    /* ── Avatar ─────────────────────────────────────────────── */
     .avatar-wrapper {
       position: relative;
-      width: 108px;
-      height: 108px;
+      width: 112px;
+      height: 112px;
       flex-shrink: 0;
     }
 
-    /*
-      ::before — animated conic ring using semantic accent tokens.
-    */
+    /* Neumorphic raised circle base behind avatar */
     .avatar-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: var(--neu-bg);
+      box-shadow: var(--neu-shadow-out);
+      z-index: 0;
+    }
+
+    /* Spinning conic accent ring */
+    .avatar-wrapper::after {
       content: '';
       position: absolute;
       inset: -3px;
       border-radius: 50%;
       background: conic-gradient(
         from 0deg,
-        var(--theme-accent-primary) 0%,
-        var(--theme-accent-secondary) 30%,
-        transparent 60%,
-        var(--theme-accent-primary) 100%
+        var(--accent-indigo) 0%,
+        var(--accent-cyan) 35%,
+        var(--accent-pink) 65%,
+        var(--accent-indigo) 100%
       );
-      animation: spin-ring 4s linear infinite;
-      z-index: 0;
+      animation: spin-ring 5s linear infinite;
+      z-index: 1;
     }
 
-    /* ::after — soft radial glow bloom behind the ring */
-    .avatar-wrapper::after {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      background: radial-gradient(circle,
-        var(--theme-accent-primary-glow) 0%,
-        transparent 70%
-      );
-      z-index: 0;
-      animation: pulse-glow 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes spin-ring {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes pulse-glow {
-      from { opacity: 0.5; transform: scale(0.95); }
-      to   { opacity: 1;   transform: scale(1.05); }
-    }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
 
     .avatar-img {
       position: relative;
-      z-index: 1;
-      width: 108px;
-      height: 108px;
+      z-index: 2;
+      width: 112px;
+      height: 112px;
       border-radius: 50%;
       object-fit: cover;
       object-position: center top;
-      border: 3px solid var(--theme-bg-root);
-      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
-      overflow: hidden;
+      border: 4px solid var(--neu-bg);
+      display: block;
     }
 
-    .avatar-img.fallback {
-      display: flex !important;
-    }
-
-    /* Initials fallback overlay — visible only when .visible is added via JS */
     .avatar-initials {
       position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--theme-accent-primary);
-      z-index: 2;
-      pointer-events: none;
+      inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--accent-indigo);
       opacity: 0;
       transition: opacity 0.3s ease;
+      pointer-events: none;
     }
+    .avatar-initials.visible { opacity: 1; }
 
-    .avatar-img.fallback ~ .avatar-initials,
-    .avatar-initials.visible {
-      opacity: 1;
-    }
-
-    /* --- Name with gradient shimmer --- */
+    /* ── Name ─────────────────────────────────────────────────── */
     .profile-name {
-      font-size: clamp(1.8rem, 6vw, 2.4rem);
-      font-weight: 700;
+      font-size: clamp(1.75rem, 6vw, 2.4rem);
+      font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #ffffff 55%,
-        var(--color-indigo-300) 85%,
-        var(--color-indigo-400) 100%
-      );
+      background: linear-gradient(135deg, var(--name-grad-start) 0%, var(--accent-indigo) 60%, var(--accent-cyan) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
-    /* --- Bio Expand/Collapse --- */
-    .bio-wrapper {
-      max-width: 480px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-
-    .bio-content {
-      overflow: hidden;
-      transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      width: 100%;
-    }
-
-    .bio-content.collapsed {
-      max-height: 3.5rem; /* Exactly 2 lines (1.75 * 2) */
-      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    }
-
-    .bio-content.expanded {
-      /* max-height will be set dynamically by JS, mask fully visible */
-      -webkit-mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
-      mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
-    }
-
-    .profile-bio {
-      margin: 0;
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: #d4d4e8;
-      line-height: 1.75;
-      letter-spacing: 0.01em;
-      text-align: justify;
-      hyphens: auto;
-    }
-
-    .bio-toggle-btn {
-      margin-top: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--theme-text-secondary);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-    }
-
-    .bio-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--theme-text-primary);
-      transform: translateY(2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .bio-chevron {
-      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .bio-toggle-btn.active .bio-chevron {
-      transform: rotate(180deg);
-    }
-
-    /* --- Location pill --- */
+    /* ── Location pill ─────────────────────────────────────────── */
     .profile-location {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--theme-text-muted);
+      font-weight: 600;
       letter-spacing: 0.06em;
-      /* subtle pill treatment — blends without competing with name */
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: var(--theme-radius-pill);
-      padding: 4px 12px 4px 9px;
+      color: var(--text-muted);
+      background: var(--neu-bg);
+      border-radius: var(--r-full);
+      padding: 5px 14px 5px 10px;
+      box-shadow: var(--neu-shadow-sm);
     }
 
-    .profile-location svg {
-      opacity: 0.55;
-      flex-shrink: 0;
+    .profile-location svg { opacity: 0.6; flex-shrink: 0; }
+
+    /* ── Bio ──────────────────────────────────────────────────── */
+    .bio-wrapper {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    .bio-content {
+      overflow: hidden;
+      transition: max-height 0.65s var(--ease-spring);
+      width: 100%;
+    }
+
+    .bio-content.collapsed {
+      max-height: 3.2rem;
+      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+    }
+
+    .bio-content.expanded {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .profile-bio {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.78;
+      text-align: justify;
+      hyphens: auto;
+      margin: 0;
+    }
+
+    /* ── Bio toggle — Neumorphic press button ─────────────────── */
+    .bio-toggle-btn {
+      margin-top: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--neu-bg);
+      box-shadow: var(--neu-shadow-sm);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, color 0.25s ease, transform 0.3s var(--ease-bounce);
+    }
+
+    .bio-toggle-btn:hover {
+      color: var(--accent-indigo);
+    }
+
+    /* Inset / "pressed" state when expanded */
+    .bio-toggle-btn.active {
+      box-shadow: var(--neu-shadow-in);
+      color: var(--accent-indigo);
+    }
+
+    .bio-chevron {
+      transition: transform 0.5s var(--ease-spring);
+      pointer-events: none;
+    }
+
+    .bio-toggle-btn.active .bio-chevron { transform: rotate(180deg); }
 
     /* ============================================================
-       ACADEMIC TIMELINE COMPONENT
+       ACADEMIC TIMELINE — glass panels on Neumorphic card
     ============================================================ */
+    .section-label {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
     .academic-section {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-    }
-
-    .academic-label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--theme-text-muted);
+      gap: 12px;
     }
 
     .timeline-card {
       width: 100%;
-      background: var(--theme-bg-glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--theme-border-subtle);
-      border-radius: var(--theme-radius-card);
+      background: var(--neu-bg);
+      border-radius: var(--r-lg);
+      box-shadow: var(--neu-shadow-out);
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -505,352 +512,312 @@
       gap: 0;
       position: relative;
       overflow: hidden;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
-    /* Subtle gradient blush inside the card */
+    /* Elevated surface in dark mode */
+    [data-theme="dark"] .timeline-card {
+      background: #1c1f34;
+    }
+
     .timeline-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        rgba(var(--color-indigo-500-rgb), 0.06) 0%,
-        transparent 50%,
-        rgba(var(--color-cyan-400-rgb), 0.04) 100%
-      );
-      pointer-events: none;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--sheen-edge), transparent);
     }
 
     .timeline-node {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      flex: 1;
-      position: relative;
-      z-index: 1;
     }
 
-    /* ── Timeline badge — premium glassmorphic pill ──────────── */
+    /* Glass badge */
     .timeline-badge {
       display: inline-flex;
       align-items: center;
       gap: 9px;
       padding: 10px 22px;
-      border-radius: var(--theme-radius-pill);
-      font-size: 0.88rem;
+      border-radius: var(--r-full);
+      font-size: 0.87rem;
       font-weight: 700;
       letter-spacing: 0.04em;
-      transition: var(--theme-transition);
       white-space: nowrap;
       cursor: default;
       user-select: none;
       position: relative;
-      /* frosted glass base shared by both variants */
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      /* subtle top-edge highlight — the key glass cue */
-      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.14);
+      overflow: hidden;
+
+      /* Glass base */
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+
+      transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s ease;
     }
 
-    /*
-      ::before — a soft radial inner glow that fills the pill
-      centre, giving depth without colour bleed.
-    */
+    /* Glass sheen line at top of badge — token-driven */
     .timeline-badge::before {
       content: '';
       position: absolute;
-      inset: 0;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, var(--sheen-badge), transparent);
       border-radius: inherit;
-      background: radial-gradient(
-        ellipse 80% 60% at 50% 0%,
-        rgba(255,255,255,0.08) 0%,
-        transparent 70%
-      );
       pointer-events: none;
     }
 
-    /* ── Indigo pill ── */
     .timeline-badge--indigo {
-      background:
-        linear-gradient(
-          160deg,
-          rgba(var(--color-indigo-500-rgb), 0.30) 0%,
-          rgba(var(--color-indigo-500-rgb), 0.10) 100%
-        );
-      border: 1px solid rgba(var(--color-indigo-500-rgb), 0.50);
-      color: #c7d2fe; /* indigo-200 — bright enough to read well */
-      box-shadow:
-        /* top-edge glass highlight */
-        inset 0 1.5px 0 rgba(255,255,255,0.14),
-        /* outer diffuse glow halo */
-        0 0 18px -2px rgba(var(--color-indigo-500-rgb), 0.55),
-        /* deep shadow for lift */
-        0 4px 20px -4px rgba(0,0,0,0.50);
+      color: var(--badge-indigo-text);
+      box-shadow: var(--glass-shadow), 0 0 0 1px rgba(99,102,241,0.2);
     }
 
     .timeline-badge--indigo:hover {
-      background:
-        linear-gradient(
-          160deg,
-          rgba(var(--color-indigo-500-rgb), 0.42) 0%,
-          rgba(var(--color-indigo-500-rgb), 0.18) 100%
-        );
-      border-color: rgba(var(--color-indigo-500-rgb), 0.70);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.20),
-        0 0 28px -2px rgba(var(--color-indigo-500-rgb), 0.75),
-        0 6px 24px -4px rgba(0,0,0,0.55);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: var(--glass-shadow-hov), 0 0 0 1.5px rgba(99,102,241,0.4), 0 0 20px -4px rgba(99,102,241,0.35);
     }
 
-    /* ── Cyan pill ── */
     .timeline-badge--cyan {
-      background:
-        linear-gradient(
-          160deg,
-          rgba(var(--color-cyan-400-rgb), 0.25) 0%,
-          rgba(var(--color-cyan-400-rgb), 0.08) 100%
-        );
-      border: 1px solid rgba(var(--color-cyan-400-rgb), 0.45);
-      color: #a5f3fc; /* cyan-200 */
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.14),
-        0 0 18px -2px rgba(var(--color-cyan-400-rgb), 0.50),
-        0 4px 20px -4px rgba(0,0,0,0.50);
+      color: var(--badge-cyan-text);
+      box-shadow: var(--glass-shadow), 0 0 0 1px rgba(6,182,212,0.2);
     }
 
     .timeline-badge--cyan:hover {
-      background:
-        linear-gradient(
-          160deg,
-          rgba(var(--color-cyan-400-rgb), 0.38) 0%,
-          rgba(var(--color-cyan-400-rgb), 0.14) 100%
-        );
-      border-color: rgba(var(--color-cyan-400-rgb), 0.65);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.20),
-        0 0 28px -2px rgba(var(--color-cyan-400-rgb), 0.70),
-        0 6px 24px -4px rgba(0,0,0,0.55);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: var(--glass-shadow-hov), 0 0 0 1.5px rgba(6,182,212,0.4), 0 0 20px -4px rgba(6,182,212,0.35);
     }
 
-    .badge-icon {
-      font-size: 0.85rem;
-      opacity: 0.90;
-      display: flex;
-      align-items: center;
-      position: relative; /* stacks above ::before */
-      z-index: 1;
-    }
-
-    .badge-text {
-      font-family: var(--theme-font);
-      position: relative;
-      z-index: 1;
-    }
+    .badge-icon { display: flex; align-items: center; position: relative; z-index: 1; }
+    .badge-text { font-family: var(--font); position: relative; z-index: 1; }
 
     .timeline-sub {
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--theme-text-muted);
-      letter-spacing: 0.10em;
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-
-
-
-
     /* ============================================================
-       LINK HUB — Social / contact link cards
+       LINK CARDS — Glassmorphic floating panels
     ============================================================ */
     .links-section {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      width: 100%;
-      gap: var(--theme-gap-link);
+      gap: 10px;
     }
 
     .links-heading {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--theme-text-muted);
+      color: var(--text-muted);
       text-align: center;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
-    /* ── Link card base ───────────────────────────────────────── */
+    /* ── Card base ────────────────────────────────────────────── */
     .link-card {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: var(--space-4) var(--space-5);
-      border-radius: var(--theme-radius-card);
-      border: 1px solid var(--theme-border-subtle);
-      background: var(--theme-bg-card);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: var(--theme-transition);
+      padding: 14px 18px;
+      border-radius: var(--r-md);
+
+      /* Glassmorphism */
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+
       cursor: pointer;
       position: relative;
       overflow: hidden;
       min-width: 0;
+
+      /*
+        3D tilt + hover lift driven by JS rAF.
+        CSS handles the reset transition.
+      */
+      transform:
+        perspective(1000px)
+        rotateX(var(--tilt-x, 0deg))
+        rotateY(var(--tilt-y, 0deg));
+      transition:
+        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.45s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
+
+      will-change: transform;
     }
 
-    /*
-      SPOTLIGHT HOVER EFFECT — ::before pseudo-element
-      ─────────────────────────────────────────────────
-      A radial gradient centred on --mouse-x / --mouse-y (injected
-      per-card by the mousemove listener in JS). At rest, opacity is
-      0 so it is completely invisible. On hover it fades to 1,
-      creating a soft glow that literally follows the cursor.
-
-      NOTE: The left-edge accent bar from v1 has been folded into
-      this more advanced effect. The bar still appears via the
-      ::after pseudo-element below.
-    */
+    /* Glass sheen sweep across top half — token-driven */
     .link-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        600px circle at var(--mouse-x) var(--mouse-y),
-        rgba(var(--card-glow-color, var(--color-indigo-500-rgb)), 0.15),
-        transparent 60%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, var(--sheen-card), transparent);
       pointer-events: none;
       border-radius: inherit;
-    }
-
-    .link-card:hover::before {
-      opacity: 1;
-    }
-
-    /* Left-edge accent bar — the accent stripe from v1 */
-    .link-card::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      border-radius: var(--radius-full) 0 0 var(--radius-full);
-      background: linear-gradient(
-        180deg,
-        rgba(var(--card-glow-color, var(--color-indigo-500-rgb)), 0.8),
-        rgba(var(--card-glow-color, var(--color-indigo-500-rgb)), 0.2)
-      );
-      opacity: 0;
+      z-index: 1;
       transition: opacity 0.3s ease;
     }
 
+    /* Diagonal light-sweep on hover — token-driven */
+    .link-card::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -60%;
+      width: 45%; height: 200%;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--sheen-sweep-a) 40%,
+        var(--sheen-sweep-b) 50%,
+        var(--sheen-sweep-a) 60%,
+        transparent 100%
+      );
+      transform: skewX(-20deg) translateX(-120%);
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: 2;
+    }
+
     .link-card:hover::after {
-      opacity: 1;
+      animation: glass-sheen 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes glass-sheen {
+      from { transform: skewX(-20deg) translateX(-120%); }
+      to   { transform: skewX(-20deg) translateX(280%);  }
     }
 
     /* ── Hover state ──────────────────────────────────────────── */
     .link-card:hover {
-      background: var(--theme-bg-card-hover);
-      border-color: var(--theme-accent-primary-border);
-      transform: translateY(-3px) scale(1.02);
+      background: var(--glass-bg-hov);
+      border-color: rgba(var(--card-glow-r, 99), var(--card-glow-g, 102), var(--card-glow-b, 241), 0.5);
       box-shadow:
-        0 8px 24px -6px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(var(--color-indigo-500-rgb), 0.15),
-        0 0 32px -8px var(--theme-accent-primary-glow);
+        var(--glass-shadow-hov),
+        0 0 0 1.5px rgba(var(--card-glow-r, 99), var(--card-glow-g, 102), var(--card-glow-b, 241), 0.15),
+        0 0 28px -6px rgba(var(--card-glow-r, 99), var(--card-glow-g, 102), var(--card-glow-b, 241), 0.30);
+      transform:
+        perspective(1000px)
+        rotateX(var(--tilt-x, 0deg))
+        rotateY(var(--tilt-y, 0deg))
+        translateY(-4px);
     }
 
-    .link-card:hover .link-icon-svg {
-      stroke: var(--theme-accent-primary);
-      fill: var(--theme-accent-primary); /* for filled-path icons */
-      transform: scale(1.1);
-    }
-
-    /* Only apply stroke override to icons that use stroke */
-    .link-card:hover .link-icon-svg.stroke-only {
-      fill: none;
-      stroke: var(--theme-accent-primary);
-    }
-
-    /* Only apply fill override to icons that use fill */
-    .link-card:hover .link-icon-svg.fill-only {
-      stroke: none;
-      fill: var(--theme-accent-primary);
-    }
-
-    .link-card:hover .link-arrow-svg {
-      transform: translateX(3px);
-      opacity: 1;
-    }
-
-    /* ── Active / tap state ───────────────────────────────────── */
+    /* ── Active tap ───────────────────────────────────────────── */
     .link-card:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: none;
-      background: rgba(var(--color-indigo-500-rgb), 0.10);
-      border-color: var(--theme-accent-primary-border);
+      transform: perspective(1000px) rotateX(0) rotateY(0) scale(0.975) !important;
+      box-shadow: var(--glass-shadow) !important;
     }
 
-    /* ── Icon wrapper box ─────────────────────────────────────── */
+    /* Brand colour left accent bar */
+    .link-card-accent {
+      position: absolute;
+      left: 0; top: 12%; bottom: 12%;
+      width: 3px;
+      border-radius: var(--r-full);
+      background: linear-gradient(
+        180deg,
+        rgba(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241), 0.9),
+        rgba(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241), 0.2)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
+    }
+
+    .link-card:hover .link-card-accent { opacity: 1; }
+
+    /* ── Icon wrapper — fully token-driven ───────────────────── */
     .link-icon-wrapper {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--r-sm);
+      background: var(--icon-bg);
+      border: 1px solid var(--icon-border);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: var(--theme-transition);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 4;
     }
 
     .link-card:hover .link-icon-wrapper {
-      background: var(--theme-accent-primary-soft);
-      border-color: var(--theme-accent-primary-border);
+      background: var(--icon-bg-hov);
+      box-shadow:
+        0 4px 12px rgba(0,0,0,0.15),
+        0 0 0 1px rgba(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241), 0.25);
     }
 
-    /* Inline SVG icon defaults */
     .link-icon-svg {
       width: 18px;
       height: 18px;
-      color: var(--theme-text-secondary);
-      transition: var(--theme-transition);
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
       flex-shrink: 0;
     }
 
-    /* Stroke-style icons */
     .link-icon-svg.stroke-only {
       fill: none;
-      stroke: var(--theme-text-secondary);
+      stroke: var(--text-secondary);
       stroke-width: 1.75;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    /* Fill-style icons (e.g. brand logos) */
     .link-icon-svg.fill-only {
-      fill: var(--theme-text-secondary);
+      fill: var(--text-secondary);
       stroke: none;
     }
 
-    /* ── Text column ──────────────────────────────────────────── */
+    .link-card:hover .link-icon-svg {
+      color: rgb(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241));
+    }
+
+    .link-card:hover .link-icon-svg.stroke-only {
+      stroke: rgb(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241));
+      fill: none;
+    }
+
+    .link-card:hover .link-icon-svg.fill-only {
+      fill: rgb(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241));
+      stroke: none;
+    }
+
+    /* ── Text ─────────────────────────────────────────────────── */
     .link-text-wrapper {
       flex: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
       gap: 2px;
+      position: relative;
+      z-index: 4;
     }
 
     .link-label {
       font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--theme-text-primary);
+      font-weight: 700;
+      color: var(--text-primary);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -858,2224 +825,331 @@
     }
 
     .link-sublabel {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 400;
-      color: var(--theme-text-muted);
+      color: var(--text-muted);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    /* Arrow chevron SVG */
     .link-arrow-svg {
       width: 14px;
       height: 14px;
       flex-shrink: 0;
-      opacity: 0.4;
-      transition: var(--theme-transition);
-      stroke: var(--theme-text-muted);
+      opacity: 0.35;
+      transition: all 0.3s ease;
+      stroke: var(--text-muted);
       fill: none;
-      stroke-width: 2;
+      stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
+      position: relative;
+      z-index: 4;
     }
+
+    .link-card:hover .link-arrow-svg {
+      transform: translateX(3px);
+      opacity: 0.8;
+      stroke: rgb(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241));
+    }
+
+    /* ============================================================
+       THEME TOGGLE — inline in the page, top-right of viewport
+       On desktop: fixed top-right (out of content flow, safe)
+       On mobile (<=600px): sits inline at top of page container,
+       right-aligned, so it never overlaps scrolling content.
+    ============================================================ */
+    .theme-toggle-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 2px;
+    }
+
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: var(--neu-bg);
+      box-shadow: var(--neu-shadow-sm);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition:
+        background  0.4s ease,
+        box-shadow  0.3s ease,
+        color       0.3s ease,
+        transform   0.35s var(--ease-bounce);
+    }
+
+    /* Desktop: fix to top-right corner */
+    @media (min-width: 601px) {
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+      }
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent-indigo);
+      transform: scale(1.10);
+    }
+
+    .theme-toggle:active {
+      box-shadow: var(--neu-shadow-in);
+      transform: scale(0.94);
+    }
+
+    /* Icon visibility — sun shown in dark mode, moon in light mode */
+    .theme-toggle .icon-sun  { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+
+    [data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
     /* ============================================================
        FOOTER
     ============================================================ */
     .page-footer {
-      margin-top: 8px;
-      font-size: 0.7rem;
-      color: var(--theme-text-muted);
+      font-size: 0.70rem;
+      color: var(--text-muted);
       text-align: center;
       letter-spacing: 0.06em;
-      opacity: 0.6;
+      opacity: 0.75;
     }
 
-    .page-footer a {
-      color: var(--theme-text-muted);
-      transition: color 0.2s ease;
+    .secret-hint {
+      font-size: 0.75rem;
+      color: var(--text-base);
+      opacity: 0.8;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      transition: opacity 0.3s ease, color 0.3s ease;
     }
-
-    .page-footer a:hover {
-      color: var(--theme-accent-primary);
+    .secret-hint:hover {
+      opacity: 1;
+      color: var(--accent-cyan);
     }
 
     /* ============================================================
-       STAGGERED ENTRANCE ANIMATIONS — preserved from v1
+       STAGGERED ENTRANCE ANIMATIONS
     ============================================================ */
-
-    /* Base: invisible + shifted down */
     .anim-ready {
       opacity: 0;
-      transform: translateY(22px);
+      transform: translateY(24px) scale(0.97);
     }
 
-    /* JS adds .anim-in after data-delay ms */
     .anim-in {
-      animation: fadeSlideUp 0.6s var(--ease-entrance) forwards;
+      animation: popIn 0.65s var(--ease-bounce) forwards;
     }
 
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0);    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
-    /* Avatar has a springy scale-in */
-    .anim-avatar {
-      opacity: 0;
-      transform: scale(0.85) translateY(10px);
-    }
+    .anim-avatar { opacity: 0; transform: scale(0.80); }
 
     .anim-avatar.anim-in {
-      animation: avatarIn 0.7s var(--ease-spring) forwards;
+      animation: avatarPop 0.75s var(--ease-bounce) forwards;
     }
 
-    @keyframes avatarIn {
-      from { opacity: 0; transform: scale(0.85) translateY(10px); }
-      to   { opacity: 1; transform: scale(1)    translateY(0);    }
+    @keyframes avatarPop {
+      from { opacity: 0; transform: scale(0.80); }
+      to   { opacity: 1; transform: scale(1);    }
+    }
+
+    /* ============================================================
+       MOBILE TOUCH FALLBACK
+    ============================================================ */
+    @media (hover: none) {
+      .link-card {
+        transform: none !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+      }
+      .link-card:active {
+        transform: scale(0.97) !important;
+        box-shadow: var(--glass-shadow) !important;
+      }
     }
 
     /* ============================================================
        RESPONSIVE TWEAKS
     ============================================================ */
     @media (max-width: 400px) {
-      .page-container {
-        padding-top: 40px;
-        padding-bottom: 56px;
-        gap: 22px;
-      }
-
-      .timeline-badge {
-        padding: 7px 13px;
-        font-size: 0.82rem;
-      }
-
-      .timeline-connector { padding: 0 10px; }
-      .timeline-connector-line { width: 32px; }
+      .page-container { padding-top: 40px; padding-bottom: 56px; gap: 20px; }
+      .profile-card   { padding: 24px 16px; }
+      .timeline-badge { padding: 8px 14px; font-size: 0.82rem; }
     }
 
     /* Respect prefers-reduced-motion */
     @media (prefers-reduced-motion: reduce) {
-      .avatar-wrapper::before,
-      .timeline-connector-line::after,
-      .live-dot::before,
-      .live-status-card::before {
-        animation: none;
-      }
-
-      .anim-ready,
-      .anim-avatar {
-        opacity: 0;
-      }
-
-      .anim-in {
-        animation: simpleFade 0.4s ease forwards;
-      }
-
-      @keyframes simpleFade {
-        to { opacity: 1; transform: none; }
-      }
+      .blob-1, .blob-2, .blob-3, .blob-4 { animation: none; }
+      .avatar-wrapper::after { animation: none; }
+      .anim-ready, .anim-avatar { opacity: 0; }
+      .anim-in { animation: simpleFade 0.4s ease forwards; }
+      @keyframes simpleFade { to { opacity: 1; transform: none; } }
+      .link-card { transform: none !important; transition: background 0.2s ease, border-color 0.2s ease !important; }
+      .link-card::after { animation: none !important; }
     }
 
     /* ============================================================
-       STARFIELD ANIMATION
-       Three layers of stars (1px / 2px / 3px) scrolling upward
-       at different speeds to simulate depth parallax.
-       Only the background gradient on .container/.body was changed
-       per the requirement — all box-shadow coords and keyframes
-       are kept exactly as supplied.
+       MAC TERMINAL OVERLAY
     ============================================================ */
-
-    /* ── Layer 1 — tiny 1px stars (fastest, 50s) ──────────────── */
-    #stars {
+    .mac-terminal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 1px;
-      height: 1px;
-      background: transparent;
-      box-shadow:
-        501px 811px #fff,
-        1450px 1324px #fff,
-        1093px 1780px #fff,
-        1469px 678px #fff,
-        904px 741px #fff,
-        1160px 781px #fff,
-        1841px 1962px #fff,
-        1630px 1667px #fff,
-        1788px 676px #fff,
-        367px 1734px #fff,
-        1343px 156px #fff,
-        1283px 1142px #fff,
-        1062px 378px #fff,
-        1395px 467px #fff,
-        1017px 1891px #fff,
-        137px 1114px #fff,
-        1767px 1403px #fff,
-        1543px 11px #fff,
-        1078px 181px #fff,
-        1189px 1574px #fff,
-        1697px 1551px #fff,
-        439px 472px #fff,
-        1491px 677px #fff,
-        1364px 599px #fff,
-        34px 382px #fff,
-        1221px 1584px #fff,
-        1266px 1499px #fff,
-        169px 1907px #fff,
-        1219px 1125px #fff,
-        659px 18px #fff,
-        1731px 1959px #fff,
-        332px 1216px #fff,
-        1913px 788px #fff,
-        80px 712px #fff,
-        326px 1605px #fff,
-        574px 1502px #fff,
-        473px 1653px #fff,
-        404px 975px #fff,
-        322px 1797px #fff,
-        425px 1321px #fff,
-        1121px 1797px #fff,
-        731px 647px #fff,
-        891px 1584px #fff,
-        1523px 109px #fff,
-        1379px 244px #fff,
-        865px 1064px #fff,
-        493px 956px #fff,
-        624px 1380px #fff,
-        440px 619px #fff,
-        1630px 767px #fff,
-        955px 1196px #fff,
-        62px 729px #fff,
-        126px 946px #fff,
-        1256px 896px #fff,
-        1444px 256px #fff,
-        661px 1628px #fff,
-        1078px 1716px #fff,
-        300px 737px #fff,
-        1734px 413px #fff,
-        1296px 129px #fff,
-        1771px 1678px #fff,
-        977px 1764px #fff,
-        1879px 549px #fff,
-        665px 1531px #fff,
-        89px 701px #fff,
-        1084px 1183px #fff,
-        1597px 1576px #fff,
-        1354px 1774px #fff,
-        554px 1471px #fff,
-        1469px 287px #fff,
-        887px 106px #fff,
-        1962px 766px #fff,
-        638px 805px #fff,
-        1651px 741px #fff,
-        1517px 1826px #fff,
-        24px 1152px #fff,
-        507px 558px #fff,
-        1262px 652px #fff,
-        246px 1048px #fff,
-        1077px 421px #fff,
-        1866px 1847px #fff,
-        1986px 1561px #fff,
-        704px 632px #fff,
-        1991px 1875px #fff,
-        1227px 395px #fff,
-        45px 1116px #fff,
-        247px 786px #fff,
-        890px 607px #fff,
-        787px 1235px #fff,
-        557px 524px #fff,
-        1582px 1285px #fff,
-        1725px 1366px #fff,
-        952px 747px #fff,
-        251px 458px #fff,
-        1500px 1250px #fff,
-        1999px 1734px #fff,
-        1336px 1955px #fff,
-        1705px 1464px #fff,
-        728px 697px #fff,
-        594px 510px #fff,
-        1345px 1990px #fff,
-        1919px 1803px #fff,
-        1117px 966px #fff,
-        1629px 97px #fff,
-        1046px 1196px #fff,
-        810px 1092px #fff,
-        722px 976px #fff,
-        406px 18px #fff,
-        1665px 1860px #fff,
-        1758px 1628px #fff,
-        1183px 463px #fff,
-        564px 239px #fff,
-        13px 1767px #fff,
-        1482px 1472px #fff,
-        1700px 347px #fff,
-        1362px 244px #fff,
-        1141px 1708px #fff,
-        22px 885px #fff,
-        374px 1309px #fff,
-        1034px 1037px #fff,
-        1725px 1086px #fff,
-        1343px 1921px #fff,
-        596px 903px #fff,
-        1061px 478px #fff,
-        18px 1409px #fff,
-        729px 1364px #fff,
-        264px 911px #fff,
-        677px 1442px #fff,
-        123px 33px #fff,
-        1303px 646px #fff,
-        1945px 792px #fff,
-        1305px 938px #fff,
-        918px 1536px #fff,
-        620px 948px #fff,
-        183px 646px #fff,
-        695px 687px #fff,
-        881px 272px #fff,
-        1521px 1212px #fff,
-        1423px 1022px #fff,
-        1545px 1271px #fff,
-        1393px 348px #fff,
-        685px 1910px #fff,
-        1446px 856px #fff,
-        73px 1201px #fff,
-        736px 999px #fff,
-        673px 796px #fff,
-        469px 850px #fff,
-        1912px 142px #fff,
-        1278px 664px #fff,
-        184px 1990px #fff,
-        1173px 1312px #fff,
-        782px 1879px #fff,
-        323px 1035px #fff,
-        611px 908px #fff,
-        565px 1449px #fff,
-        748px 1713px #fff,
-        1047px 490px #fff,
-        1040px 1872px #fff,
-        1818px 1659px #fff,
-        1806px 1327px #fff,
-        386px 575px #fff,
-        1550px 463px #fff,
-        148px 687px #fff,
-        651px 1683px #fff,
-        1588px 1194px #fff,
-        1831px 2px #fff,
-        581px 876px #fff,
-        1396px 1743px #fff,
-        1212px 1810px #fff,
-        421px 1920px #fff,
-        658px 1461px #fff,
-        1859px 1809px #fff,
-        1456px 388px #fff,
-        186px 1627px #fff,
-        1528px 1145px #fff,
-        171px 97px #fff,
-        674px 1072px #fff,
-        676px 1052px #fff,
-        1165px 1131px #fff,
-        1088px 781px #fff,
-        1231px 948px #fff,
-        330px 257px #fff,
-        426px 1046px #fff,
-        549px 652px #fff,
-        1338px 74px #fff,
-        1749px 364px #fff,
-        931px 369px #fff,
-        383px 1428px #fff,
-        1558px 389px #fff,
-        927px 133px #fff,
-        234px 1888px #fff,
-        1785px 1617px #fff,
-        556px 643px #fff,
-        401px 275px #fff,
-        406px 1644px #fff,
-        1253px 1852px #fff,
-        1599px 883px #fff,
-        744px 1721px #fff,
-        524px 1297px #fff,
-        1226px 1177px #fff,
-        1679px 55px #fff,
-        874px 1811px #fff,
-        838px 790px #fff,
-        1241px 430px #fff,
-        1676px 652px #fff,
-        1191px 568px #fff,
-        53px 1990px #fff,
-        1163px 237px #fff,
-        61px 223px #fff,
-        592px 456px #fff,
-        1844px 271px #fff,
-        1324px 1488px #fff,
-        1373px 717px #fff,
-        1822px 709px #fff,
-        1464px 941px #fff,
-        1445px 1118px #fff,
-        991px 1414px #fff,
-        1964px 1076px #fff,
-        108px 172px #fff,
-        641px 1722px #fff,
-        1539px 427px #fff,
-        1697px 45px #fff,
-        1301px 1353px #fff,
-        1060px 329px #fff,
-        967px 1396px #fff,
-        493px 301px #fff,
-        1228px 1406px #fff,
-        1211px 1653px #fff,
-        444px 1822px #fff,
-        1746px 353px #fff,
-        1449px 381px #fff,
-        671px 887px #fff,
-        650px 138px #fff,
-        30px 1839px #fff,
-        1094px 1405px #fff,
-        273px 796px #fff,
-        1618px 1964px #fff,
-        1045px 1849px #fff,
-        1472px 1155px #fff,
-        1529px 1312px #fff,
-        728px 448px #fff,
-        44px 1908px #fff,
-        691px 818px #fff,
-        254px 293px #fff,
-        1981px 1133px #fff,
-        1307px 375px #fff,
-        196px 316px #fff,
-        1241px 1975px #fff,
-        1138px 1706px #fff,
-        1769px 463px #fff,
-        1768px 1428px #fff,
-        1730px 590px #fff,
-        1780px 523px #fff,
-        1862px 1526px #fff,
-        1613px 909px #fff,
-        1266px 1781px #fff,
-        470px 352px #fff,
-        699px 1682px #fff,
-        1002px 614px #fff,
-        1209px 133px #fff,
-        1842px 518px #fff,
-        1422px 1836px #fff,
-        1720px 1901px #fff,
-        470px 1788px #fff,
-        1355px 1387px #fff,
-        146px 1162px #fff,
-        933px 80px #fff,
-        681px 1063px #fff,
-        313px 1341px #fff,
-        740px 1498px #fff,
-        168px 1014px #fff,
-        345px 1355px #fff,
-        1498px 1562px #fff,
-        1626px 1358px #fff,
-        890px 403px #fff,
-        663px 562px #fff,
-        1481px 168px #fff,
-        22px 719px #fff,
-        774px 1041px #fff,
-        1899px 829px #fff,
-        430px 158px #fff,
-        430px 361px #fff,
-        1592px 1334px #fff,
-        224px 323px #fff,
-        1639px 1131px #fff,
-        7px 271px #fff,
-        1646px 1514px #fff,
-        1605px 1444px #fff,
-        1820px 1665px #fff,
-        1549px 1641px #fff,
-        1609px 1377px #fff,
-        486px 1098px #fff,
-        229px 613px #fff,
-        542px 1694px #fff,
-        318px 256px #fff,
-        1861px 918px #fff,
-        889px 892px #fff,
-        442px 1524px #fff,
-        19px 422px #fff,
-        1935px 1908px #fff,
-        828px 109px #fff,
-        862px 1248px #fff,
-        1275px 560px #fff,
-        906px 63px #fff,
-        337px 1605px #fff,
-        1691px 918px #fff,
-        1414px 679px #fff,
-        1726px 749px #fff,
-        1540px 1149px #fff,
-        1337px 1466px #fff,
-        446px 430px #fff,
-        676px 1616px #fff,
-        840px 326px #fff,
-        976px 977px #fff,
-        1840px 642px #fff,
-        1273px 804px #fff,
-        1071px 928px #fff,
-        1292px 1675px #fff,
-        29px 1148px #fff,
-        1585px 135px #fff,
-        1007px 563px #fff,
-        1035px 78px #fff,
-        1174px 574px #fff,
-        120px 1304px #fff,
-        845px 1292px #fff,
-        861px 540px #fff,
-        234px 232px #fff,
-        1940px 1367px #fff,
-        759px 639px #fff,
-        1775px 1381px #fff,
-        906px 372px #fff,
-        1104px 1165px #fff,
-        1524px 911px #fff,
-        1882px 330px #fff,
-        1389px 700px #fff,
-        300px 1629px #fff,
-        220px 1614px #fff,
-        563px 140px #fff,
-        1611px 1586px #fff,
-        793px 1316px #fff,
-        325px 1070px #fff,
-        1722px 1462px #fff,
-        1406px 1120px #fff,
-        1169px 1768px #fff,
-        1956px 1053px #fff,
-        959px 1587px #fff,
-        585px 1566px #fff,
-        370px 204px #fff,
-        1606px 1416px #fff,
-        443px 1606px #fff,
-        1499px 1102px #fff,
-        1943px 105px #fff,
-        1121px 1594px #fff,
-        1512px 32px #fff,
-        871px 1425px #fff,
-        433px 100px #fff,
-        294px 1471px #fff,
-        1688px 1755px #fff,
-        1666px 591px #fff,
-        1034px 300px #fff,
-        734px 1178px #fff,
-        1342px 313px #fff,
-        1616px 1590px #fff,
-        1763px 1472px #fff,
-        632px 1935px #fff,
-        1708px 872px #fff,
-        1871px 915px #fff,
-        1829px 1020px #fff,
-        1599px 578px #fff,
-        42px 585px #fff,
-        1163px 1382px #fff,
-        1744px 1272px #fff,
-        984px 1426px #fff,
-        1786px 1584px #fff,
-        1813px 379px #fff,
-        1867px 1127px #fff,
-        97px 567px #fff,
-        626px 988px #fff,
-        1178px 79px #fff,
-        1703px 211px #fff,
-        961px 1785px #fff,
-        110px 975px #fff,
-        953px 1941px #fff,
-        1027px 1790px #fff,
-        1665px 107px #fff,
-        11px 964px #fff,
-        1718px 1147px #fff,
-        21px 1728px #fff,
-        1358px 1922px #fff,
-        872px 65px #fff,
-        1191px 1635px #fff,
-        762px 681px #fff,
-        1519px 1033px #fff,
-        906px 566px #fff,
-        1074px 657px #fff,
-        1093px 415px #fff,
-        51px 198px #fff,
-        1075px 1418px #fff,
-        1547px 1070px #fff,
-        225px 920px #fff,
-        850px 1974px #fff,
-        981px 595px #fff,
-        1425px 131px #fff,
-        460px 917px #fff,
-        56px 495px #fff,
-        714px 428px #fff,
-        920px 493px #fff,
-        470px 1521px #fff,
-        532px 821px #fff,
-        1905px 71px #fff,
-        883px 1501px #fff,
-        294px 196px #fff,
-        381px 1999px #fff,
-        332px 793px #fff,
-        1246px 408px #fff,
-        233px 149px #fff,
-        315px 231px #fff,
-        1594px 1302px #fff,
-        696px 1585px #fff,
-        791px 136px #fff,
-        479px 199px #fff,
-        1627px 1413px #fff,
-        1824px 924px #fff,
-        1631px 342px #fff,
-        1251px 1151px #fff,
-        284px 1781px #fff,
-        497px 1052px #fff,
-        204px 1161px #fff,
-        646px 1499px #fff,
-        1762px 558px #fff,
-        854px 1833px #fff,
-        883px 945px #fff,
-        44px 982px #fff,
-        1101px 834px #fff,
-        515px 1748px #fff,
-        1578px 1435px #fff,
-        819px 1258px #fff,
-        776px 670px #fff,
-        115px 385px #fff,
-        1478px 434px #fff,
-        885px 20px #fff,
-        192px 1513px #fff,
-        78px 1129px #fff,
-        1774px 1105px #fff,
-        955px 1149px #fff,
-        1817px 1929px #fff,
-        1106px 1832px #fff,
-        1107px 1997px #fff,
-        94px 23px #fff,
-        243px 982px #fff,
-        43px 1972px #fff,
-        1798px 673px #fff,
-        1131px 1589px #fff,
-        841px 14px #fff,
-        826px 345px #fff,
-        687px 56px #fff,
-        1084px 32px #fff,
-        1887px 1878px #fff,
-        153px 526px #fff,
-        1828px 253px #fff,
-        1947px 1105px #fff,
-        886px 700px #fff,
-        1307px 1723px #fff,
-        1274px 651px #fff,
-        1530px 837px #fff,
-        1699px 1637px #fff,
-        1703px 1331px #fff,
-        1929px 1557px #fff,
-        1763px 737px #fff,
-        1118px 1680px #fff,
-        1545px 692px #fff,
-        1462px 1092px #fff,
-        208px 1667px #fff,
-        1393px 859px #fff,
-        186px 1794px #fff,
-        351px 1199px #fff,
-        642px 1995px #fff,
-        1061px 1726px #fff,
-        1708px 115px #fff,
-        1233px 1305px #fff,
-        637px 1786px #fff,
-        1730px 603px #fff,
-        75px 1240px #fff,
-        1704px 1326px #fff,
-        584px 346px #fff,
-        438px 1554px #fff,
-        561px 513px #fff,
-        1382px 225px #fff,
-        467px 1674px #fff,
-        1403px 815px #fff,
-        1546px 1835px #fff,
-        127px 1119px #fff,
-        276px 591px #fff,
-        688px 1458px #fff,
-        765px 646px #fff,
-        474px 984px #fff,
-        171px 361px #fff,
-        94px 1480px #fff,
-        1962px 1666px #fff,
-        909px 1037px #fff,
-        1725px 222px #fff,
-        253px 1355px #fff,
-        1892px 1901px #fff,
-        275px 1847px #fff,
-        28px 1184px #fff,
-        1725px 1382px #fff,
-        882px 647px #fff,
-        1935px 1046px #fff,
-        10px 344px #fff,
-        292px 1328px #fff,
-        127px 1352px #fff,
-        752px 929px #fff,
-        1589px 384px #fff,
-        284px 1829px #fff,
-        381px 820px #fff,
-        1229px 1125px #fff,
-        777px 429px #fff,
-        1811px 1499px #fff,
-        1573px 287px #fff,
-        295px 756px #fff,
-        389px 616px #fff,
-        781px 41px #fff,
-        1092px 333px #fff,
-        794px 1588px #fff,
-        386px 1847px #fff,
-        1802px 710px #fff,
-        662px 60px #fff,
-        640px 264px #fff,
-        463px 746px #fff,
-        1859px 799px #fff,
-        763px 37px #fff,
-        639px 396px #fff,
-        357px 1071px #fff,
-        1190px 1430px #fff,
-        1814px 257px #fff,
-        1382px 235px #fff,
-        606px 1304px #fff,
-        1939px 1470px #fff,
-        1124px 349px #fff,
-        307px 1567px #fff,
-        310px 1323px #fff,
-        1145px 922px #fff,
-        1196px 1922px #fff,
-        1647px 544px #fff,
-        788px 1337px #fff,
-        257px 632px #fff,
-        1413px 414px #fff,
-        590px 620px #fff,
-        582px 794px #fff,
-        1702px 1481px #fff,
-        1055px 53px #fff,
-        157px 346px #fff,
-        50px 1901px #fff,
-        1038px 1369px #fff,
-        796px 1941px #fff,
-        215px 194px #fff,
-        1567px 1538px #fff,
-        367px 800px #fff,
-        1044px 489px #fff,
-        1109px 1712px #fff,
-        524px 327px #fff,
-        525px 1252px #fff,
-        1475px 1240px #fff,
-        529px 436px #fff,
-        795px 834px #fff,
-        122px 1371px #fff,
-        79px 482px #fff,
-        520px 1249px #fff,
-        336px 1878px #fff,
-        188px 944px #fff,
-        325px 1259px #fff,
-        1491px 1942px #fff,
-        620px 1054px #fff,
-        1606px 1153px #fff,
-        1448px 502px #fff,
-        53px 1381px #fff,
-        107px 1670px #fff,
-        1380px 618px #fff,
-        967px 1557px #fff,
-        1116px 1722px #fff,
-        1174px 1044px #fff,
-        1805px 717px #fff,
-        663px 394px #fff,
-        1848px 1007px #fff,
-        389px 802px #fff,
-        49px 392px #fff,
-        1650px 852px #fff,
-        1678px 1012px #fff,
-        335px 1009px #fff,
-        1818px 1631px #fff,
-        1568px 742px #fff,
-        1162px 1991px #fff,
-        52px 1190px #fff,
-        1401px 928px #fff,
-        119px 1549px #fff,
-        537px 1529px #fff,
-        2px 1709px #fff,
-        122px 387px #fff,
-        543px 2px #fff,
-        27px 1971px #fff,
-        507px 1377px #fff,
-        1362px 1080px #fff,
-        1031px 1544px #fff,
-        1631px 1174px #fff,
-        1603px 312px #fff,
-        1626px 1422px #fff,
-        1430px 615px #fff,
-        1958px 1431px #fff,
-        1946px 1412px #fff,
-        1848px 247px #fff,
-        984px 1808px #fff,
-        1396px 225px #fff,
-        319px 717px #fff,
-        1252px 875px #fff,
-        1619px 156px #fff,
-        951px 1971px #fff,
-        386px 355px #fff,
-        1406px 1151px #fff,
-        273px 1538px #fff,
-        844px 1570px #fff,
-        947px 151px #fff,
-        1363px 525px #fff,
-        209px 307px #fff,
-        1923px 1718px #fff,
-        993px 1741px #fff,
-        1513px 353px #fff,
-        1353px 61px #fff,
-        664px 352px #fff,
-        1382px 359px #fff,
-        1487px 1707px #fff,
-        657px 1045px #fff,
-        1107px 490px #fff,
-        1834px 1176px #fff,
-        837px 1438px #fff,
-        1947px 448px #fff,
-        1196px 333px #fff,
-        151px 555px #fff,
-        18px 992px #fff,
-        458px 748px #fff,
-        1801px 890px #fff,
-        1093px 1012px #fff,
-        315px 1101px #fff,
-        194px 323px #fff,
-        754px 292px #fff,
-        1737px 7px #fff,
-        40px 840px #fff,
-        1170px 805px #fff,
-        176px 1753px #fff,
-        805px 1148px #fff,
-        1578px 1271px #fff,
-        367px 1494px #fff,
-        363px 1111px #fff,
-        1955px 243px #fff,
-        1451px 1093px #fff,
-        375px 617px #fff,
-        1223px 720px #fff,
-        1178px 13px #fff,
-        1456px 865px #fff,
-        1440px 49px #fff,
-        186px 1569px #fff,
-        320px 1853px #fff,
-        300px 539px #fff,
-        1559px 509px #fff,
-        1985px 1108px #fff,
-        1588px 828px #fff,
-        525px 1432px #fff,
-        831px 363px #fff,
-        141px 281px #fff,
-        1319px 402px #fff,
-        40px 456px #fff,
-        1955px 478px #fff,
-        1758px 818px #fff,
-        1924px 688px #fff,
-        1030px 953px #fff,
-        1982px 210px #fff,
-        917px 1401px #fff,
-        1051px 1837px #fff,
-        1045px 463px #fff,
-        1744px 573px #fff,
-        529px 1530px #fff,
-        542px 469px #fff,
-        1982px 324px #fff,
-        1902px 1422px #fff,
-        1968px 782px #fff,
-        1666px 1561px #fff,
-        955px 304px #fff,
-        323px 778px #fff,
-        272px 443px #fff,
-        485px 581px #fff,
-        1353px 1058px #fff,
-        1257px 131px #fff,
-        434px 98px #fff,
-        1587px 1953px #fff,
-        1749px 68px #fff,
-        1984px 839px #fff,
-        1518px 183px #fff,
-        1071px 855px #fff,
-        1662px 1994px #fff,
-        1111px 106px #fff,
-        1954px 838px #fff;
-      animation: animStar 70s linear infinite;
-      z-index: 0;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
       pointer-events: none;
-    }
-    #stars:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 1px;
-      height: 1px;
-      background: transparent;
-      box-shadow:
-        501px 811px #fff,
-        1450px 1324px #fff,
-        1093px 1780px #fff,
-        1469px 678px #fff,
-        904px 741px #fff,
-        1160px 781px #fff,
-        1841px 1962px #fff,
-        1630px 1667px #fff,
-        1788px 676px #fff,
-        367px 1734px #fff,
-        1343px 156px #fff,
-        1283px 1142px #fff,
-        1062px 378px #fff,
-        1395px 467px #fff,
-        1017px 1891px #fff,
-        137px 1114px #fff,
-        1767px 1403px #fff,
-        1543px 11px #fff,
-        1078px 181px #fff,
-        1189px 1574px #fff,
-        1697px 1551px #fff,
-        439px 472px #fff,
-        1491px 677px #fff,
-        1364px 599px #fff,
-        34px 382px #fff,
-        1221px 1584px #fff,
-        1266px 1499px #fff,
-        169px 1907px #fff,
-        1219px 1125px #fff,
-        659px 18px #fff,
-        1731px 1959px #fff,
-        332px 1216px #fff,
-        1913px 788px #fff,
-        80px 712px #fff,
-        326px 1605px #fff,
-        574px 1502px #fff,
-        473px 1653px #fff,
-        404px 975px #fff,
-        322px 1797px #fff,
-        425px 1321px #fff,
-        1121px 1797px #fff,
-        731px 647px #fff,
-        891px 1584px #fff,
-        1523px 109px #fff,
-        1379px 244px #fff,
-        865px 1064px #fff,
-        493px 956px #fff,
-        624px 1380px #fff,
-        440px 619px #fff,
-        1630px 767px #fff,
-        955px 1196px #fff,
-        62px 729px #fff,
-        126px 946px #fff,
-        1256px 896px #fff,
-        1444px 256px #fff,
-        661px 1628px #fff,
-        1078px 1716px #fff,
-        300px 737px #fff,
-        1734px 413px #fff,
-        1296px 129px #fff,
-        1771px 1678px #fff,
-        977px 1764px #fff,
-        1879px 549px #fff,
-        665px 1531px #fff,
-        89px 701px #fff,
-        1084px 1183px #fff,
-        1597px 1576px #fff,
-        1354px 1774px #fff,
-        554px 1471px #fff,
-        1469px 287px #fff,
-        887px 106px #fff,
-        1962px 766px #fff,
-        638px 805px #fff,
-        1651px 741px #fff,
-        1517px 1826px #fff,
-        24px 1152px #fff,
-        507px 558px #fff,
-        1262px 652px #fff,
-        246px 1048px #fff,
-        1077px 421px #fff,
-        1866px 1847px #fff,
-        1986px 1561px #fff,
-        704px 632px #fff,
-        1991px 1875px #fff,
-        1227px 395px #fff,
-        45px 1116px #fff,
-        247px 786px #fff,
-        890px 607px #fff,
-        787px 1235px #fff,
-        557px 524px #fff,
-        1582px 1285px #fff,
-        1725px 1366px #fff,
-        952px 747px #fff,
-        251px 458px #fff,
-        1500px 1250px #fff,
-        1999px 1734px #fff,
-        1336px 1955px #fff,
-        1705px 1464px #fff,
-        728px 697px #fff,
-        594px 510px #fff,
-        1345px 1990px #fff,
-        1919px 1803px #fff,
-        1117px 966px #fff,
-        1629px 97px #fff,
-        1046px 1196px #fff,
-        810px 1092px #fff,
-        722px 976px #fff,
-        406px 18px #fff,
-        1665px 1860px #fff,
-        1758px 1628px #fff,
-        1183px 463px #fff,
-        564px 239px #fff,
-        13px 1767px #fff,
-        1482px 1472px #fff,
-        1700px 347px #fff,
-        1362px 244px #fff,
-        1141px 1708px #fff,
-        22px 885px #fff,
-        374px 1309px #fff,
-        1034px 1037px #fff,
-        1725px 1086px #fff,
-        1343px 1921px #fff,
-        596px 903px #fff,
-        1061px 478px #fff,
-        18px 1409px #fff,
-        729px 1364px #fff,
-        264px 911px #fff,
-        677px 1442px #fff,
-        123px 33px #fff,
-        1303px 646px #fff,
-        1945px 792px #fff,
-        1305px 938px #fff,
-        918px 1536px #fff,
-        620px 948px #fff,
-        183px 646px #fff,
-        695px 687px #fff,
-        881px 272px #fff,
-        1521px 1212px #fff,
-        1423px 1022px #fff,
-        1545px 1271px #fff,
-        1393px 348px #fff,
-        685px 1910px #fff,
-        1446px 856px #fff,
-        73px 1201px #fff,
-        736px 999px #fff,
-        673px 796px #fff,
-        469px 850px #fff,
-        1912px 142px #fff,
-        1278px 664px #fff,
-        184px 1990px #fff,
-        1173px 1312px #fff,
-        782px 1879px #fff,
-        323px 1035px #fff,
-        611px 908px #fff,
-        565px 1449px #fff,
-        748px 1713px #fff,
-        1047px 490px #fff,
-        1040px 1872px #fff,
-        1818px 1659px #fff,
-        1806px 1327px #fff,
-        386px 575px #fff,
-        1550px 463px #fff,
-        148px 687px #fff,
-        651px 1683px #fff,
-        1588px 1194px #fff,
-        1831px 2px #fff,
-        581px 876px #fff,
-        1396px 1743px #fff,
-        1212px 1810px #fff,
-        421px 1920px #fff,
-        658px 1461px #fff,
-        1859px 1809px #fff,
-        1456px 388px #fff,
-        186px 1627px #fff,
-        1528px 1145px #fff,
-        171px 97px #fff,
-        674px 1072px #fff,
-        676px 1052px #fff,
-        1165px 1131px #fff,
-        1088px 781px #fff,
-        1231px 948px #fff,
-        330px 257px #fff,
-        426px 1046px #fff,
-        549px 652px #fff,
-        1338px 74px #fff,
-        1749px 364px #fff,
-        931px 369px #fff,
-        383px 1428px #fff,
-        1558px 389px #fff,
-        927px 133px #fff,
-        234px 1888px #fff,
-        1785px 1617px #fff,
-        556px 643px #fff,
-        401px 275px #fff,
-        406px 1644px #fff,
-        1253px 1852px #fff,
-        1599px 883px #fff,
-        744px 1721px #fff,
-        524px 1297px #fff,
-        1226px 1177px #fff,
-        1679px 55px #fff,
-        874px 1811px #fff,
-        838px 790px #fff,
-        1241px 430px #fff,
-        1676px 652px #fff,
-        1191px 568px #fff,
-        53px 1990px #fff,
-        1163px 237px #fff,
-        61px 223px #fff,
-        592px 456px #fff,
-        1844px 271px #fff,
-        1324px 1488px #fff,
-        1373px 717px #fff,
-        1822px 709px #fff,
-        1464px 941px #fff,
-        1445px 1118px #fff,
-        991px 1414px #fff,
-        1964px 1076px #fff,
-        108px 172px #fff,
-        641px 1722px #fff,
-        1539px 427px #fff,
-        1697px 45px #fff,
-        1301px 1353px #fff,
-        1060px 329px #fff,
-        967px 1396px #fff,
-        493px 301px #fff,
-        1228px 1406px #fff,
-        1211px 1653px #fff,
-        444px 1822px #fff,
-        1746px 353px #fff,
-        1449px 381px #fff,
-        671px 887px #fff,
-        650px 138px #fff,
-        30px 1839px #fff,
-        1094px 1405px #fff,
-        273px 796px #fff,
-        1618px 1964px #fff,
-        1045px 1849px #fff,
-        1472px 1155px #fff,
-        1529px 1312px #fff,
-        728px 448px #fff,
-        44px 1908px #fff,
-        691px 818px #fff,
-        254px 293px #fff,
-        1981px 1133px #fff,
-        1307px 375px #fff,
-        196px 316px #fff,
-        1241px 1975px #fff,
-        1138px 1706px #fff,
-        1769px 463px #fff,
-        1768px 1428px #fff,
-        1730px 590px #fff,
-        1780px 523px #fff,
-        1862px 1526px #fff,
-        1613px 909px #fff,
-        1266px 1781px #fff,
-        470px 352px #fff,
-        699px 1682px #fff,
-        1002px 614px #fff,
-        1209px 133px #fff,
-        1842px 518px #fff,
-        1422px 1836px #fff,
-        1720px 1901px #fff,
-        470px 1788px #fff,
-        1355px 1387px #fff,
-        146px 1162px #fff,
-        933px 80px #fff,
-        681px 1063px #fff,
-        313px 1341px #fff,
-        740px 1498px #fff,
-        168px 1014px #fff,
-        345px 1355px #fff,
-        1498px 1562px #fff,
-        1626px 1358px #fff,
-        890px 403px #fff,
-        663px 562px #fff,
-        1481px 168px #fff,
-        22px 719px #fff,
-        774px 1041px #fff,
-        1899px 829px #fff,
-        430px 158px #fff,
-        430px 361px #fff,
-        1592px 1334px #fff,
-        224px 323px #fff,
-        1639px 1131px #fff,
-        7px 271px #fff,
-        1646px 1514px #fff,
-        1605px 1444px #fff,
-        1820px 1665px #fff,
-        1549px 1641px #fff,
-        1609px 1377px #fff,
-        486px 1098px #fff,
-        229px 613px #fff,
-        542px 1694px #fff,
-        318px 256px #fff,
-        1861px 918px #fff,
-        889px 892px #fff,
-        442px 1524px #fff,
-        19px 422px #fff,
-        1935px 1908px #fff,
-        828px 109px #fff,
-        862px 1248px #fff,
-        1275px 560px #fff,
-        906px 63px #fff,
-        337px 1605px #fff,
-        1691px 918px #fff,
-        1414px 679px #fff,
-        1726px 749px #fff,
-        1540px 1149px #fff,
-        1337px 1466px #fff,
-        446px 430px #fff,
-        676px 1616px #fff,
-        840px 326px #fff,
-        976px 977px #fff,
-        1840px 642px #fff,
-        1273px 804px #fff,
-        1071px 928px #fff,
-        1292px 1675px #fff,
-        29px 1148px #fff,
-        1585px 135px #fff,
-        1007px 563px #fff,
-        1035px 78px #fff,
-        1174px 574px #fff,
-        120px 1304px #fff,
-        845px 1292px #fff,
-        861px 540px #fff,
-        234px 232px #fff,
-        1940px 1367px #fff,
-        759px 639px #fff,
-        1775px 1381px #fff,
-        906px 372px #fff,
-        1104px 1165px #fff,
-        1524px 911px #fff,
-        1882px 330px #fff,
-        1389px 700px #fff,
-        300px 1629px #fff,
-        220px 1614px #fff,
-        563px 140px #fff,
-        1611px 1586px #fff,
-        793px 1316px #fff,
-        325px 1070px #fff,
-        1722px 1462px #fff,
-        1406px 1120px #fff,
-        1169px 1768px #fff,
-        1956px 1053px #fff,
-        959px 1587px #fff,
-        585px 1566px #fff,
-        370px 204px #fff,
-        1606px 1416px #fff,
-        443px 1606px #fff,
-        1499px 1102px #fff,
-        1943px 105px #fff,
-        1121px 1594px #fff,
-        1512px 32px #fff,
-        871px 1425px #fff,
-        433px 100px #fff,
-        294px 1471px #fff,
-        1688px 1755px #fff,
-        1666px 591px #fff,
-        1034px 300px #fff,
-        734px 1178px #fff,
-        1342px 313px #fff,
-        1616px 1590px #fff,
-        1763px 1472px #fff,
-        632px 1935px #fff,
-        1708px 872px #fff,
-        1871px 915px #fff,
-        1829px 1020px #fff,
-        1599px 578px #fff,
-        42px 585px #fff,
-        1163px 1382px #fff,
-        1744px 1272px #fff,
-        984px 1426px #fff,
-        1786px 1584px #fff,
-        1813px 379px #fff,
-        1867px 1127px #fff,
-        97px 567px #fff,
-        626px 988px #fff,
-        1178px 79px #fff,
-        1703px 211px #fff,
-        961px 1785px #fff,
-        110px 975px #fff,
-        953px 1941px #fff,
-        1027px 1790px #fff,
-        1665px 107px #fff,
-        11px 964px #fff,
-        1718px 1147px #fff,
-        21px 1728px #fff,
-        1358px 1922px #fff,
-        872px 65px #fff,
-        1191px 1635px #fff,
-        762px 681px #fff,
-        1519px 1033px #fff,
-        906px 566px #fff,
-        1074px 657px #fff,
-        1093px 415px #fff,
-        51px 198px #fff,
-        1075px 1418px #fff,
-        1547px 1070px #fff,
-        225px 920px #fff,
-        850px 1974px #fff,
-        981px 595px #fff,
-        1425px 131px #fff,
-        460px 917px #fff,
-        56px 495px #fff,
-        714px 428px #fff,
-        920px 493px #fff,
-        470px 1521px #fff,
-        532px 821px #fff,
-        1905px 71px #fff,
-        883px 1501px #fff,
-        294px 196px #fff,
-        381px 1999px #fff,
-        332px 793px #fff,
-        1246px 408px #fff,
-        233px 149px #fff,
-        315px 231px #fff,
-        1594px 1302px #fff,
-        696px 1585px #fff,
-        791px 136px #fff,
-        479px 199px #fff,
-        1627px 1413px #fff,
-        1824px 924px #fff,
-        1631px 342px #fff,
-        1251px 1151px #fff,
-        284px 1781px #fff,
-        497px 1052px #fff,
-        204px 1161px #fff,
-        646px 1499px #fff,
-        1762px 558px #fff,
-        854px 1833px #fff,
-        883px 945px #fff,
-        44px 982px #fff,
-        1101px 834px #fff,
-        515px 1748px #fff,
-        1578px 1435px #fff,
-        819px 1258px #fff,
-        776px 670px #fff,
-        115px 385px #fff,
-        1478px 434px #fff,
-        885px 20px #fff,
-        192px 1513px #fff,
-        78px 1129px #fff,
-        1774px 1105px #fff,
-        955px 1149px #fff,
-        1817px 1929px #fff,
-        1106px 1832px #fff,
-        1107px 1997px #fff,
-        94px 23px #fff,
-        243px 982px #fff,
-        43px 1972px #fff,
-        1798px 673px #fff,
-        1131px 1589px #fff,
-        841px 14px #fff,
-        826px 345px #fff,
-        687px 56px #fff,
-        1084px 32px #fff,
-        1887px 1878px #fff,
-        153px 526px #fff,
-        1828px 253px #fff,
-        1947px 1105px #fff,
-        886px 700px #fff,
-        1307px 1723px #fff,
-        1274px 651px #fff,
-        1530px 837px #fff,
-        1699px 1637px #fff,
-        1703px 1331px #fff,
-        1929px 1557px #fff,
-        1763px 737px #fff,
-        1118px 1680px #fff,
-        1545px 692px #fff,
-        1462px 1092px #fff,
-        208px 1667px #fff,
-        1393px 859px #fff,
-        186px 1794px #fff,
-        351px 1199px #fff,
-        642px 1995px #fff,
-        1061px 1726px #fff,
-        1708px 115px #fff,
-        1233px 1305px #fff,
-        637px 1786px #fff,
-        1730px 603px #fff,
-        75px 1240px #fff,
-        1704px 1326px #fff,
-        584px 346px #fff,
-        438px 1554px #fff,
-        561px 513px #fff,
-        1382px 225px #fff,
-        467px 1674px #fff,
-        1403px 815px #fff,
-        1546px 1835px #fff,
-        127px 1119px #fff,
-        276px 591px #fff,
-        688px 1458px #fff,
-        765px 646px #fff,
-        474px 984px #fff,
-        171px 361px #fff,
-        94px 1480px #fff,
-        1962px 1666px #fff,
-        909px 1037px #fff,
-        1725px 222px #fff,
-        253px 1355px #fff,
-        1892px 1901px #fff,
-        275px 1847px #fff,
-        28px 1184px #fff,
-        1725px 1382px #fff,
-        882px 647px #fff,
-        1935px 1046px #fff,
-        10px 344px #fff,
-        292px 1328px #fff,
-        127px 1352px #fff,
-        752px 929px #fff,
-        1589px 384px #fff,
-        284px 1829px #fff,
-        381px 820px #fff,
-        1229px 1125px #fff,
-        777px 429px #fff,
-        1811px 1499px #fff,
-        1573px 287px #fff,
-        295px 756px #fff,
-        389px 616px #fff,
-        781px 41px #fff,
-        1092px 333px #fff,
-        794px 1588px #fff,
-        386px 1847px #fff,
-        1802px 710px #fff,
-        662px 60px #fff,
-        640px 264px #fff,
-        463px 746px #fff,
-        1859px 799px #fff,
-        763px 37px #fff,
-        639px 396px #fff,
-        357px 1071px #fff,
-        1190px 1430px #fff,
-        1814px 257px #fff,
-        1382px 235px #fff,
-        606px 1304px #fff,
-        1939px 1470px #fff,
-        1124px 349px #fff,
-        307px 1567px #fff,
-        310px 1323px #fff,
-        1145px 922px #fff,
-        1196px 1922px #fff,
-        1647px 544px #fff,
-        788px 1337px #fff,
-        257px 632px #fff,
-        1413px 414px #fff,
-        590px 620px #fff,
-        582px 794px #fff,
-        1702px 1481px #fff,
-        1055px 53px #fff,
-        157px 346px #fff,
-        50px 1901px #fff,
-        1038px 1369px #fff,
-        796px 1941px #fff,
-        215px 194px #fff,
-        1567px 1538px #fff,
-        367px 800px #fff,
-        1044px 489px #fff,
-        1109px 1712px #fff,
-        524px 327px #fff,
-        525px 1252px #fff,
-        1475px 1240px #fff,
-        529px 436px #fff,
-        795px 834px #fff,
-        122px 1371px #fff,
-        79px 482px #fff,
-        520px 1249px #fff,
-        336px 1878px #fff,
-        188px 944px #fff,
-        325px 1259px #fff,
-        1491px 1942px #fff,
-        620px 1054px #fff,
-        1606px 1153px #fff,
-        1448px 502px #fff,
-        53px 1381px #fff,
-        107px 1670px #fff,
-        1380px 618px #fff,
-        967px 1557px #fff,
-        1116px 1722px #fff,
-        1174px 1044px #fff,
-        1805px 717px #fff,
-        663px 394px #fff,
-        1848px 1007px #fff,
-        389px 802px #fff,
-        49px 392px #fff,
-        1650px 852px #fff,
-        1678px 1012px #fff,
-        335px 1009px #fff,
-        1818px 1631px #fff,
-        1568px 742px #fff,
-        1162px 1991px #fff,
-        52px 1190px #fff,
-        1401px 928px #fff,
-        119px 1549px #fff,
-        537px 1529px #fff,
-        2px 1709px #fff,
-        122px 387px #fff,
-        543px 2px #fff,
-        27px 1971px #fff,
-        507px 1377px #fff,
-        1362px 1080px #fff,
-        1031px 1544px #fff,
-        1631px 1174px #fff,
-        1603px 312px #fff,
-        1626px 1422px #fff,
-        1430px 615px #fff,
-        1958px 1431px #fff,
-        1946px 1412px #fff,
-        1848px 247px #fff,
-        984px 1808px #fff,
-        1396px 225px #fff,
-        319px 717px #fff,
-        1252px 875px #fff,
-        1619px 156px #fff,
-        951px 1971px #fff,
-        386px 355px #fff,
-        1406px 1151px #fff,
-        273px 1538px #fff,
-        844px 1570px #fff,
-        947px 151px #fff,
-        1363px 525px #fff,
-        209px 307px #fff,
-        1923px 1718px #fff,
-        993px 1741px #fff,
-        1513px 353px #fff,
-        1353px 61px #fff,
-        664px 352px #fff,
-        1382px 359px #fff,
-        1487px 1707px #fff,
-        657px 1045px #fff,
-        1107px 490px #fff,
-        1834px 1176px #fff,
-        837px 1438px #fff,
-        1947px 448px #fff,
-        1196px 333px #fff,
-        151px 555px #fff,
-        18px 992px #fff,
-        458px 748px #fff,
-        1801px 890px #fff,
-        1093px 1012px #fff,
-        315px 1101px #fff,
-        194px 323px #fff,
-        754px 292px #fff,
-        1737px 7px #fff,
-        40px 840px #fff,
-        1170px 805px #fff,
-        176px 1753px #fff,
-        805px 1148px #fff,
-        1578px 1271px #fff,
-        367px 1494px #fff,
-        363px 1111px #fff,
-        1955px 243px #fff,
-        1451px 1093px #fff,
-        375px 617px #fff,
-        1223px 720px #fff,
-        1178px 13px #fff,
-        1456px 865px #fff,
-        1440px 49px #fff,
-        186px 1569px #fff,
-        320px 1853px #fff,
-        300px 539px #fff,
-        1559px 509px #fff,
-        1985px 1108px #fff,
-        1588px 828px #fff,
-        525px 1432px #fff,
-        831px 363px #fff,
-        141px 281px #fff,
-        1319px 402px #fff,
-        40px 456px #fff,
-        1955px 478px #fff,
-        1758px 818px #fff,
-        1924px 688px #fff,
-        1030px 953px #fff,
-        1982px 210px #fff,
-        917px 1401px #fff,
-        1051px 1837px #fff,
-        1045px 463px #fff,
-        1744px 573px #fff,
-        529px 1530px #fff,
-        542px 469px #fff,
-        1982px 324px #fff,
-        1902px 1422px #fff,
-        1968px 782px #fff,
-        1666px 1561px #fff,
-        955px 304px #fff,
-        323px 778px #fff,
-        272px 443px #fff,
-        485px 581px #fff,
-        1353px 1058px #fff,
-        1257px 131px #fff,
-        434px 98px #fff,
-        1587px 1953px #fff,
-        1749px 68px #fff,
-        1984px 839px #fff,
-        1518px 183px #fff,
-        1071px 855px #fff,
-        1662px 1994px #fff,
-        1111px 106px #fff,
-        1954px 838px #fff;
+      transition: opacity 0.3s ease;
     }
 
-    /* ── Layer 2 — medium 2px stars (slower, 100s) ─────────────── */
-    #stars2 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 1.5px;
-      height: 1.5px;
-      background: transparent;
-      box-shadow:
-        1925px 1320px #fff,
-        693px 1778px #fff,
-        1016px 711px #fff,
-        1171px 563px #fff,
-        661px 1919px #fff,
-        1610px 44px #fff,
-        1275px 140px #fff,
-        1208px 1802px #fff,
-        1473px 1587px #fff,
-        11px 1117px #fff,
-        853px 1757px #fff,
-        1149px 937px #fff,
-        1353px 428px #fff,
-        270px 279px #fff,
-        258px 1404px #fff,
-        417px 1188px #fff,
-        286px 561px #fff,
-        393px 1765px #fff,
-        147px 881px #fff,
-        666px 1097px #fff,
-        1425px 1278px #fff,
-        806px 156px #fff,
-        1252px 561px #fff,
-        218px 52px #fff,
-        1371px 1980px #fff,
-        171px 745px #fff,
-        1424px 89px #fff,
-        137px 244px #fff,
-        939px 1922px #fff,
-        137px 1080px #fff,
-        1757px 50px #fff,
-        904px 536px #fff,
-        1938px 1001px #fff,
-        1172px 440px #fff,
-        72px 1475px #fff,
-        102px 121px #fff,
-        804px 1671px #fff,
-        1314px 270px #fff,
-        440px 1341px #fff,
-        1216px 511px #fff,
-        1061px 1523px #fff,
-        97px 274px #fff,
-        704px 1318px #fff,
-        52px 1872px #fff,
-        1962px 296px #fff,
-        111px 289px #fff,
-        1157px 1236px #fff,
-        1347px 1451px #fff,
-        820px 286px #fff,
-        1389px 1169px #fff,
-        644px 841px #fff,
-        1286px 522px #fff,
-        955px 659px #fff,
-        428px 1805px #fff,
-        237px 557px #fff,
-        1689px 1058px #fff,
-        636px 1882px #fff,
-        1349px 1664px #fff,
-        1548px 432px #fff,
-        1841px 504px #fff,
-        302px 252px #fff,
-        827px 1765px #fff,
-        620px 123px #fff,
-        207px 748px #fff,
-        1454px 1234px #fff,
-        1967px 1790px #fff,
-        542px 33px #fff,
-        742px 1214px #fff,
-        255px 1402px #fff,
-        74px 1772px #fff,
-        699px 475px #fff,
-        980px 1253px #fff,
-        534px 1676px #fff,
-        909px 202px #fff,
-        1498px 1251px #fff,
-        1796px 120px #fff,
-        1409px 1263px #fff,
-        1627px 995px #fff,
-        969px 710px #fff,
-        1674px 676px #fff,
-        1832px 759px #fff,
-        1623px 563px #fff,
-        251px 1790px #fff,
-        96px 1688px #fff,
-        886px 239px #fff,
-        778px 150px #fff,
-        1767px 430px #fff,
-        765px 1259px #fff,
-        1189px 877px #fff,
-        444px 1629px #fff,
-        1560px 324px #fff,
-        1952px 1097px #fff,
-        712px 1173px #fff,
-        541px 911px #fff,
-        827px 1420px #fff,
-        1233px 285px #fff,
-        784px 546px #fff,
-        645px 285px #fff,
-        1273px 1255px #fff,
-        1821px 174px #fff,
-        221px 1795px #fff,
-        1004px 456px #fff,
-        1298px 941px #fff,
-        274px 387px #fff,
-        174px 376px #fff,
-        1491px 258px #fff,
-        1489px 1946px #fff,
-        1134px 1382px #fff,
-        1289px 1145px #fff,
-        464px 358px #fff,
-        1249px 1842px #fff,
-        1665px 831px #fff,
-        1982px 84px #fff,
-        541px 774px #fff,
-        1994px 523px #fff,
-        762px 1644px #fff,
-        1730px 867px #fff,
-        1951px 1287px #fff,
-        911px 1691px #fff,
-        1454px 725px #fff,
-        1287px 1940px #fff,
-        70px 564px #fff,
-        1980px 638px #fff,
-        1674px 1774px #fff,
-        1720px 116px #fff,
-        1747px 182px #fff,
-        1040px 450px #fff,
-        1795px 375px #fff,
-        857px 1471px #fff,
-        1326px 1730px #fff,
-        915px 274px #fff,
-        1224px 358px #fff,
-        1808px 60px #fff,
-        43px 1870px #fff,
-        1810px 1536px #fff,
-        1564px 1719px #fff,
-        731px 1388px #fff,
-        1953px 1967px #fff,
-        1744px 1119px #fff,
-        794px 1384px #fff,
-        959px 714px #fff,
-        18px 1932px #fff,
-        1358px 1437px #fff,
-        355px 939px #fff,
-        1355px 1648px #fff,
-        608px 719px #fff,
-        383px 758px #fff,
-        1164px 1681px #fff,
-        1045px 253px #fff,
-        424px 1279px #fff,
-        1899px 359px #fff,
-        379px 488px #fff,
-        214px 465px #fff,
-        179px 905px #fff,
-        830px 1993px #fff,
-        448px 1077px #fff,
-        1880px 1354px #fff,
-        1973px 347px #fff,
-        745px 1025px #fff,
-        788px 1007px #fff,
-        1377px 883px #fff,
-        6px 290px #fff,
-        1312px 407px #fff,
-        1398px 622px #fff,
-        1405px 339px #fff,
-        1198px 1709px #fff,
-        988px 1226px #fff,
-        87px 1459px #fff,
-        1113px 1698px #fff,
-        997px 732px #fff,
-        708px 331px #fff,
-        1876px 1112px #fff,
-        1729px 1797px #fff,
-        719px 703px #fff,
-        1295px 522px #fff,
-        758px 1061px #fff,
-        1309px 1014px #fff,
-        1327px 1365px #fff,
-        854px 1317px #fff,
-        531px 1001px #fff,
-        1751px 1040px #fff,
-        1354px 190px #fff,
-        800px 1538px #fff,
-        88px 1455px #fff,
-        668px 39px #fff,
-        1379px 41px #fff,
-        892px 524px #fff,
-        54px 649px #fff,
-        1289px 730px #fff,
-        727px 488px #fff,
-        181px 842px #fff,
-        1230px 64px #fff,
-        3px 857px #fff,
-        292px 1201px #fff,
-        1343px 673px #fff,
-        1096px 1412px #fff,
-        1520px 292px #fff,
-        104px 1683px #fff,
-        934px 1387px #fff,
-        314px 739px #fff;
-      animation: animStar 130s linear infinite;
-      z-index: 0;
+    .mac-terminal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mac-window {
+      width: 100%;
+      max-width: 800px;
+      height: 60vh;
+      min-height: 400px;
+      background: rgba(30, 30, 30, 0.85);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mac-terminal-overlay.open .mac-window {
+      transform: translateY(0) scale(1);
+    }
+
+    .mac-titlebar {
+      height: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+    }
+
+    .mac-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mac-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .mac-btn.close { background: #ff5f56; }
+    .mac-btn.minimize { background: #ffbd2e; }
+    .mac-btn.maximize { background: #27c93f; }
+
+    .mac-title {
+      position: absolute;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #999;
       pointer-events: none;
-    }
-    #stars2:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 2px;
-      height: 2px;
-      background: transparent;
-      box-shadow:
-        1925px 1320px #fff,
-        693px 1778px #fff,
-        1016px 711px #fff,
-        1171px 563px #fff,
-        661px 1919px #fff,
-        1610px 44px #fff,
-        1275px 140px #fff,
-        1208px 1802px #fff,
-        1473px 1587px #fff,
-        11px 1117px #fff,
-        853px 1757px #fff,
-        1149px 937px #fff,
-        1353px 428px #fff,
-        270px 279px #fff,
-        258px 1404px #fff,
-        417px 1188px #fff,
-        286px 561px #fff,
-        393px 1765px #fff,
-        147px 881px #fff,
-        666px 1097px #fff,
-        1425px 1278px #fff,
-        806px 156px #fff,
-        1252px 561px #fff,
-        218px 52px #fff,
-        1371px 1980px #fff,
-        171px 745px #fff,
-        1424px 89px #fff,
-        137px 244px #fff,
-        939px 1922px #fff,
-        137px 1080px #fff,
-        1757px 50px #fff,
-        904px 536px #fff,
-        1938px 1001px #fff,
-        1172px 440px #fff,
-        72px 1475px #fff,
-        102px 121px #fff,
-        804px 1671px #fff,
-        1314px 270px #fff,
-        440px 1341px #fff,
-        1216px 511px #fff,
-        1061px 1523px #fff,
-        97px 274px #fff,
-        704px 1318px #fff,
-        52px 1872px #fff,
-        1962px 296px #fff,
-        111px 289px #fff,
-        1157px 1236px #fff,
-        1347px 1451px #fff,
-        820px 286px #fff,
-        1389px 1169px #fff,
-        644px 841px #fff,
-        1286px 522px #fff,
-        955px 659px #fff,
-        428px 1805px #fff,
-        237px 557px #fff,
-        1689px 1058px #fff,
-        636px 1882px #fff,
-        1349px 1664px #fff,
-        1548px 432px #fff,
-        1841px 504px #fff,
-        302px 252px #fff,
-        827px 1765px #fff,
-        620px 123px #fff,
-        207px 748px #fff,
-        1454px 1234px #fff,
-        1967px 1790px #fff,
-        542px 33px #fff,
-        742px 1214px #fff,
-        255px 1402px #fff,
-        74px 1772px #fff,
-        699px 475px #fff,
-        980px 1253px #fff,
-        534px 1676px #fff,
-        909px 202px #fff,
-        1498px 1251px #fff,
-        1796px 120px #fff,
-        1409px 1263px #fff,
-        1627px 995px #fff,
-        969px 710px #fff,
-        1674px 676px #fff,
-        1832px 759px #fff,
-        1623px 563px #fff,
-        251px 1790px #fff,
-        96px 1688px #fff,
-        886px 239px #fff,
-        778px 150px #fff,
-        1767px 430px #fff,
-        765px 1259px #fff,
-        1189px 877px #fff,
-        444px 1629px #fff,
-        1560px 324px #fff,
-        1952px 1097px #fff,
-        712px 1173px #fff,
-        541px 911px #fff,
-        827px 1420px #fff,
-        1233px 285px #fff,
-        784px 546px #fff,
-        645px 285px #fff,
-        1273px 1255px #fff,
-        1821px 174px #fff,
-        221px 1795px #fff,
-        1004px 456px #fff,
-        1298px 941px #fff,
-        274px 387px #fff,
-        174px 376px #fff,
-        1491px 258px #fff,
-        1489px 1946px #fff,
-        1134px 1382px #fff,
-        1289px 1145px #fff,
-        464px 358px #fff,
-        1249px 1842px #fff,
-        1665px 831px #fff,
-        1982px 84px #fff,
-        541px 774px #fff,
-        1994px 523px #fff,
-        762px 1644px #fff,
-        1730px 867px #fff,
-        1951px 1287px #fff,
-        911px 1691px #fff,
-        1454px 725px #fff,
-        1287px 1940px #fff,
-        70px 564px #fff,
-        1980px 638px #fff,
-        1674px 1774px #fff,
-        1720px 116px #fff,
-        1747px 182px #fff,
-        1040px 450px #fff,
-        1795px 375px #fff,
-        857px 1471px #fff,
-        1326px 1730px #fff,
-        915px 274px #fff,
-        1224px 358px #fff,
-        1808px 60px #fff,
-        43px 1870px #fff,
-        1810px 1536px #fff,
-        1564px 1719px #fff,
-        731px 1388px #fff,
-        1953px 1967px #fff,
-        1744px 1119px #fff,
-        794px 1384px #fff,
-        959px 714px #fff,
-        18px 1932px #fff,
-        1358px 1437px #fff,
-        355px 939px #fff,
-        1355px 1648px #fff,
-        608px 719px #fff,
-        383px 758px #fff,
-        1164px 1681px #fff,
-        1045px 253px #fff,
-        424px 1279px #fff,
-        1899px 359px #fff,
-        379px 488px #fff,
-        214px 465px #fff,
-        179px 905px #fff,
-        830px 1993px #fff,
-        448px 1077px #fff,
-        1880px 1354px #fff,
-        1973px 347px #fff,
-        745px 1025px #fff,
-        788px 1007px #fff,
-        1377px 883px #fff,
-        6px 290px #fff,
-        1312px 407px #fff,
-        1398px 622px #fff,
-        1405px 339px #fff,
-        1198px 1709px #fff,
-        988px 1226px #fff,
-        87px 1459px #fff,
-        1113px 1698px #fff,
-        997px 732px #fff,
-        708px 331px #fff,
-        1876px 1112px #fff,
-        1729px 1797px #fff,
-        719px 703px #fff,
-        1295px 522px #fff,
-        758px 1061px #fff,
-        1309px 1014px #fff,
-        1327px 1365px #fff,
-        854px 1317px #fff,
-        531px 1001px #fff,
-        1751px 1040px #fff,
-        1354px 190px #fff,
-        800px 1538px #fff,
-        88px 1455px #fff,
-        668px 39px #fff,
-        1379px 41px #fff,
-        892px 524px #fff,
-        54px 649px #fff,
-        1289px 730px #fff,
-        727px 488px #fff,
-        181px 842px #fff,
-        1230px 64px #fff,
-        3px 857px #fff,
-        292px 1201px #fff,
-        1343px 673px #fff,
-        1096px 1412px #fff,
-        1520px 292px #fff,
-        104px 1683px #fff,
-        934px 1387px #fff,
-        314px 739px #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* ── Layer 3 — large 3px stars (slowest, 150s) ─────────────── */
-    #stars3 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 2px;
-      height: 2px;
-      background: transparent;
-      box-shadow:
-        200px 981px #fff,
-        1731px 521px #fff,
-        132px 1039px #fff,
-        1888px 1547px #fff,
-        899px 1226px #fff,
-        1887px 580px #fff,
-        1548px 1092px #fff,
-        1626px 689px #fff,
-        254px 1072px #fff,
-        1684px 1211px #fff,
-        672px 1267px #fff,
-        939px 668px #fff,
-        1969px 645px #fff,
-        1126px 983px #fff,
-        457px 568px #fff,
-        476px 876px #fff,
-        829px 1896px #fff,
-        1364px 1846px #fff,
-        1507px 1120px #fff,
-        936px 1948px #fff,
-        1833px 832px #fff,
-        1424px 285px #fff,
-        1377px 1596px #fff,
-        432px 153px #fff,
-        1348px 1410px #fff,
-        1529px 954px #fff,
-        1102px 387px #fff,
-        264px 297px #fff,
-        811px 977px #fff,
-        1931px 673px #fff,
-        1734px 978px #fff,
-        1772px 1567px #fff,
-        1197px 1400px #fff,
-        764px 282px #fff,
-        1103px 822px #fff,
-        872px 1803px #fff,
-        1057px 1763px #fff,
-        52px 1299px #fff,
-        1312px 1236px #fff,
-        235px 1082px #fff,
-        299px 1086px #fff,
-        1017px 1602px #fff,
-        1950px 626px #fff,
-        1306px 132px #fff,
-        1358px 1618px #fff,
-        1873px 1718px #fff,
-        1447px 940px #fff,
-        1888px 1195px #fff,
-        1704px 1765px #fff,
-        872px 1357px #fff,
-        1555px 1120px #fff,
-        250px 1415px #fff,
-        450px 415px #fff,
-        492px 901px #fff,
-        170px 1641px #fff,
-        56px 1129px #fff,
-        627px 1514px #fff,
-        1221px 500px #fff,
-        324px 1895px #fff,
-        1397px 1775px #fff,
-        1966px 598px #fff,
-        1550px 763px #fff,
-        326px 1605px #fff,
-        261px 969px #fff,
-        890px 281px #fff,
-        736px 544px #fff,
-        589px 1262px #fff,
-        1581px 368px #fff,
-        1900px 1132px #fff,
-        1914px 585px #fff,
-        1864px 1517px #fff,
-        241px 217px #fff,
-        859px 787px #fff,
-        996px 1729px #fff,
-        741px 121px #fff,
-        418px 414px #fff,
-        142px 967px #fff,
-        387px 896px #fff,
-        703px 562px #fff,
-        968px 1136px #fff,
-        1682px 332px #fff,
-        1287px 846px #fff,
-        256px 1427px #fff,
-        1885px 432px #fff,
-        1739px 1458px #fff,
-        345px 1769px #fff,
-        1140px 1612px #fff,
-        192px 1921px #fff,
-        920px 471px #fff,
-        834px 881px #fff,
-        917px 1803px #fff,
-        466px 1266px #fff,
-        483px 1108px #fff,
-        689px 986px #fff,
-        1279px 786px #fff,
-        458px 910px #fff,
-        1250px 870px #fff,
-        785px 1654px #fff,
-        1543px 1757px #fff,
-        287px 1272px #fff;
-      animation: animStar 190s linear infinite;
-      z-index: 0;
-      pointer-events: none;
-    }
-    #stars3:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 3px;
-      height: 3px;
-      background: transparent;
-      box-shadow:
-        200px 981px #fff,
-        1731px 521px #fff,
-        132px 1039px #fff,
-        1888px 1547px #fff,
-        899px 1226px #fff,
-        1887px 580px #fff,
-        1548px 1092px #fff,
-        1626px 689px #fff,
-        254px 1072px #fff,
-        1684px 1211px #fff,
-        672px 1267px #fff,
-        939px 668px #fff,
-        1969px 645px #fff,
-        1126px 983px #fff,
-        457px 568px #fff,
-        476px 876px #fff,
-        829px 1896px #fff,
-        1364px 1846px #fff,
-        1507px 1120px #fff,
-        936px 1948px #fff,
-        1833px 832px #fff,
-        1424px 285px #fff,
-        1377px 1596px #fff,
-        432px 153px #fff,
-        1348px 1410px #fff,
-        1529px 954px #fff,
-        1102px 387px #fff,
-        264px 297px #fff,
-        811px 977px #fff,
-        1931px 673px #fff,
-        1734px 978px #fff,
-        1772px 1567px #fff,
-        1197px 1400px #fff,
-        764px 282px #fff,
-        1103px 822px #fff,
-        872px 1803px #fff,
-        1057px 1763px #fff,
-        52px 1299px #fff,
-        1312px 1236px #fff,
-        235px 1082px #fff,
-        299px 1086px #fff,
-        1017px 1602px #fff,
-        1950px 626px #fff,
-        1306px 132px #fff,
-        1358px 1618px #fff,
-        1873px 1718px #fff,
-        1447px 940px #fff,
-        1888px 1195px #fff,
-        1704px 1765px #fff,
-        872px 1357px #fff,
-        1555px 1120px #fff,
-        250px 1415px #fff,
-        450px 415px #fff,
-        492px 901px #fff,
-        170px 1641px #fff,
-        56px 1129px #fff,
-        627px 1514px #fff,
-        1221px 500px #fff,
-        324px 1895px #fff,
-        1397px 1775px #fff,
-        1966px 598px #fff,
-        1550px 763px #fff,
-        326px 1605px #fff,
-        261px 969px #fff,
-        890px 281px #fff,
-        736px 544px #fff,
-        589px 1262px #fff,
-        1581px 368px #fff,
-        1900px 1132px #fff,
-        1914px 585px #fff,
-        1864px 1517px #fff,
-        241px 217px #fff,
-        859px 787px #fff,
-        996px 1729px #fff,
-        741px 121px #fff,
-        418px 414px #fff,
-        142px 967px #fff,
-        387px 896px #fff,
-        703px 562px #fff,
-        968px 1136px #fff,
-        1682px 332px #fff,
-        1287px 846px #fff,
-        256px 1427px #fff,
-        1885px 432px #fff,
-        1739px 1458px #fff,
-        345px 1769px #fff,
-        1140px 1612px #fff,
-        192px 1921px #fff,
-        920px 471px #fff,
-        834px 881px #fff,
-        917px 1803px #fff,
-        466px 1266px #fff,
-        483px 1108px #fff,
-        689px 986px #fff,
-        1279px 786px #fff,
-        458px 910px #fff,
-        1250px 870px #fff,
-        785px 1654px #fff,
-        1543px 1757px #fff,
-        287px 1272px #fff;
+    .mac-body {
+      flex: 1;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Shared scroll keyframe — unchanged from original */
-    @keyframes animStar {
-      from { transform: translateY(0px);    }
-      to   { transform: translateY(-2000px); }
+    .mac-output {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 4px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
+    .mac-output div {
+      line-height: 1.4;
+    }
+
+    .mac-input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .mac-prompt {
+      color: #38bdf8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .mac-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      min-width: 0;
+    }
+
+    /* Terminal colours */
+    .term-green { color: #4ade80; }
+    .term-red { color: #f87171; }
+    .term-yellow { color: #facc15; }
+    .term-blue { color: #60a5fa; }
+    .term-magenta { color: #c084fc; }
   </style>
 </head>
 <body>
 
+
+
   <!-- ============================================================
-       STARFIELD LAYERS
-       Three fixed-position 1×1px elements whose box-shadows form
-       the star field. Each scrolls upward at a different speed via
-       animStar to simulate depth parallax.
-       pointer-events: none so they never block page interaction.
+       ANIMATED COLOUR BLOBS — background canvas for glass refraction
   ============================================================ -->
-  <div id="stars"  aria-hidden="true" style="opacity:0.25"></div>
-  <div id="stars2" aria-hidden="true" style="opacity:0.38"></div>
-  <div id="stars3" aria-hidden="true" style="opacity:0.50"></div>
+  <div class="blob-scene" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
 
   <!-- ============================================================
        PAGE WRAPPER
@@ -3083,44 +1157,71 @@
   <main class="page-container" role="main">
 
     <!-- =========================================================
-         PROFILE SECTION
+         THEME TOGGLE — inline on mobile, fixed on desktop via CSS
     ========================================================== -->
-    <section class="profile-section" aria-label="Profile">
+    <div class="theme-toggle-wrap">
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        aria-label="Switch to light mode"
+        title="Toggle dark / light mode"
+      >
+        <!-- Sun icon (shown in dark mode to switch to light) -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <!-- Moon icon (shown in light mode to switch to dark) -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
 
-      <!-- Avatar — animation group 1 -->
-      <div class="avatar-wrapper anim-ready anim-avatar" data-delay="0">
+    <!-- =========================================================
+         PROFILE CARD — Neumorphic extruded panel
+    ========================================================== -->
+    <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
+
+      <!-- Avatar -->
+      <div class="avatar-wrapper anim-ready anim-avatar" data-delay="80">
         <img
           id="profile-avatar"
           class="avatar-img"
           src="https://drive.google.com/thumbnail?id=1z73B4_S8Adg0LwwkuXcBYlBu2GnaHVgD&sz=w2000"
           alt="Shahzeb's profile picture"
           onerror="
-            this.classList.add('fallback');
+            this.style.opacity='0';
             document.getElementById('avatar-initials').classList.add('visible');
           "
           loading="eager"
           decoding="async"
-          width="108"
-          height="108"
+          width="112"
+          height="112"
         />
         <div class="avatar-initials" id="avatar-initials" aria-hidden="true">S</div>
       </div>
 
-      <!-- Name — animation group 2 -->
-      <h1 class="profile-name anim-ready" data-delay="150">Shahzeb Faisal</h1>
+      <!-- Name -->
+      <h1 class="profile-name anim-ready" data-delay="160">Shahzeb Faisal</h1>
 
-      <!-- Location — animation group 2b -->
-      <span class="profile-location anim-ready" data-delay="200" aria-label="Based in Lahore, Pakistan">
-        <!-- Lucide map-pin icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <!-- Location -->
+      <span class="profile-location anim-ready" data-delay="220" aria-label="Based in Lahore, Pakistan">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
           <path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/>
           <circle cx="12" cy="10" r="3"/>
         </svg>
         Lahore, Pakistan
       </span>
 
-      <!-- Bio — animation group 3 -->
-      <div class="bio-wrapper anim-ready" data-delay="280">
+      <!-- Bio collapsible -->
+      <div class="bio-wrapper anim-ready" data-delay="300">
         <div class="bio-content collapsed" id="bio-content">
           <p class="profile-bio">
             Began my journey by conquering my GCE O Levels with a clean sweep of A*s and As,
@@ -3135,33 +1236,31 @@
           </p>
         </div>
         <button class="bio-toggle-btn" id="bio-toggle-btn" aria-label="Read more">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bio-chevron"><path d="m6 9 6 6 6-6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round" class="bio-chevron">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
         </button>
       </div>
 
     </section>
 
     <!-- =========================================================
-         ACADEMIC TIMELINE COMPONENT
-         title attributes removed — replaced with .sr-only spans
-         for richer, more descriptive screen-reader text.
+         ACADEMIC TIMELINE
     ========================================================== -->
     <section class="academic-section anim-ready" data-delay="380" aria-label="Academic milestones">
-      <span class="academic-label">Academic Journey</span>
+      <span class="section-label">Academic Journey</span>
 
       <div class="timeline-card">
 
-        <!-- Node 1: LGS -->
         <div class="timeline-node">
           <div class="timeline-badge timeline-badge--indigo">
-            <!--
-              a11y: title="" removed. Screen readers now get the
-              full description from the visually hidden .sr-only span.
-            -->
             <span class="sr-only">Lahore Grammar School, completing O-Levels in 2026</span>
             <span class="badge-icon" aria-hidden="true">
-              <!-- Graduation cap — Lucide-style inline SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
@@ -3171,15 +1270,13 @@
           <span class="timeline-sub">O-Levels</span>
         </div>
 
-
-
-        <!-- Node 2: ISL -->
         <div class="timeline-node">
           <div class="timeline-badge timeline-badge--cyan">
             <span class="sr-only">International School of Lahore, completing A-Levels in 2028</span>
             <span class="badge-icon" aria-hidden="true">
-              <!-- Book — Lucide-style inline SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
               </svg>
@@ -3193,359 +1290,627 @@
     </section>
 
     <!-- =========================================================
-         SOCIAL & CONTACT LINK HUB
-         The hardcoded <a> nodes below have been REMOVED.
-         Links are now rendered dynamically by renderLinks() from
-         the LINKS_DATA array in the <script>.
+         LINK HUB — injected by renderLinks()
     ========================================================== -->
     <nav class="links-section" id="links-section" aria-label="Social and contact links">
       <span class="links-heading">Find Me Online</span>
     </nav>
 
     <!-- Footer -->
-    <footer class="page-footer anim-ready" data-delay="0" id="page-footer">
-      <p>Made with <span aria-label="love">♥</span> by Shahzeb</time></p>
+    <footer class="page-footer anim-ready" data-delay="0">
+      <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
+      <p>Made with <span aria-label="love">♥</span> by Shahzeb</p>
     </footer>
 
   </main>
 
   <!-- ============================================================
-       JAVASCRIPT — DATA-DRIVEN RENDERING, SPOTLIGHT, LIVE STATUS
+       SECRET MAC TERMINAL OVERLAY
+  ============================================================ -->
+  <div class="mac-terminal-overlay" id="mac-terminal" aria-hidden="true">
+    <div class="mac-window">
+      <div class="mac-titlebar">
+        <div class="mac-buttons">
+          <div class="mac-btn close" id="mac-close"></div>
+          <div class="mac-btn minimize"></div>
+          <div class="mac-btn maximize"></div>
+        </div>
+        <div class="mac-title">shahzeb@portfolio ~ -zsh</div>
+      </div>
+      <div class="mac-body" id="mac-body">
+        <div class="mac-output" id="mac-output">
+          <div>Last login: <span id="term-date"></span> on ttys000</div>
+          <div>Type 'help' to see available commands.</div>
+        </div>
+        <form class="mac-input-line" id="mac-form">
+          <span class="mac-prompt">guest@shahzeb ~ %</span>
+          <input type="text" id="mac-input" class="mac-input" autocomplete="off" spellcheck="false">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
   ============================================================ -->
   <script>
-    (function () {
-      'use strict';
+  (function () {
+    'use strict';
 
-      /* ============================================================
-         LINK DATA ARRAY
-      ============================================================ */
-      const LINKS_DATA = [
-        {
-          id:       'link-instagram',
-          label:    'Instagram',
-          sublabel: '@shahzebfaysal',
-          href:     'https://instagram.com/shahzebfaysal',
-          target:   '_blank',
-          ariaLabel: 'Instagram profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '225, 48, 108',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-whatsapp',
-          label:    'WhatsApp',
-          sublabel: '+92 335 7696999',
-          href:     'https://api.whatsapp.com/send?phone=923357696999',
-          target:   '_blank',
-          ariaLabel: 'Chat on WhatsApp — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '37, 211, 102',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-snapchat',
-          label:    'Snapchat',
-          sublabel: '@shahzeb69420',
-          href:     'https://www.snapchat.com/add/shahzeb69420?share_id=8G37QGAC-ws&locale=en-US',
-          target:   '_blank',
-          ariaLabel: 'Snapchat profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '255, 252, 0',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M11.968 1.488C10.518 1.488 9.04 1.7 8.16 2.6c-.632.651-.832 1.411-.832 2.14 0 .341-.01.69-.02 1.04-.032 1.451-.08 3.593-.8 4.603a11.238 11.238 0 0 1-.95.952c-.682.59-1.572 1.352-1.572 2.623 0 1.581 1.451 2.453 2.502 2.923l.11.05c-.14.281-.33.721-.36 1.132-.05.591.13 1.192.511 1.692.671.882 1.882 1.092 2.583 1.152.09.01.18.01.27.01.611 0 1.252-.16 2.002-.551 1.201-.631 2.373-.631 3.574 0 .75.391 1.391.551 2.002.551.09 0 .18 0 .27-.01.701-.06 1.912-.27 2.583-1.152.381-.5.561-1.101.511-1.692-.03-.411-.22-.851-.36-1.132l.11-.05c1.05-.47 2.502-1.342 2.502-2.923 0-1.271-.89-2.032-1.572-2.623a11.238 11.238 0 0 1-.95-.952c-.72-1.01-.768-3.152-.8-4.603-.01-.35-.02-.7-.02-1.04 0-.729-.2-1.489-.832-2.14-.88-.9-2.358-1.112-3.808-1.112z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-x',
-          label:    'X / Twitter',
-          sublabel: '@HannistHk',
-          href:     'https://x.com/HannistHk',
-          target:   '_blank',
-          ariaLabel: 'X (formerly Twitter) profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '255, 255, 255',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-discord',
-          label:    'Discord',
-          sublabel: 'shahzeb.athari',
-          href:     '#',
-          target:   null,
-          ariaLabel: 'Discord username: shahzeb.athari',
-          iconStyle: 'fill-only',
-          brandColor: '88, 101, 242',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-github',
-          label:    'GitHub',
-          sublabel: '@HannistHK',
-          href:     'https://github.com/HannistHK',
-          target:   '_blank',
-          ariaLabel: 'GitHub profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '250, 250, 250',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-          </svg>`,
-        },
-        {
-          id:       'link-linkedin',
-          label:    'LinkedIn',
-          sublabel: 'Shahzeb Faisal',
-          href:     'https://www.linkedin.com/in/shahzeb-faisal-b011b13b9?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-          target:   '_blank',
-          ariaLabel: 'LinkedIn profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '10, 102, 194',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-facebook',
-          label:    'Facebook',
-          sublabel: 'Shahzeb Faisal',
-          href:     'https://www.facebook.com/share/1BSPW5Gc7b/',
-          target:   '_blank',
-          ariaLabel: 'Facebook profile — opens in new tab',
-          iconStyle: 'fill-only',
-          brandColor: '24, 119, 242',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>`,
-        },
-        {
-          id:       'link-email',
-          label:    'Email',
-          sublabel: 'shahzeb@shahzebfaisal.com',
-          href:     'mailto:shahzeb@shahzebfaisal.com',
-          target:   null,
-          ariaLabel: 'Send an email to Shahzeb',
-          iconStyle: 'stroke-only',
-          brandColor: 'var(--color-cyan-400-rgb)',
-          iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <rect width="20" height="16" x="2" y="4" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>`,
-        },
-      ];
+    /* ==============================================================
+       LINKS DATA
+       brandColor is now split into R/G/B components so we can use
+       them in CSS rgba() expressions for the glow effects.
+       (--card-glow-r, --card-glow-g, --card-glow-b)
+    ============================================================== */
+    const LINKS_DATA = [
+      {
+        id: 'link-instagram', label: 'Instagram', sublabel: '@shahzebfaysal',
+        href: 'https://instagram.com/shahzebfaysal', target: '_blank',
+        ariaLabel: 'Instagram profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 225, glowG: 48,  glowB: 108,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
+      },
+      {
+        id: 'link-whatsapp', label: 'WhatsApp', sublabel: '+92 335 7696999',
+        href: 'https://api.whatsapp.com/send?phone=923357696999', target: '_blank',
+        ariaLabel: 'Chat on WhatsApp — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 37, glowG: 211, glowB: 102,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>`,
+      },
+      {
+        id: 'link-snapchat', label: 'Snapchat', sublabel: '@shahzeb69420',
+        href: 'https://www.snapchat.com/add/shahzeb69420?share_id=8G37QGAC-ws&locale=en-US', target: '_blank',
+        ariaLabel: 'Snapchat profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 255, glowG: 200, glowB: 0,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.968 1.488C10.518 1.488 9.04 1.7 8.16 2.6c-.632.651-.832 1.411-.832 2.14 0 .341-.01.69-.02 1.04-.032 1.451-.08 3.593-.8 4.603a11.238 11.238 0 0 1-.95.952c-.682.59-1.572 1.352-1.572 2.623 0 1.581 1.451 2.453 2.502 2.923l.11.05c-.14.281-.33.721-.36 1.132-.05.591.13 1.192.511 1.692.671.882 1.882 1.092 2.583 1.152.09.01.18.01.27.01.611 0 1.252-.16 2.002-.551 1.201-.631 2.373-.631 3.574 0 .75.391 1.391.551 2.002.551.09 0 .18 0 .27-.01.701-.06 1.912-.27 2.583-1.152.381-.5.561-1.101.511-1.692-.03-.411-.22-.851-.36-1.132l.11-.05c1.05-.47 2.502-1.342 2.502-2.923 0-1.271-.89-2.032-1.572-2.623a11.238 11.238 0 0 1-.95-.952c-.72-1.01-.768-3.152-.8-4.603-.01-.35-.02-.7-.02-1.04 0-.729-.2-1.489-.832-2.14-.88-.9-2.358-1.112-3.808-1.112z"/></svg>`,
+      },
+      {
+        id: 'link-x', label: 'X / Twitter', sublabel: '@HannistHk',
+        href: 'https://x.com/HannistHk', target: '_blank',
+        ariaLabel: 'X (formerly Twitter) profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 60, glowG: 60, glowB: 80,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+      },
+      {
+        id: 'link-discord', label: 'Discord', sublabel: 'shahzeb.athari',
+        href: '#', target: null,
+        ariaLabel: 'Discord username: shahzeb.athari',
+        iconStyle: 'fill-only',
+        glowR: 88, glowG: 101, glowB: 242,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`,
+      },
+      {
+        id: 'link-github', label: 'GitHub', sublabel: '@HannistHK',
+        href: 'https://github.com/HannistHK', target: '_blank',
+        ariaLabel: 'GitHub profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 80, glowG: 80, glowB: 100,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`,
+      },
+      {
+        id: 'link-linkedin', label: 'LinkedIn', sublabel: 'Shahzeb Faisal',
+        href: 'https://www.linkedin.com/in/shahzeb-faisal-b011b13b9?utm_source=share_via&utm_content=profile&utm_medium=member_android', target: '_blank',
+        ariaLabel: 'LinkedIn profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 10, glowG: 102, glowB: 194,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+      },
+      {
+        id: 'link-facebook', label: 'Facebook', sublabel: 'Connect with me',
+        href: 'https://www.facebook.com/share/1BSPW5Gc7b/', target: '_blank',
+        ariaLabel: 'Facebook profile — opens in new tab',
+        iconStyle: 'fill-only',
+        glowR: 24, glowG: 119, glowB: 242,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`,
+      },
+      {
+        id: 'link-email', label: 'Email', sublabel: 'shahzeb@shahzebfaisal.com',
+        href: 'mailto:shahzeb@shahzebfaisal.com', target: null,
+        ariaLabel: 'Send an email to Shahzeb',
+        iconStyle: 'stroke-only',
+        glowR: 6, glowG: 182, glowB: 212,
+        iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+      },
+    ];
 
-      /* Chevron-right SVG — reused for every card arrow */
-      const ARROW_SVG = `<svg class="link-arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>`;
+    /* ==============================================================
+       TOUCH DETECTION
+    ============================================================== */
+    const IS_TOUCH = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-      /* ============================================================
-         renderLinks()
-         Maps over LINKS_DATA and injects link card HTML into the
-         .links-section nav. Delays start at 480ms and increment
-         by 80ms per item (matching the original v1 cadence).
-      ============================================================ */
-      function renderLinks() {
-        const section = document.getElementById('links-section');
-        if (!section) return;
+    /* ==============================================================
+       3D TILT SYSTEM (Lerp-smoothed rAF loop)
+    ============================================================== */
+    const MAX_TILT  = 7;   /* degrees */
+    const LERP_F    = 0.10; /* 10% per frame */
+    const tiltState = new Map();
 
-        const BASE_DELAY    = 480;
-        const DELAY_STEP    = 80;
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
-        LINKS_DATA.forEach(function (link, index) {
-          const delay      = BASE_DELAY + index * DELAY_STEP;
-          const targetAttr = link.target ? `target="${link.target}" rel="noopener noreferrer"` : '';
-          const styleAttr  = link.brandColor ? `style="--card-glow-color: ${link.brandColor};"` : '';
+    function registerTiltCard(card) {
+      if (IS_TOUCH) return;
+      tiltState.set(card, { tx: 0, ty: 0, cx: 0, cy: 0 });
 
-          const cardHTML = `
-            <a
-              id="${link.id}"
-              class="link-card anim-ready"
-              data-delay="${delay}"
-              href="${link.href}"
-              ${targetAttr}
-              ${styleAttr}
-              aria-label="${link.ariaLabel}"
-            >
-              <div class="link-icon-wrapper">
-                <svg class="link-icon-svg ${link.iconStyle}"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  ${extractSvgPaths(link.iconSvg)}
-                </svg>
-              </div>
-              <div class="link-text-wrapper">
-                <span class="link-label">${link.label}</span>
-                <span class="link-sublabel">${link.sublabel}</span>
-              </div>
-              ${ARROW_SVG}
-            </a>
-          `;
+      card.addEventListener('mousemove', function (e) {
+        const r   = card.getBoundingClientRect();
+        const nx  = ((e.clientX - r.left)  / r.width  - 0.5) * 2;
+        const ny  = ((e.clientY - r.top)   / r.height - 0.5) * 2;
+        const s   = tiltState.get(card);
+        s.ty =  clamp(nx * MAX_TILT, -MAX_TILT, MAX_TILT);
+        s.tx = -clamp(ny * MAX_TILT, -MAX_TILT, MAX_TILT);
+      });
 
-          section.insertAdjacentHTML('beforeend', cardHTML);
-        });
-      }
+      card.addEventListener('mouseleave', function () {
+        const s  = tiltState.get(card);
+        s.tx = 0; s.ty = 0;
+      });
+    }
 
-      /*
-        extractSvgPaths(svgString)
-        Pulls just the inner content (paths/rects/etc.) from a full
-        SVG string so we can inject it into our wrapper <svg>.
-      */
-      function extractSvgPaths(svgString) {
-        const match = svgString.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
-        return match ? match[1].trim() : svgString;
-      }
-
-      /* ============================================================
-         SPOTLIGHT HOVER EFFECT
-         ─────────────────────────────────────────────────────────────
-         Attaches a mousemove listener to the links-section container.
-         For each .link-card child, we calculate the mouse position
-         relative to that specific card and set --mouse-x / --mouse-y
-         as local CSS custom properties.
-
-         The .link-card::before radial-gradient is mapped to these
-         coordinates — creating a glow that literally follows the cursor.
-      ============================================================ */
-      function initSpotlight() {
-        const section = document.getElementById('links-section');
-        if (!section) return;
-
-        section.addEventListener('mousemove', function (e) {
-          /* Query cards fresh each time in case new ones are added */
-          const cards = section.querySelectorAll('.link-card');
-
-          cards.forEach(function (card) {
-            const rect = card.getBoundingClientRect();
-
-            /* Mouse position relative to this card */
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            card.style.setProperty('--mouse-x', x + 'px');
-            card.style.setProperty('--mouse-y', y + 'px');
-          });
-        });
-      }
-
-      /* ============================================================
-         [Live status feature removed]
-         fetchLiveStatus() and related helpers were removed at user request.
-      ============================================================ */
-
-      /* ============================================================
-         [placeholder — keeps line reference stable]
-         fetchLiveStatus()
-         ─────────────────────────────────────────────────────────────
-         Async function that demonstrates the pattern for pulling
-         live data (e.g., latest GitHub commit) and injecting it
-         into the Live Status card.
-
-         Currently mocks a fetch with a Promise that resolves after
-         a realistic 1.2s delay. Swap the mock data with a real
-         fetch() call to the GitHub API:
-           const res = await fetch(
-             'https://api.github.com/repos/shahzeb/{repo}/commits?per_page=1',
-             { headers: { Accept: 'application/vnd.github+json' } }
-           );
-           const [commit] = await res.json();
-      ============================================================ */
-
-
-      /* ============================================================
-         initAnimations()
-         Preserved from v1 — reads data-delay off every .anim-ready
-         element (including dynamically rendered cards) and triggers
-         .anim-in after the correct timeout.
-      ============================================================ */
-      function initAnimations() {
-        const animEls = document.querySelectorAll('.anim-ready');
-        animEls.forEach(function (el) {
-          const delay = parseInt(el.dataset.delay, 10) || 0;
-          setTimeout(function () {
-            el.classList.add('anim-in');
-          }, delay);
-        });
-      }
-
-      /* ============================================================
-         initAvatarFallback() — preserved from v1
-      ============================================================ */
-      function initAvatarFallback() {
-        var img = document.getElementById('profile-avatar');
-        if (!img) return;
-        if (img.complete && img.naturalWidth === 0) {
-          img.classList.add('fallback');
-          var initials = document.getElementById('avatar-initials');
-          if (initials) initials.classList.add('visible');
-        }
-      }
-
-      /* ============================================================
-         BIO TOGGLE
-      ============================================================ */
-      function initBioToggle() {
-        const toggleBtn = document.getElementById('bio-toggle-btn');
-        const bioContent = document.getElementById('bio-content');
-        
-        if (!toggleBtn || !bioContent) return;
-        
-        toggleBtn.addEventListener('click', function() {
-          const isExpanded = bioContent.classList.contains('expanded');
-          
-          if (isExpanded) {
-            // Collapse
-            bioContent.style.maxHeight = '';
-            bioContent.classList.remove('expanded');
-            bioContent.classList.add('collapsed');
-            toggleBtn.classList.remove('active');
-            toggleBtn.setAttribute('aria-label', 'Read more');
+    function tiltLoop() {
+      if (!IS_TOUCH) {
+        tiltState.forEach(function (s, card) {
+          s.cx = lerp(s.cx, s.tx, LERP_F);
+          s.cy = lerp(s.cy, s.ty, LERP_F);
+          const flat = Math.abs(s.cx) < 0.005 && Math.abs(s.cy) < 0.005 && s.tx === 0 && s.ty === 0;
+          if (!flat) {
+            card.style.setProperty('--tilt-x', s.cx.toFixed(3) + 'deg');
+            card.style.setProperty('--tilt-y', s.cy.toFixed(3) + 'deg');
           } else {
-            // Expand: calculate full height and set it dynamically for smooth transition
-            const fullHeight = bioContent.scrollHeight + 'px';
-            bioContent.style.maxHeight = fullHeight;
-            bioContent.classList.remove('collapsed');
-            bioContent.classList.add('expanded');
-            toggleBtn.classList.add('active');
-            toggleBtn.setAttribute('aria-label', 'Show less');
+            card.style.removeProperty('--tilt-x');
+            card.style.removeProperty('--tilt-y');
+          }
+        });
+      }
+      requestAnimationFrame(tiltLoop);
+    }
+
+    /* ==============================================================
+       renderLinks() — inject cards from LINKS_DATA
+    ============================================================== */
+    const ARROW_SVG = `<svg class="link-arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>`;
+
+    function extractSvgPaths(str) {
+      const m = str.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
+      return m ? m[1].trim() : str;
+    }
+
+    function renderLinks() {
+      const section = document.getElementById('links-section');
+      if (!section) return;
+
+      const BASE = 480, STEP = 75;
+
+      LINKS_DATA.forEach(function (link, i) {
+        const delay  = BASE + i * STEP;
+        const target = link.target ? `target="${link.target}" rel="noopener noreferrer"` : '';
+        const style  = `style="--card-glow-r:${link.glowR};--card-glow-g:${link.glowG};--card-glow-b:${link.glowB};"`;
+
+        section.insertAdjacentHTML('beforeend', `
+          <a id="${link.id}" class="link-card anim-ready" data-delay="${delay}"
+            href="${link.href}" ${target} ${style} aria-label="${link.ariaLabel}">
+            <div class="link-card-accent" aria-hidden="true"></div>
+            <div class="link-icon-wrapper">
+              <svg class="link-icon-svg ${link.iconStyle}" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24" aria-hidden="true">${extractSvgPaths(link.iconSvg)}</svg>
+            </div>
+            <div class="link-text-wrapper">
+              <span class="link-label">${link.label}</span>
+              <span class="link-sublabel">${link.sublabel}</span>
+            </div>
+            ${ARROW_SVG}
+          </a>
+        `);
+      });
+
+      section.querySelectorAll('.link-card').forEach(registerTiltCard);
+    }
+
+    /* ==============================================================
+       initAnimations() — staggered entrance
+    ============================================================== */
+    function initAnimations() {
+      document.querySelectorAll('.anim-ready').forEach(function (el) {
+        const delay = parseInt(el.dataset.delay, 10) || 0;
+        setTimeout(function () { el.classList.add('anim-in'); }, delay);
+      });
+    }
+
+    /* ==============================================================
+       initAvatarFallback()
+    ============================================================== */
+    function initAvatarFallback() {
+      var img = document.getElementById('profile-avatar');
+      if (!img) return;
+      if (img.complete && img.naturalWidth === 0) {
+        img.style.opacity = '0';
+        var ini = document.getElementById('avatar-initials');
+        if (ini) ini.classList.add('visible');
+      }
+    }
+
+    /* ==============================================================
+       initBioToggle() — Neumorphic press button
+    ============================================================== */
+    function initBioToggle() {
+      var btn  = document.getElementById('bio-toggle-btn');
+      var cont = document.getElementById('bio-content');
+      if (!btn || !cont) return;
+
+      btn.addEventListener('click', function () {
+        var expanded = cont.classList.contains('expanded');
+        if (expanded) {
+          cont.style.maxHeight = '';
+          cont.classList.replace('expanded', 'collapsed');
+          btn.classList.remove('active');
+          btn.setAttribute('aria-label', 'Read more');
+        } else {
+          cont.style.maxHeight = cont.scrollHeight + 'px';
+          cont.classList.replace('collapsed', 'expanded');
+          btn.classList.add('active');
+          btn.setAttribute('aria-label', 'Show less');
+        }
+      });
+    }
+
+    /* ==============================================================
+       initTheme()
+       Reads the saved preference from localStorage (or defaults
+       to 'dark'). Sets data-theme on <html> and wires the toggle.
+       Preference is persisted across page loads.
+    ============================================================== */
+    function initTheme() {
+      var root   = document.documentElement;
+      var btn    = document.getElementById('theme-toggle');
+      /* Default to dark if no preference is saved yet */
+      var saved  = localStorage.getItem('sf-theme') || 'dark';
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        if (btn) {
+          btn.setAttribute(
+            'aria-label',
+            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          );
+        }
+        localStorage.setItem('sf-theme', theme);
+      }
+
+      applyTheme(saved);
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var current = root.getAttribute('data-theme');
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
+    }
+
+    /* ==============================================================
+       MAC TERMINAL LOGIC
+    ============================================================== */
+    function initMacTerminal() {
+      var terminal = document.getElementById('mac-terminal');
+      var closeBtn = document.getElementById('mac-close');
+      var macForm  = document.getElementById('mac-form');
+      var macInput = document.getElementById('mac-input');
+      var macOutput = document.getElementById('mac-output');
+      var avatar   = document.getElementById('profile-avatar');
+
+      var hintEl = document.getElementById('secret-hint');
+      if (hintEl) {
+        hintEl.textContent = IS_TOUCH ? "Hint: Tap the avatar 5 times" : "Hint: Press ` or Ctrl+Alt+T";
+      }
+
+      document.getElementById('term-date').textContent = new Date().toString().split(' ').slice(0, 4).join(' ');
+
+      var tapCount = 0;
+      var tapTimer;
+
+      if (avatar) {
+        avatar.addEventListener('click', function() {
+          tapCount++;
+          clearTimeout(tapTimer);
+          if (tapCount >= 5) {
+            openTerminal();
+            tapCount = 0;
+          } else {
+            tapTimer = setTimeout(function() { tapCount = 0; }, 2000);
           }
         });
       }
 
-      /* ============================================================
-         BOOT SEQUENCE — runs on DOMContentLoaded
-      ============================================================ */
-      function boot() {
-        /*
-          Boot order:
-          1. Render link cards into the DOM
-          2. Kick off staggered entrance animations
-          3. Set up spotlight cursor listener
-          4. Avatar image fallback check
-          5. Setup bio toggle
-        */
-        renderLinks();
-        initAnimations();
-        initSpotlight();
-        initAvatarFallback();
-        initBioToggle();
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && e.altKey && e.key.toLowerCase() === 't') || e.key === '`') {
+          e.preventDefault();
+          openTerminal();
+        }
+        if (e.key === 'Escape' && terminal.classList.contains('open')) {
+          closeTerminal();
+        }
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeTerminal);
+      if (terminal) {
+        terminal.addEventListener('click', function(e) {
+          if (e.target === terminal) closeTerminal();
+        });
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot);
-      } else {
-        boot();
+      function openTerminal() {
+        terminal.classList.add('open');
+        setTimeout(function() { macInput.focus(); }, 100);
       }
 
-    })();
+      function closeTerminal() {
+        terminal.classList.remove('open');
+        macInput.blur();
+      }
+
+      var commands = {
+        help: function() {
+          return "Available commands:\n" +
+                 "  <span class=\"term-green\">whoami</span>    - Display user bio\n" +
+                 "  <span class=\"term-green\">links</span>     - List social profiles\n" +
+                 "  <span class=\"term-green\">clear</span>     - Clear the terminal screen\n" +
+                 "  <span class=\"term-green\">date</span>      - Show current date/time\n" +
+                 "  <span class=\"term-green\">ls</span>        - List directory contents\n" +
+                 "  <span class=\"term-green\">cat</span>       - Print file contents\n" +
+                 "  <span class=\"term-green\">neofetch</span>  - System information\n" +
+                 "  <span class=\"term-green\">coffee</span>    - Brew a cup of coffee\n" +
+                 "  <span class=\"term-green\">hack</span>      - Initiate mainframe bypass\n" +
+                 "  <span class=\"term-green\">matrix</span>    - Enter the matrix\n" +
+                 "  <span class=\"term-green\">sudo</span>      - Execute a command as superuser\n" +
+                 "  <span class=\"term-green\">exit</span>      - Close the terminal";
+        },
+        whoami: function() {
+          var bioEl = document.querySelector('.profile-bio');
+          return bioEl ? bioEl.innerText.trim() : "Name: Shahzeb Faisal\nRole: Developer & Tech Enthusiast\nStatus: Highly classified";
+        },
+        links: function() {
+          if (typeof LINKS_DATA !== 'undefined' && LINKS_DATA.length > 0) {
+            return LINKS_DATA.map(function(l) { return l.label + ": " + l.href; }).join('\n');
+          }
+          return "No links found.";
+        },
+        date: function() {
+          return new Date().toString();
+        },
+        ls: function() {
+          return "index.html  styles.css  <span class=\"term-red\">top_secret.txt</span>";
+        },
+        cat: function() {
+          return "cat: missing file operand\nTry 'ls' to see available files.";
+        },
+        'cat top_secret.txt': function() {
+          window.open("https://www.youtube.com/watch?v=amaB9lrgTvg", "_blank");
+          return "Opening highly classified document...";
+        },
+        neofetch: function() {
+          var ua = navigator.userAgent;
+          var os = "Unknown OS";
+          var host = "Unknown Device";
+          var ascii = [];
+
+          if (/Windows/i.test(ua)) {
+            os = "Windows";
+            host = "PC";
+            ascii = [
+              "<span class=\"term-blue\">███████ ███████</span> ",
+              "<span class=\"term-blue\">███████ ███████</span> ",
+              "<span class=\"term-blue\">███████ ███████</span> ",
+              "                ",
+              "<span class=\"term-blue\">███████ ███████</span> ",
+              "<span class=\"term-blue\">███████ ███████</span> ",
+              "<span class=\"term-blue\">███████ ███████</span> "
+            ];
+          } else if (/Mac/i.test(ua) && !/iPhone|iPad|iPod/i.test(ua)) {
+            os = "macOS";
+            host = "Mac";
+            ascii = [
+              "        <span class=\"term-green\">.:'</span>     ",
+              "     <span class=\"term-green\">__ :'__</span>    ",
+              "  <span class=\"term-yellow\">.'  \`-'  \`.</span>   ",
+              "  <span class=\"term-red\">:          :</span>  ",
+              "  <span class=\"term-magenta\">:         :</span>   ",
+              "   <span class=\"term-blue\">\`.___.__.'</span>   ",
+              "                "
+            ];
+          } else if (/iPhone|iPad|iPod/i.test(ua)) {
+            os = "iOS";
+            host = /iPad/i.test(ua) ? "iPad" : "iPhone";
+            ascii = [
+              "        <span class=\"term-green\">.:'</span>     ",
+              "     <span class=\"term-green\">__ :'__</span>    ",
+              "  <span class=\"term-yellow\">.'  \`-'  \`.</span>   ",
+              "  <span class=\"term-red\">:          :</span>  ",
+              "  <span class=\"term-magenta\">:         :</span>   ",
+              "   <span class=\"term-blue\">\`.___.__.'</span>   ",
+              "                "
+            ];
+          } else if (/Android/i.test(ua)) {
+            os = "Android";
+            host = "Smartphone";
+            ascii = [
+              "  <span class=\"term-green\">;,          ,;</span>  ",
+              "   <span class=\"term-green\">'--_    _--'</span>   ",
+              "  <span class=\"term-green\">/ o  \\__/  o \\</span>  ",
+              " <span class=\"term-green\">|              |</span> ",
+              " <span class=\"term-green\">|  __________  |</span> ",
+              "  <span class=\"term-green\">\\_\\______/_/</span>    ",
+              "                "
+            ];
+          } else if (/Linux/i.test(ua)) {
+            os = "Linux";
+            host = "Machine";
+            ascii = [
+              "        <span class=\"term-blue\">.</span>       ",
+              "       <span class=\"term-blue\">/ \\</span>      ",
+              "      <span class=\"term-blue\">/   \\</span>     ",
+              "     <span class=\"term-blue\">/^.   \\</span>    ",
+              "    <span class=\"term-blue\">/  .-.  \\</span>   ",
+              "   <span class=\"term-blue\">/  (   ) _\\</span>  ",
+              "  <span class=\"term-blue\">/ _.~   ~._^\\</span> "
+            ];
+          } else {
+            ascii = [
+              "      <span class=\"term-yellow\">____</span>      ",
+              "     <span class=\"term-yellow\">/    \\</span>     ",
+              "    <span class=\"term-yellow\">|  ??  |</span>    ",
+              "     \\<span class=\"term-yellow\">____/</span>     ",
+              "      <span class=\"term-yellow\">(__)</span>      ",
+              "                ",
+              "                "
+            ];
+          }
+
+          var rKernels = ["6.9.12-arch1", "10.0.22631", "Darwin 23.5.0", "Linux 5.15.0", "17.5.1"];
+          var rKernel = rKernels[Math.floor(Math.random() * rKernels.length)];
+          var info = [
+            "<span class=\"term-green\">guest@" + (host === "Smartphone" || host === "iPhone" ? "phone" : "machine") + "</span>",
+            "OS: " + os,
+            "Host: " + host,
+            "Kernel: " + rKernel,
+            "Shell: zsh 5.9",
+            "WM: " + (os === "Windows" ? "DWM" : os === "macOS" ? "Quartz" : "Wayland"),
+            "Theme: Hyper-Premium"
+          ];
+
+          var output = [];
+          for (var i = 0; i < 7; i++) {
+            output.push(ascii[i] + "  " + info[i]);
+          }
+          return output.join('\n');
+        },
+        coffee: function(el) {
+          var frames = [
+            "Brewing...\n[                ] 0%",
+            "Brewing...\n[████            ] 25%",
+            "Brewing...\n[████████        ] 50%",
+            "Brewing...\n[████████████    ] 75%",
+            "Brewing...\n[████████████████] 100%\nHere is your coffee! ☕"
+          ];
+          var i = 0;
+          el.innerText = frames[0];
+          var interval = setInterval(function() {
+            i++;
+            if (i >= frames.length) {
+              clearInterval(interval);
+            } else {
+              el.innerText = frames[i];
+              el.parentElement.scrollTop = el.parentElement.scrollHeight;
+            }
+          }, 400);
+          return null;
+        },
+        hack: function(el) {
+          var steps = [
+            "<span class=\"term-green\">Connecting to mainframe...</span>",
+            "<span class=\"term-yellow\">Bypassing security protocols...</span>",
+            "<span class=\"term-red\">Decrypting passwords... [███████   ] 70%</span>",
+            "<span class=\"term-red\">Decrypting passwords... [██████████] 100%</span>",
+            "<span class=\"term-green\">ACCESS GRANTED.</span> You are a master hacker."
+          ];
+          var i = 0;
+          el.innerHTML = steps[0];
+          var interval = setInterval(function() {
+            i++;
+            if (i >= steps.length) {
+              clearInterval(interval);
+            } else {
+              el.innerHTML += "\n" + steps[i];
+              el.parentElement.scrollTop = el.parentElement.scrollHeight;
+            }
+          }, 600);
+          return null;
+        },
+        matrix: function(el) {
+          el.classList.add("term-green");
+          var rows = 0;
+          var interval = setInterval(function() {
+            var row = "";
+            for (var j = 0; j < 40; j++) row += Math.round(Math.random()) + " ";
+            el.innerHTML += row + "\n";
+            el.parentElement.scrollTop = el.parentElement.scrollHeight;
+            rows++;
+            if (rows > 20) clearInterval(interval);
+          }, 60);
+          return null;
+        },
+        'rm -rf /': function() {
+          return "<span class=\"term-red\">ERROR: Permission denied.\nWarning: This incident has been reported. Your IP address has been logged.</span>";
+        },
+        sudo: function() {
+          return "<span class=\"term-red\">guest is not in the sudoers file. This incident will be reported.</span>";
+        }
+      };
+
+      if (macForm) {
+        macForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var cmd = macInput.value.trim();
+          if (!cmd) return;
+
+          var cmdLine = document.createElement('div');
+          cmdLine.innerHTML = "<span class=\"mac-prompt\">guest@shahzeb ~ %</span> " + cmd;
+          macOutput.appendChild(cmdLine);
+
+          var args = cmd.toLowerCase().split(' ');
+          var baseCmd = args[0];
+
+          if (baseCmd === 'clear') {
+            macOutput.innerHTML = '';
+          } else if (baseCmd === 'exit') {
+            closeTerminal();
+          } else {
+            var response = document.createElement('div');
+            macOutput.appendChild(response);
+
+            var result;
+            if (commands[cmd]) {
+              result = commands[cmd](response);
+            } else if (commands[baseCmd]) {
+              result = commands[baseCmd](response);
+            } else {
+              result = "zsh: command not found: " + baseCmd;
+            }
+
+            if (result) {
+              response.innerHTML = result;
+            }
+          }
+
+          macInput.value = '';
+          macOutput.parentElement.scrollTop = macOutput.parentElement.scrollHeight;
+        });
+      }
+    }
+
+    /* ==============================================================
+       BOOT
+    ============================================================== */
+    function boot() {
+      initTheme();
+      renderLinks();
+      initAnimations();
+      initAvatarFallback();
+      initBioToggle();
+      initMacTerminal();
+      requestAnimationFrame(tiltLoop);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+
+  })();
   </script>
 
 </body>

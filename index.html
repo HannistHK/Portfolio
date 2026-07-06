@@ -489,6 +489,7 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-muted);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       margin-bottom: 2px;
     }
 
@@ -621,6 +622,7 @@
       text-transform: uppercase;
       color: var(--text-muted);
       text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       margin-bottom: 4px;
     }
 
@@ -930,7 +932,9 @@
       color: var(--text-base);
       opacity: 0.8;
       font-weight: 500;
-      margin-bottom: 8px;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: -10px;
       font-family: var(--font-mono);
       transition: opacity 0.3s ease, color 0.3s ease;
     }
@@ -1185,6 +1189,7 @@
     <!-- =========================================================
          PROFILE CARD — Neumorphic extruded panel
     ========================================================== -->
+    <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
     <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
 
       <!-- Avatar -->
@@ -1298,7 +1303,6 @@
 
     <!-- Footer -->
     <footer class="page-footer anim-ready" data-delay="0">
-      <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
       <p>Made with <span aria-label="love">♥</span> by Shahzeb</p>
     </footer>
 
@@ -1860,7 +1864,8 @@
           cmdLine.innerHTML = "<span class=\"mac-prompt\">guest@shahzeb ~ %</span> " + cmd;
           macOutput.appendChild(cmdLine);
 
-          var args = cmd.toLowerCase().split(' ');
+          var lowerCmd = cmd.toLowerCase();
+          var args = lowerCmd.split(' ');
           var baseCmd = args[0];
 
           if (baseCmd === 'clear') {
@@ -1872,8 +1877,8 @@
             macOutput.appendChild(response);
 
             var result;
-            if (commands[cmd]) {
-              result = commands[cmd](response);
+            if (commands[lowerCmd]) {
+              result = commands[lowerCmd](response);
             } else if (commands[baseCmd]) {
               result = commands[baseCmd](response);
             } else {

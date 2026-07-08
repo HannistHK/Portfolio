@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+  <!-- ============================================================
+       META & SEO
+  ============================================================ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Shahzeb Faisal — personal portfolio and link hub. Find me on GitHub, LinkedIn, Instagram, and more." />
@@ -13,21 +15,17 @@
   <link rel="preload" as="image"
     href="https://drive.google.com/thumbnail?id=1z73B4_S8Adg0LwwkuXcBYlBu2GnaHVgD&sz=w2000"
     fetchpriority="high" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-    <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
-    
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
     :root {
-      
+      /* ── Neumorphic base palette ── */
       --neu-bg:           #e0e5ec;
       --neu-shadow-light: #ffffff;
       --neu-shadow-dark:  #a3b1c6;
@@ -35,7 +33,7 @@
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
 
-      
+      /* ── Glass palette ── */
       --glass-bg:     rgba(255, 255, 255, 0.40);
       --glass-bg-hov: rgba(255, 255, 255, 0.62);
       --glass-border: rgba(255, 255, 255, 0.65);
@@ -43,44 +41,44 @@
       --glass-shadow: 0 8px 32px rgba(100, 120, 160, 0.18), 0 2px 8px rgba(100, 120, 160, 0.10);
       --glass-shadow-hov: 0 16px 40px rgba(100, 120, 160, 0.26), 0 4px 12px rgba(100, 120, 160, 0.14);
 
-      
-      --sheen-edge:   rgba(255, 255, 255, 0.90); 
-      --sheen-badge:  rgba(255, 255, 255, 0.35); 
-      --sheen-card:   rgba(255, 255, 255, 0.28); 
-      --sheen-sweep-a: rgba(255, 255, 255, 0.18); 
-      --sheen-sweep-b: rgba(255, 255, 255, 0.28); 
+      /* ── Sheen overlays (pseudo-elements that need dark-mode overrides) ── */
+      --sheen-edge:   rgba(255, 255, 255, 0.90); /* top-edge highlight on neu cards */
+      --sheen-badge:  rgba(255, 255, 255, 0.35); /* top sheen on glass badges */
+      --sheen-card:   rgba(255, 255, 255, 0.28); /* top sheen on link cards */
+      --sheen-sweep-a: rgba(255, 255, 255, 0.18); /* hover sweep edges */
+      --sheen-sweep-b: rgba(255, 255, 255, 0.28); /* hover sweep centre */
 
-      
+      /* ── Icon wrapper ── */
       --icon-bg:      rgba(255, 255, 255, 0.55);
       --icon-border:  rgba(255, 255, 255, 0.70);
       --icon-bg-hov:  rgba(255, 255, 255, 0.82);
 
-      
+      /* ── Badge text colours ── */
       --badge-indigo-text: #3730a3;
       --badge-yellow-text: #b45309;
 
-      
+      /* ── Profile name gradient start ── */
       --name-grad-start: #2d3250;
 
-      
+      /* ── Accent colours ── */
       --accent-indigo: #6366f1;
       --accent-cyan:   #06b6d4;
       --accent-pink:   #ec4899;
       --accent-purple: #a855f7;
 
-      
+      /* ── Text ── */
       --text-primary:   #2d3250;
       --text-secondary: #5a6680;
       --text-muted:     #8a97b0;
 
-      
+      /* ── Radius ── */
       --r-xs:   8px;
       --r-sm:   14px;
       --r-md:   20px;
       --r-lg:   28px;
       --r-full: 999px;
 
-      
+      /* ── Spacing ── */
       --sp-3:  12px;
       --sp-4:  16px;
       --sp-5:  20px;
@@ -90,19 +88,24 @@
       --sp-14: 56px;
       --sp-18: 72px;
 
-      
+      /* ── Typography ── */
       --font:      'Plus Jakarta Sans', system-ui, sans-serif;
       --font-mono: 'DM Mono', monospace;
 
-      
+      /* ── Easing ── */
       --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
       --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
       --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    
+    /* ============================================================
+       DARK MODE TOKENS
+       Applied when <html> carries data-theme="dark".
+       Neumorphic shadows flip to deep dark colours.
+       Glass panels use near-black translucent backgrounds.
+    ============================================================ */
     [data-theme="dark"] {
-      
+      /* Neumorphic base — deep slate */
       --neu-bg:           #141624;
       --neu-shadow-light: #1e2138;
       --neu-shadow-dark:  #0b0d18;
@@ -110,39 +113,51 @@
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
 
-      
+      /*
+        Glass panels — dark mode uses a SOLID dark surface with white glass overlay,
+        NOT nearly-transparent white (which vanishes on dark backgrounds).
+        The effect: a raised dark slate panel that refracts the blob colours subtly.
+      */
       --glass-bg:     rgba(30, 33, 56, 0.82);
       --glass-bg-hov: rgba(36, 40, 66, 0.92);
       --glass-border: rgba(255, 255, 255, 0.10);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
       --glass-shadow-hov: 0 16px 40px rgba(0, 0, 0, 0.70), 0 4px 12px rgba(0, 0, 0, 0.40);
 
-      
+      /* Sheen overlays — very subtle in dark mode */
       --sheen-edge:    rgba(255, 255, 255, 0.05);
       --sheen-badge:   rgba(255, 255, 255, 0.05);
       --sheen-card:    rgba(255, 255, 255, 0.03);
       --sheen-sweep-a: rgba(255, 255, 255, 0.03);
       --sheen-sweep-b: rgba(255, 255, 255, 0.06);
 
-      
+      /* Icon wrapper — dark translucent box */
       --icon-bg:     rgba(255, 255, 255, 0.07);
       --icon-border: rgba(255, 255, 255, 0.12);
       --icon-bg-hov: rgba(255, 255, 255, 0.13);
 
-      
+      /* Badge text — bright and readable on dark */
       --badge-indigo-text: #c7d2fe;
       --badge-yellow-text: #fef08a;
 
-      
+      /* Profile name gradient start */
       --name-grad-start: #ffffff;
 
-      
+      /* Text — high contrast on dark */
       --text-primary:   #ffffff;
       --text-secondary: #c2c9e0;
       --text-muted:     #94a3b8;
+
+      /* Dark Mode Background Blobs (Tech-focused) */
+      .blob-1 { background: radial-gradient(circle, #0f766e, #10b981); }
+      .blob-2 { background: radial-gradient(circle, #0e7490, #06b6d4); }
+      .blob-3 { background: radial-gradient(circle, #3730a3, #4f46e5); }
+      .blob-4 { background: radial-gradient(circle, #4c1d95, #8b5cf6); }
     }
 
-    
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
@@ -161,7 +176,7 @@
       align-items: center;
       position: relative;
       overflow-x: hidden;
-      
+      /* Smooth colour transition when toggling theme */
       transition: background 0.4s ease, color 0.4s ease;
     }
 
@@ -179,7 +194,11 @@
       border-radius: var(--r-sm);
     }
 
-    
+    /* ============================================================
+       ANIMATED BACKGROUND BLOBS
+       Large, softly blurred colour orbs that drift slowly,
+       creating the colourful base for the glassmorphism refraction.
+    ============================================================ */
     .blob-scene {
       position: fixed;
       inset: 0;
@@ -230,7 +249,7 @@
       animation-name: drift-4;
     }
 
-    
+    /* GTA 5 style slow, organic, multi-directional panning & scaling */
     @keyframes drift-1 {
       0%   { transform: translate(0, 0) scale(1); }
       33%  { transform: translate(140px, 120px) scale(1.25); }
@@ -256,7 +275,9 @@
       100% { transform: translate(0, 0) scale(1); }
     }
 
-    
+    /* ============================================================
+       PAGE CONTAINER
+    ============================================================ */
     .page-container {
       width: 100%;
       max-width: 600px;
@@ -270,7 +291,9 @@
       z-index: 1;
     }
 
-    
+    /* ============================================================
+       PROFILE CARD — Neumorphic extruded panel
+    ============================================================ */
     .profile-card {
       width: 100%;
       background: var(--neu-bg);
@@ -284,16 +307,16 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      
+      /* Smooth background colour transition on theme switch */
       transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
-    
+    /* Slightly elevated surface in dark mode so card separates from body */
     [data-theme="dark"] .profile-card {
       background: #1c1f34;
     }
 
-    
+    /* Subtle inner highlight at the top edge — uses token so dark mode can dim it */
     .profile-card::before {
       content: '';
       position: absolute;
@@ -302,7 +325,7 @@
       background: linear-gradient(90deg, transparent, var(--sheen-edge), transparent);
     }
 
-    
+    /* ── Avatar ─────────────────────────────────────────────── */
     .avatar-wrapper {
       position: relative;
       width: 112px;
@@ -310,7 +333,7 @@
       flex-shrink: 0;
     }
 
-    
+    /* Neumorphic raised circle base behind avatar */
     .avatar-wrapper::before {
       content: '';
       position: absolute;
@@ -321,7 +344,7 @@
       z-index: 0;
     }
 
-    
+    /* Spinning conic accent ring */
     .avatar-wrapper::after {
       content: '';
       position: absolute;
@@ -364,7 +387,7 @@
     }
     .avatar-initials.visible { opacity: 1; }
 
-    
+    /* ── Name ─────────────────────────────────────────────────── */
     .profile-name {
       font-size: clamp(1.75rem, 6vw, 2.4rem);
       font-weight: 800;
@@ -376,7 +399,7 @@
       background-clip: text;
     }
 
-    
+    /* ── Location pill ─────────────────────────────────────────── */
     .profile-location {
       display: inline-flex;
       align-items: center;
@@ -393,7 +416,7 @@
 
     .profile-location svg { opacity: 0.6; flex-shrink: 0; }
 
-    
+    /* ── Bio ──────────────────────────────────────────────────── */
     .bio-wrapper {
       width: 100%;
       max-width: 460px;
@@ -429,9 +452,9 @@
       margin: 0;
     }
 
-    
+    /* ── Bio toggle — Neumorphic press button ─────────────────── */
     .bio-toggle-btn {
-      margin-top: 14px;
+      margin-top: 8px;
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -450,7 +473,7 @@
       color: var(--accent-indigo);
     }
 
-    
+    /* Inset / "pressed" state when expanded */
     .bio-toggle-btn.active {
       box-shadow: var(--neu-shadow-in);
       color: var(--accent-indigo);
@@ -463,7 +486,60 @@
 
     .bio-toggle-btn.active .bio-chevron { transform: rotate(180deg); }
 
-    
+    /* ============================================================
+       TECH STACK MARQUEE
+    ============================================================ */
+    .tech-marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      margin-top: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .tech-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 12s linear infinite;
+    }
+
+    .tech-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    .tech-marquee-content {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .tech-icon {
+      width: 28px;
+      height: 28px;
+      opacity: 0.4;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: crosshair;
+    }
+
+    .tech-icon:hover {
+      transform: scale(1.3);
+      opacity: 1;
+    }
+
+    .tech-arch:hover { color: #1793d1; filter: drop-shadow(0 0 8px rgba(23, 147, 209, 0.6)); }
+    .tech-python:hover { color: #ffd343; filter: drop-shadow(0 0 8px rgba(255, 211, 67, 0.6)); }
+    .tech-debian:hover { color: #d70a53; filter: drop-shadow(0 0 8px rgba(215, 10, 83, 0.6)); }
+    .tech-terminal:hover { color: #22c55e; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)); }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       ACADEMIC TIMELINE — glass panels on Neumorphic card
+    ============================================================ */
     .section-label {
       font-size: 0.66rem;
       font-weight: 700;
@@ -471,6 +547,7 @@
       text-transform: uppercase;
       color: var(--text-base);
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      margin-bottom: 2px;
     }
 
     .academic-section {
@@ -496,7 +573,7 @@
       transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
-    
+    /* Elevated surface in dark mode */
     [data-theme="dark"] .timeline-card {
       background: #1c1f34;
     }
@@ -517,7 +594,7 @@
       gap: 8px;
     }
 
-    
+    /* Glass badge */
     .timeline-badge {
       display: inline-flex;
       align-items: center;
@@ -533,7 +610,7 @@
       position: relative;
       overflow: hidden;
 
-      
+      /* Glass base */
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
@@ -543,7 +620,7 @@
       transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s ease;
     }
 
-    
+    /* Glass sheen line at top of badge — token-driven */
     .timeline-badge::before {
       content: '';
       position: absolute;
@@ -585,7 +662,9 @@
       text-transform: uppercase;
     }
 
-    
+    /* ============================================================
+       LINK CARDS — Glassmorphic floating panels
+    ============================================================ */
     .links-section {
       width: 100%;
       display: flex;
@@ -604,7 +683,7 @@
       margin-bottom: 4px;
     }
 
-    
+    /* ── Card base ────────────────────────────────────────────── */
     .link-card {
       display: flex;
       align-items: center;
@@ -612,7 +691,7 @@
       padding: 14px 18px;
       border-radius: var(--r-md);
 
-      
+      /* Glassmorphism */
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
@@ -624,21 +703,24 @@
       overflow: hidden;
       min-width: 0;
 
-      
+      /*
+        3D tilt + hover lift driven by JS rAF.
+        CSS handles the reset transition.
+      */
       transform:
         perspective(1000px)
         rotateX(var(--tilt-x, 0deg))
         rotateY(var(--tilt-y, 0deg));
       transition:
-        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.45s ease,
-        border-color 0.35s ease,
-        background 0.35s ease;
+        transform 0.4s cubic-bezier(0.1, 0.1, 0.25, 1),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease,
+        background 0.4s ease;
 
       will-change: transform;
     }
 
-    
+    /* Glass sheen sweep across top half — token-driven */
     .link-card::before {
       content: '';
       position: absolute;
@@ -651,7 +733,7 @@
       transition: opacity 0.3s ease;
     }
 
-    
+    /* Diagonal light-sweep on hover — token-driven */
     .link-card::after {
       content: '';
       position: absolute;
@@ -680,7 +762,7 @@
       to   { transform: skewX(-20deg) translateX(280%);  }
     }
 
-    
+    /* ── Hover state ──────────────────────────────────────────── */
     .link-card:hover {
       background: var(--glass-bg-hov);
       border-color: rgba(var(--card-glow-r, 99), var(--card-glow-g, 102), var(--card-glow-b, 241), 0.5);
@@ -693,15 +775,20 @@
         rotateX(var(--tilt-x, 0deg))
         rotateY(var(--tilt-y, 0deg))
         translateY(-4px);
+      transition:
+        transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease;
     }
 
-    
+    /* ── Active tap ───────────────────────────────────────────── */
     .link-card:active {
       transform: perspective(1000px) rotateX(0) rotateY(0) scale(0.975) !important;
       box-shadow: var(--glass-shadow) !important;
     }
 
-    
+    /* Brand colour left accent bar */
     .link-card-accent {
       position: absolute;
       left: 0; top: 12%; bottom: 12%;
@@ -719,7 +806,7 @@
 
     .link-card:hover .link-card-accent { opacity: 1; }
 
-    
+    /* ── Icon wrapper — fully token-driven ───────────────────── */
     .link-icon-wrapper {
       width: 40px;
       height: 40px;
@@ -780,7 +867,7 @@
       stroke: none;
     }
 
-    
+    /* ── Text ─────────────────────────────────────────────────── */
     .link-text-wrapper {
       flex: 1;
       min-width: 0;
@@ -831,7 +918,12 @@
       stroke: rgb(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241));
     }
 
-    
+    /* ============================================================
+       THEME TOGGLE — inline in the page, top-right of viewport
+       On desktop: fixed top-right (out of content flow, safe)
+       On mobile (<=600px): sits inline at top of page container,
+       right-aligned, so it never overlaps scrolling content.
+    ============================================================ */
     .theme-toggle-wrap {
       width: 100%;
       display: flex;
@@ -859,7 +951,7 @@
         transform   0.35s var(--ease-bounce);
     }
 
-    
+    /* Desktop: fix to top-right corner */
     @media (min-width: 601px) {
       .theme-toggle {
         position: fixed;
@@ -879,14 +971,16 @@
       transform: scale(0.94);
     }
 
-    
+    /* Icon visibility — sun shown in dark mode, moon in light mode */
     .theme-toggle .icon-sun  { display: none; }
     .theme-toggle .icon-moon { display: block; }
 
     [data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
     [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
-    
+    /* ============================================================
+       FOOTER
+    ============================================================ */
     .page-footer {
       font-size: 0.70rem;
       color: var(--text-muted);
@@ -911,7 +1005,9 @@
       color: var(--accent-cyan);
     }
 
-    
+    /* ============================================================
+       STAGGERED ENTRANCE ANIMATIONS
+    ============================================================ */
     .anim-ready {
       opacity: 0;
       transform: translateY(24px) scale(0.97);
@@ -937,7 +1033,9 @@
       to   { opacity: 1; transform: scale(1);    }
     }
 
-    
+    /* ============================================================
+       MOBILE TOUCH FALLBACK
+    ============================================================ */
     @media (hover: none) {
       .link-card {
         transform: none !important;
@@ -949,14 +1047,16 @@
       }
     }
 
-    
+    /* ============================================================
+       RESPONSIVE TWEAKS
+    ============================================================ */
     @media (max-width: 400px) {
       .page-container { padding-top: 4px; padding-bottom: 56px; gap: 20px; }
       .profile-card   { padding: 24px 16px; }
       .timeline-badge { padding: 8px 14px; font-size: 0.82rem; }
     }
 
-    
+    /* Respect prefers-reduced-motion */
     @media (prefers-reduced-motion: reduce) {
       .blob-1, .blob-2, .blob-3, .blob-4 { animation: none; }
       .avatar-wrapper::after { animation: none; }
@@ -967,7 +1067,9 @@
       .link-card::after { animation: none !important; }
     }
 
-    
+    /* ============================================================
+       MAC TERMINAL OVERLAY
+    ============================================================ */
     .mac-terminal-overlay {
       position: fixed;
       inset: 0;
@@ -1093,19 +1195,82 @@
       min-width: 0;
     }
 
-    
+    /* Terminal colours */
     .term-green { color: #4ade80; }
     .term-red { color: #f87171; }
     .term-yellow { color: #facc15; }
     .term-blue { color: #60a5fa; }
     .term-magenta { color: #c084fc; }
+    /* ============================================================
+       BIOMETRIC PRELOADER
+    ============================================================ */
+    .biometric-preloader {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--neu-bg);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      transition: opacity 0.4s ease, visibility 0.4s;
+    }
+    .biometric-preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 90%;
+      max-width: 600px;
+    }
+    .terminal-text {
+      align-self: flex-start;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      min-height: 80px;
+      line-height: 1.5;
+    }
+    .status-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-align: center;
+      min-height: 24px;
+      color: var(--accent-indigo);
+      text-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    
+    .biometric-preloader.success .status-text {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    }
   </style>
 </head>
 <body>
 
+  <!-- ============================================================
+       BIOMETRIC PRELOADER
+  ============================================================ -->
+  <div id="biometric-preloader" class="biometric-preloader" aria-hidden="true">
+    <div class="preloader-content">
+      <div class="terminal-text" id="preloader-text"></div>
+
+      <div class="status-text" id="preloader-status"></div>
+    </div>
+  </div>
 
 
-  
+
+  <!-- ============================================================
+       ANIMATED COLOUR BLOBS — background canvas for glass refraction
+  ============================================================ -->
   <div class="blob-scene" aria-hidden="true">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -1113,10 +1278,14 @@
     <div class="blob blob-4"></div>
   </div>
 
-  
+  <!-- ============================================================
+       PAGE WRAPPER
+  ============================================================ -->
   <main class="page-container" role="main">
 
-    
+    <!-- =========================================================
+         THEME TOGGLE — inline on mobile, fixed on desktop via CSS
+    ========================================================== -->
     <div class="theme-toggle-wrap">
       <button
         class="theme-toggle"
@@ -1124,14 +1293,14 @@
         aria-label="Switch to light mode"
         title="Toggle dark / light mode"
       >
-        
+        <!-- Sun icon (shown in dark mode to switch to light) -->
         <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4"/>
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
         </svg>
-        
+        <!-- Moon icon (shown in light mode to switch to dark) -->
         <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1140,11 +1309,13 @@
       </button>
     </div>
 
-    
+    <!-- =========================================================
+         PROFILE CARD — Neumorphic extruded panel
+    ========================================================== -->
     <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
     <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
 
-      
+      <!-- Avatar -->
       <div class="avatar-wrapper anim-ready anim-avatar" data-delay="80">
         <img
           id="profile-avatar"
@@ -1163,10 +1334,10 @@
         <div class="avatar-initials" id="avatar-initials" aria-hidden="true">S</div>
       </div>
 
-      
+      <!-- Name -->
       <h1 class="profile-name anim-ready" data-delay="160">Shahzeb Faisal</h1>
 
-      
+      <!-- Location -->
       <span class="profile-location anim-ready" data-delay="220" aria-label="Based in Lahore, Pakistan">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
@@ -1177,7 +1348,7 @@
         Lahore, Pakistan
       </span>
 
-      
+      <!-- Bio collapsible -->
       <div class="bio-wrapper anim-ready" data-delay="300">
         <div class="bio-content collapsed" id="bio-content">
           <p class="profile-bio">
@@ -1201,9 +1372,31 @@
         </button>
       </div>
 
+      <!-- Tech Stack Marquee -->
+      <div class="tech-marquee-wrapper anim-ready" data-delay="300">
+        <div class="tech-marquee">
+          <!-- First set -->
+          <div class="tech-marquee-content">
+            <svg class="tech-icon tech-arch" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h3.5l2.4-5.2 4.1-8.5 4.1 8.5 2.4 5.2H22L12 2zm0 8.5l-2.4 5.2h4.8L12 10.5z"/></svg>
+            <svg class="tech-icon tech-python" viewBox="0 0 24 24" fill="currentColor"><path d="M12.003 2.158c-3.151 0-4.885.666-6.19 1.706C4.417 4.978 4 6.746 4 9.38v2.337h4v-1.1c0-1.07.636-1.573 2-1.573h3.5c1.173 0 1.5.38 1.5 1.05v2h-6c-3.153 0-5.836 1.408-5.836 4.673 0 3.033 1.942 4.542 4.673 4.542h1.677v-1.542H8.38c-1.127 0-1.847-.463-1.847-1.393 0-.936 1.084-1.39 2.47-1.39h5c3.553 0 4.997-1.838 4.997-4.673v-5c0-4.32-2.128-5.153-7-5.153zm-2.5 2.482a1 1 0 110 2 1 1 0 010-2zM15 11.28c-1.42 0-2 .542-2 1.63v1.09h4v-1.09c0-1.088-.58-1.63-2-1.63zm3.5 2.5a1 1 0 110 2 1 1 0 010-2z"/></svg>
+            <svg class="tech-icon tech-debian" viewBox="0 0 24 24" fill="currentColor"><path d="M12.44 2.5a7.83 7.83 0 00-6.1 2.37 9.17 9.17 0 00-2.45 6.4 8.78 8.78 0 002.04 5.92A7.36 7.36 0 0011.62 19.5c1.47.1 2.94-.13 4.25-.67A9.45 9.45 0 0020.3 14a8.62 8.62 0 00-.73-7 6.64 6.64 0 00-4.4-3.5 5.57 5.57 0 00-4.7 1.25 4.38 4.38 0 00-1.42 3.6c.1 1.08.6 2 1.45 2.6a2.95 2.95 0 002.5.54 2.45 2.45 0 001.65-1.1c.3-.5.4-1.1.2-1.6a1.53 1.53 0 00-1.2-1 1.26 1.26 0 00-1.1.34 1.15 1.15 0 00-.28 1c0 .17.1.32.22.42a.57.57 0 00.5.15.54.54 0 00.37-.2.6.6 0 00-.06-.44.25.25 0 00-.2-.14c-.07 0-.15.03-.2.1 0 0 .15-.22.38-.2.24.03.46.2.5.5.07.45-.16.86-.53 1.1-.38.25-.86.32-1.3.18a3.17 3.17 0 01-1.85-2.2 4.14 4.14 0 011.08-3.37 5.3 5.3 0 014.28-1.58 6.42 6.42 0 014.2 2.9 8.16 8.16 0 01.96 6.1c-1 3.2-3.88 5.6-7.23 6-2.58.3-5.2-.68-6.97-2.6A9.46 9.46 0 013 8.35a8.7 8.7 0 015.65-8A10.87 10.87 0 0112.44 2.5z"/></svg>
+            <svg class="tech-icon tech-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          </div>
+          <!-- Second set for seamless loop -->
+          <div class="tech-marquee-content">
+            <svg class="tech-icon tech-arch" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h3.5l2.4-5.2 4.1-8.5 4.1 8.5 2.4 5.2H22L12 2zm0 8.5l-2.4 5.2h4.8L12 10.5z"/></svg>
+            <svg class="tech-icon tech-python" viewBox="0 0 24 24" fill="currentColor"><path d="M12.003 2.158c-3.151 0-4.885.666-6.19 1.706C4.417 4.978 4 6.746 4 9.38v2.337h4v-1.1c0-1.07.636-1.573 2-1.573h3.5c1.173 0 1.5.38 1.5 1.05v2h-6c-3.153 0-5.836 1.408-5.836 4.673 0 3.033 1.942 4.542 4.673 4.542h1.677v-1.542H8.38c-1.127 0-1.847-.463-1.847-1.393 0-.936 1.084-1.39 2.47-1.39h5c3.553 0 4.997-1.838 4.997-4.673v-5c0-4.32-2.128-5.153-7-5.153zm-2.5 2.482a1 1 0 110 2 1 1 0 010-2zM15 11.28c-1.42 0-2 .542-2 1.63v1.09h4v-1.09c0-1.088-.58-1.63-2-1.63zm3.5 2.5a1 1 0 110 2 1 1 0 010-2z"/></svg>
+            <svg class="tech-icon tech-debian" viewBox="0 0 24 24" fill="currentColor"><path d="M12.44 2.5a7.83 7.83 0 00-6.1 2.37 9.17 9.17 0 00-2.45 6.4 8.78 8.78 0 002.04 5.92A7.36 7.36 0 0011.62 19.5c1.47.1 2.94-.13 4.25-.67A9.45 9.45 0 0020.3 14a8.62 8.62 0 00-.73-7 6.64 6.64 0 00-4.4-3.5 5.57 5.57 0 00-4.7 1.25 4.38 4.38 0 00-1.42 3.6c.1 1.08.6 2 1.45 2.6a2.95 2.95 0 002.5.54 2.45 2.45 0 001.65-1.1c.3-.5.4-1.1.2-1.6a1.53 1.53 0 00-1.2-1 1.26 1.26 0 00-1.1.34 1.15 1.15 0 00-.28 1c0 .17.1.32.22.42a.57.57 0 00.5.15.54.54 0 00.37-.2.6.6 0 00-.06-.44.25.25 0 00-.2-.14c-.07 0-.15.03-.2.1 0 0 .15-.22.38-.2.24.03.46.2.5.5.07.45-.16.86-.53 1.1-.38.25-.86.32-1.3.18a3.17 3.17 0 01-1.85-2.2 4.14 4.14 0 011.08-3.37 5.3 5.3 0 014.28-1.58 6.42 6.42 0 014.2 2.9 8.16 8.16 0 01.96 6.1c-1 3.2-3.88 5.6-7.23 6-2.58.3-5.2-.68-6.97-2.6A9.46 9.46 0 013 8.35a8.7 8.7 0 015.65-8A10.87 10.87 0 0112.44 2.5z"/></svg>
+            <svg class="tech-icon tech-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          </div>
+        </div>
+      </div>
+
     </section>
 
-    
+    <!-- =========================================================
+         ACADEMIC TIMELINE
+    ========================================================== -->
     <section class="academic-section anim-ready" data-delay="380" aria-label="Academic milestones">
       <span class="section-label">Academic Journey</span>
 
@@ -1244,19 +1437,23 @@
       </div>
     </section>
 
-    
+    <!-- =========================================================
+         LINK HUB — injected by renderLinks()
+    ========================================================== -->
     <nav class="links-section" id="links-section" aria-label="Social and contact links">
-      <span class="links-heading">Find Me Online</span>
+      <span class="links-heading anim-ready" data-delay="450">Find Me Online</span>
     </nav>
 
-    
+    <!-- Footer -->
     <footer class="page-footer anim-ready" data-delay="0">
       <p>Made with <span aria-label="love">♥</span> by Shahzeb</p>
     </footer>
 
   </main>
 
-  
+  <!-- ============================================================
+       SECRET MAC TERMINAL OVERLAY
+  ============================================================ -->
   <div class="mac-terminal-overlay" id="mac-terminal" aria-hidden="true">
     <div class="mac-window">
       <div class="mac-titlebar">
@@ -1269,23 +1466,28 @@
       </div>
       <div class="mac-body" id="mac-body">
         <div class="mac-output" id="mac-output">
-          <div>Last login: <span id="term-date"></span> on ttys000</div>
-          <div>Type 'help' to see available commands.</div>
         </div>
         <form class="mac-input-line" id="mac-form">
-          <span class="mac-prompt">guest@shahzeb ~ %</span>
+          <span class="mac-prompt" id="mac-prompt-text">guest@shahzeb ~ %</span>
           <input type="text" id="mac-input" class="mac-input" autocomplete="off" spellcheck="false">
         </form>
       </div>
     </div>
   </div>
 
-  
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
   <script>
   (function () {
     'use strict';
 
-    
+    /* ==============================================================
+       LINKS DATA
+       brandColor is now split into R/G/B components so we can use
+       them in CSS rgba() expressions for the glow effects.
+       (--card-glow-r, --card-glow-g, --card-glow-b)
+    ============================================================== */
     const LINKS_DATA = [
       {
         id: 'link-instagram', label: 'Instagram', sublabel: '@shahzebfaysal',
@@ -1361,12 +1563,16 @@
       },
     ];
 
-    
+    /* ==============================================================
+       TOUCH DETECTION
+    ============================================================== */
     const IS_TOUCH = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    
-    const MAX_TILT  = 7;   
-    const LERP_F    = 0.10; 
+    /* ==============================================================
+       3D TILT SYSTEM (Lerp-smoothed rAF loop)
+    ============================================================== */
+    const MAX_TILT  = 7;   /* degrees */
+    const LERP_F    = 0.10; /* 10% per frame */
     const tiltState = new Map();
 
     function lerp(a, b, t) { return a + (b - a) * t; }
@@ -1409,7 +1615,9 @@
       requestAnimationFrame(tiltLoop);
     }
 
-    
+    /* ==============================================================
+       renderLinks() — inject cards from LINKS_DATA
+    ============================================================== */
     const ARROW_SVG = `<svg class="link-arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>`;
 
     function extractSvgPaths(str) {
@@ -1448,7 +1656,9 @@
       section.querySelectorAll('.link-card').forEach(registerTiltCard);
     }
 
-    
+    /* ==============================================================
+       initAnimations() — staggered entrance
+    ============================================================== */
     function initAnimations() {
       document.querySelectorAll('.anim-ready').forEach(function (el) {
         const delay = parseInt(el.dataset.delay, 10) || 0;
@@ -1456,7 +1666,9 @@
       });
     }
 
-    
+    /* ==============================================================
+       initAvatarFallback()
+    ============================================================== */
     function initAvatarFallback() {
       var img = document.getElementById('profile-avatar');
       if (!img) return;
@@ -1467,7 +1679,9 @@
       }
     }
 
-    
+    /* ==============================================================
+       initBioToggle() — Neumorphic press button
+    ============================================================== */
     function initBioToggle() {
       var btn  = document.getElementById('bio-toggle-btn');
       var cont = document.getElementById('bio-content');
@@ -1489,11 +1703,16 @@
       });
     }
 
-    
+    /* ==============================================================
+       initTheme()
+       Reads the saved preference from localStorage (or defaults
+       to 'dark'). Sets data-theme on <html> and wires the toggle.
+       Preference is persisted across page loads.
+    ============================================================== */
     function initTheme() {
       var root   = document.documentElement;
       var btn    = document.getElementById('theme-toggle');
-      
+      /* Default to dark if no preference is saved yet */
       var saved  = localStorage.getItem('sf-theme') || 'dark';
 
       function applyTheme(theme) {
@@ -1517,7 +1736,9 @@
       }
     }
 
-    
+    /* ==============================================================
+       MAC TERMINAL LOGIC
+    ============================================================== */
     function initMacTerminal() {
       var terminal = document.getElementById('mac-terminal');
       var closeBtn = document.getElementById('mac-close');
@@ -1530,8 +1751,6 @@
       if (hintEl) {
         hintEl.textContent = IS_TOUCH ? "Hint: Tap the avatar 5 times" : "Hint: Press ` or Ctrl+Alt+T";
       }
-
-      document.getElementById('term-date').textContent = new Date().toString().split(' ').slice(0, 4).join(' ');
 
       var tapCount = 0;
       var tapTimer;
@@ -1566,9 +1785,46 @@
         });
       }
 
+      var hasBooted = false;
+      var isRoot = false;
+      var awaitingSudo = false;
+
       function openTerminal() {
         terminal.classList.add('open');
-        setTimeout(function() { macInput.focus(); }, 100);
+        if (!hasBooted) {
+          hasBooted = true;
+          macInput.disabled = true;
+          macOutput.innerHTML = '';
+          var bootMsgs = [
+            "<span class=\"term-green\">[ OK ]</span> Started udev Kernel Device Manager.",
+            "<span class=\"term-green\">[ OK ]</span> Started Network Manager.",
+            "<span class=\"term-green\">[ OK ]</span> Reached target Network.",
+            "<span class=\"term-green\">[ OK ]</span> Started WPA supplicant.",
+            "<span class=\"term-green\">[ OK ]</span> Started Light Display Manager.",
+            "Starting <span class=\"term-yellow\">Terminus...</span>"
+          ];
+          var i = 0;
+          var bootContainer = document.createElement('div');
+          macOutput.appendChild(bootContainer);
+          var bootInterval = setInterval(function() {
+            if (i < bootMsgs.length) {
+              bootContainer.innerHTML += bootMsgs[i] + "<br>";
+              macOutput.parentElement.scrollTop = macOutput.parentElement.scrollHeight;
+              i++;
+            } else {
+              clearInterval(bootInterval);
+              setTimeout(function() {
+                var dateStr = new Date().toString().split(' ').slice(0, 4).join(' ');
+                bootContainer.innerHTML += "<br>Last login: " + dateStr + " on tty1<br>Type 'help' to see available commands.<br>";
+                macOutput.parentElement.scrollTop = macOutput.parentElement.scrollHeight;
+                macInput.disabled = false;
+                macInput.focus();
+              }, 400);
+            }
+          }, 150);
+        } else {
+          setTimeout(function() { macInput.focus(); }, 100);
+        }
       }
 
       function closeTerminal() {
@@ -1589,12 +1845,55 @@
                  "  <span class=\"term-green\">coffee</span>    - Brew a cup of coffee\n" +
                  "  <span class=\"term-green\">hack</span>      - Initiate mainframe bypass\n" +
                  "  <span class=\"term-green\">matrix</span>    - Enter the matrix\n" +
+                 "  <span class=\"term-green\">pacman</span>    - Arch package manager\n" +
                  "  <span class=\"term-green\">sudo</span>      - Execute a command as superuser\n" +
+                 "  <span class=\"term-green\">currentlyreading</span> - Literature-inspired easter egg\n" +
                  "  <span class=\"term-green\">exit</span>      - Close the terminal";
         },
         whoami: function() {
           var bioEl = document.querySelector('.profile-bio');
           return bioEl ? bioEl.innerText.trim() : "Name: Shahzeb Faisal\nRole: Developer & Tech Enthusiast\nStatus: Highly classified";
+        },
+        currentlyreading: function() {
+          var books = [
+            "Aqeedah Al-Wastiyyah By Shaykh Al Islam Ibn Taymiyyah",
+            "Kitab At Tawheed by Shaykh Muhammad ibn Abdul Wahhab",
+            "Fadhail e Sahaba Shaykh Zubair Ali Zai",
+            "At Tahaf Al Basim Sharh Mautta Imam Malik Riwayat ibn Qasim By Shaykh Zubair Ali Zai"
+          ];
+          var book = books[Math.floor(Math.random() * books.length)];
+          return "Currently reading:\n<span class=\"term-yellow\">" + book + "</span>";
+        },
+        pacman: function(el, args) {
+          if (args.length < 3 || args[1] !== '-s') {
+            return "error: no operation specified (use -h for help)\nUsage: pacman -S [package]";
+          }
+          var pkg = args[2];
+          var steps = [
+            "resolving dependencies...",
+            "looking for conflicting packages...",
+            "Packages (1) " + pkg + "-1.0.0",
+            "Total Installed Size:  2.45 MiB",
+            ":: Proceed with installation? [Y/n] Y",
+            "(1/1) checking keys in keyring                     [####################] 100%",
+            "(1/1) checking package integrity                   [####################] 100%",
+            "(1/1) loading package files                        [####################] 100%",
+            "(1/1) checking for file conflicts                  [####################] 100%",
+            "(1/1) installing " + pkg + "                         [####################] 100%",
+            "<span class=\"term-green\">Successfully installed " + pkg + ".</span>"
+          ];
+          var i = 0;
+          el.innerHTML = steps[0];
+          var interval = setInterval(function() {
+            i++;
+            if (i >= steps.length) {
+              clearInterval(interval);
+            } else {
+              el.innerHTML += "\n" + steps[i];
+              el.parentElement.scrollTop = el.parentElement.scrollHeight;
+            }
+          }, 300);
+          return null;
         },
         links: function() {
           if (typeof LINKS_DATA !== 'undefined' && LINKS_DATA.length > 0) {
@@ -1775,13 +2074,41 @@
       };
 
       if (macForm) {
+        var macPromptText = document.getElementById('mac-prompt-text');
+        
         macForm.addEventListener('submit', function(e) {
           e.preventDefault();
           var cmd = macInput.value.trim();
+
+          if (awaitingSudo) {
+            var sudoLine = document.createElement('div');
+            sudoLine.innerHTML = "[sudo] password for guest: " + (cmd ? '********' : '');
+            macOutput.appendChild(sudoLine);
+            
+            if (cmd === 'root' || cmd === 'arch btw') {
+              isRoot = true;
+              macPromptText.innerHTML = "<span class=\"term-red\">root@shahzeb #</span>";
+            } else if (cmd !== '') {
+              var errLine = document.createElement('div');
+              errLine.innerHTML = "Sorry, try again.";
+              macOutput.appendChild(errLine);
+            }
+            
+            if (cmd !== '') {
+              awaitingSudo = false;
+              macInput.type = 'text';
+              macPromptText.style.display = 'inline';
+            }
+            macInput.value = '';
+            macOutput.parentElement.scrollTop = macOutput.parentElement.scrollHeight;
+            return;
+          }
+
           if (!cmd) return;
 
           var cmdLine = document.createElement('div');
-          cmdLine.innerHTML = "<span class=\"mac-prompt\">guest@shahzeb ~ %</span> " + cmd;
+          var currentPrompt = isRoot ? "<span class=\"term-red\">root@shahzeb #</span>" : "guest@shahzeb ~ %";
+          cmdLine.innerHTML = "<span class=\"mac-prompt\">" + currentPrompt + "</span> " + cmd;
           macOutput.appendChild(cmdLine);
 
           var lowerCmd = cmd.toLowerCase();
@@ -1791,16 +2118,28 @@
           if (baseCmd === 'clear') {
             macOutput.innerHTML = '';
           } else if (baseCmd === 'exit') {
-            closeTerminal();
+            if (isRoot) {
+              isRoot = false;
+              macPromptText.innerHTML = "guest@shahzeb ~ %";
+            } else {
+              closeTerminal();
+            }
+          } else if (lowerCmd === 'sudo su' || lowerCmd === 'sudo -i') {
+            awaitingSudo = true;
+            macInput.type = 'password';
+            macPromptText.style.display = 'none';
+            var sudoPrompt = document.createElement('div');
+            sudoPrompt.innerHTML = "[sudo] password for guest: ";
+            macOutput.appendChild(sudoPrompt);
           } else {
             var response = document.createElement('div');
             macOutput.appendChild(response);
 
             var result;
             if (commands[lowerCmd]) {
-              result = commands[lowerCmd](response);
+              result = commands[lowerCmd](response, args);
             } else if (commands[baseCmd]) {
-              result = commands[baseCmd](response);
+              result = commands[baseCmd](response, args);
             } else {
               result = "zsh: command not found: " + baseCmd;
             }
@@ -1816,15 +2155,109 @@
       }
     }
 
-    
+    /* ==============================================================
+       BIOMETRIC PRELOADER
+    ============================================================== */
+    function runPreloader(onComplete) {
+      var overlay = document.getElementById('biometric-preloader');
+      var termText = document.getElementById('preloader-text');
+      var statusText = document.getElementById('preloader-status');
+
+      if (!overlay) {
+        onComplete();
+        return;
+      }
+
+      document.body.style.overflow = 'hidden';
+
+      var bootMsgs = [
+        "[ OK ] Booting Arch Linux (Kernel 6.9.12).",
+        "[ OK ] Started Network Manager.",
+        "[ OK ] Reached target Network is Online.",
+        "[ OK ] Started archlinux-keyring-wkd-sync.timer.",
+        "[ OK ] Started User Login Management.",
+        "Loading digital architect profile...",
+        "Checking your browser history to confirm you're a human..."
+      ];
+      
+      var msgIndex = 0;
+      var charIndex = 0;
+      
+      function typeWriter() {
+        if (msgIndex < bootMsgs.length) {
+          if (charIndex < bootMsgs[msgIndex].length) {
+            termText.innerHTML += bootMsgs[msgIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 4);
+          } else {
+            termText.innerHTML += "<br>";
+            msgIndex++;
+            charIndex = 0;
+            var delay = (msgIndex === bootMsgs.length) ? 400 : Math.random() * 20 + 10;
+            setTimeout(typeWriter, delay);
+          }
+        } else {
+          startScanPhase();
+        }
+      }
+      
+      function startScanPhase() {
+        statusText.innerText = "HISTORY ANALYZED: SUSPICIOUS BUT HUMAN.";
+        statusText.style.opacity = '1';
+        
+        var flashInt = setInterval(function() {
+          statusText.style.opacity = statusText.style.opacity === '0' ? '1' : '0';
+        }, 150);
+
+        setTimeout(function() {
+          clearInterval(flashInt);
+          statusText.style.opacity = '1';
+          overlay.classList.add('success');
+          statusText.innerText = "VERIFIED: HUMAN. ACCESS GRANTED.";
+          
+          setTimeout(function() {
+            overlay.classList.add('fade-out');
+            setTimeout(function() {
+              overlay.remove();
+              document.body.style.overflow = '';
+              onComplete();
+            }, 400);
+          }, 500);
+        }, 800);
+      }
+      
+      setTimeout(typeWriter, 150);
+    }
+
+    /* ==============================================================
+       BOOT
+    ============================================================== */
     function boot() {
       initTheme();
       renderLinks();
-      initAnimations();
       initAvatarFallback();
       initBioToggle();
       initMacTerminal();
       requestAnimationFrame(tiltLoop);
+
+      function runFinalAnimations() {
+        var avatarImg = document.getElementById('profile-avatar');
+        if (avatarImg && !avatarImg.complete) {
+          avatarImg.addEventListener('load', initAnimations);
+          avatarImg.addEventListener('error', initAnimations);
+        } else {
+          initAnimations();
+        }
+      }
+
+      if (sessionStorage.getItem('preloaderPlayed')) {
+        var preloader = document.getElementById('biometric-preloader');
+        if (preloader) preloader.remove();
+        runFinalAnimations();
+      } else {
+        sessionStorage.setItem('preloaderPlayed', 'true');
+        runPreloader(runFinalAnimations);
+      }
     }
 
     if (document.readyState === 'loading') {

@@ -29,8 +29,8 @@
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
 
-      --glass-bg:     rgba(255, 255, 255, 0.40);
-      --glass-bg-hov: rgba(255, 255, 255, 0.62);
+      --glass-bg:     rgba(255, 255, 255, 0.65);
+      --glass-bg-hov: rgba(255, 255, 255, 0.85);
       --glass-border: rgba(255, 255, 255, 0.65);
       --glass-blur:   blur(14px);
       --glass-shadow: 0 8px 32px rgba(100, 120, 160, 0.18), 0 2px 8px rgba(100, 120, 160, 0.10);
@@ -92,8 +92,8 @@
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
 
-      --glass-bg:     rgba(30, 33, 56, 0.82);
-      --glass-bg-hov: rgba(36, 40, 66, 0.92);
+      --glass-bg:     rgba(30, 33, 56, 0.88);
+      --glass-bg-hov: rgba(36, 40, 66, 0.94);
       --glass-border: rgba(255, 255, 255, 0.10);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
       --glass-shadow-hov: 0 16px 40px rgba(0, 0, 0, 0.70), 0 4px 12px rgba(0, 0, 0, 0.40);
@@ -165,6 +165,8 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .blob {
@@ -552,8 +554,6 @@
       overflow: hidden;
 
       background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--glass-border);
       box-shadow: var(--glass-shadow);
 
@@ -627,10 +627,10 @@
       border-radius: var(--r-md);
 
       background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--glass-border);
       box-shadow: var(--glass-shadow);
+      transform: translateZ(0);
+      backface-visibility: hidden;
 
       cursor: pointer;
       position: relative;
@@ -842,10 +842,16 @@
     }
 
     .theme-toggle-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding: 0 2px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+    }
+
+    @media (min-width: 601px) {
+      .theme-toggle-wrap {
+        position: fixed;
+      }
     }
 
     .theme-toggle {
@@ -866,15 +872,6 @@
         box-shadow  0.3s ease,
         color       0.3s ease,
         transform   0.35s var(--ease-bounce);
-    }
-
-    @media (min-width: 601px) {
-      .theme-toggle {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 10000;
-      }
     }
 
     .theme-toggle:hover {
@@ -1315,6 +1312,10 @@
       z-index: 0;
       opacity: 0.03;
       pointer-events: none;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
     [data-theme="dark"] #matrix-canvas {
       opacity: 0.12;
@@ -1331,6 +1332,8 @@
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
       background-size: 100% 4px;
       opacity: 0.4;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .crt-overlay::before {
@@ -1353,8 +1356,8 @@
       position: relative;
     }
 
-    .glitch-effect:hover::before,
-    .glitch-effect:hover::after {
+    .glitch-effect::before,
+    .glitch-effect::after {
       content: attr(data-text);
       position: absolute;
       top: 0;
@@ -1364,14 +1367,14 @@
       opacity: 0.8;
     }
 
-    .glitch-effect:hover::before {
+    .glitch-effect::before {
       left: 2px;
       text-shadow: -1px 0 rgba(255,0,0,0.7);
       clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
       animation: glitch-anim-1 2s infinite linear alternate-reverse;
     }
 
-    .glitch-effect:hover::after {
+    .glitch-effect::after {
       left: -2px;
       text-shadow: -1px 0 rgba(0,255,255,0.7);
       clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
@@ -1418,30 +1421,30 @@
     <div class="blob blob-4"></div>
   </div>
 
+  <div class="theme-toggle-wrap">
+    <button
+      class="theme-toggle"
+      id="theme-toggle"
+      aria-label="Switch to light mode"
+      title="Toggle dark / light mode"
+    >
+
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
   <main class="page-container" role="main">
-
-    <div class="theme-toggle-wrap">
-      <button
-        class="theme-toggle"
-        id="theme-toggle"
-        aria-label="Switch to light mode"
-        title="Toggle dark / light mode"
-      >
-
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-        </svg>
-
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-    </div>
 
     <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
     <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
@@ -1701,8 +1704,16 @@
     const LERP_F    = 0.10;
     const tiltState = new Map();
 
+    let tiltLoopActive = false;
+
     function lerp(a, b, t) { return a + (b - a) * t; }
     function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+
+    function startTiltLoop() {
+      if (tiltLoopActive) return;
+      tiltLoopActive = true;
+      requestAnimationFrame(tiltLoop);
+    }
 
     function registerTiltCard(card) {
       if (IS_TOUCH) return;
@@ -1715,30 +1726,43 @@
         const s   = tiltState.get(card);
         s.ty =  clamp(nx * MAX_TILT, -MAX_TILT, MAX_TILT);
         s.tx = -clamp(ny * MAX_TILT, -MAX_TILT, MAX_TILT);
+        startTiltLoop();
       });
 
       card.addEventListener('mouseleave', function () {
         const s  = tiltState.get(card);
         s.tx = 0; s.ty = 0;
+        startTiltLoop();
       });
     }
 
     function tiltLoop() {
-      if (!IS_TOUCH) {
-        tiltState.forEach(function (s, card) {
-          s.cx = lerp(s.cx, s.tx, LERP_F);
-          s.cy = lerp(s.cy, s.ty, LERP_F);
-          const flat = Math.abs(s.cx) < 0.005 && Math.abs(s.cy) < 0.005 && s.tx === 0 && s.ty === 0;
-          if (!flat) {
-            card.style.setProperty('--tilt-x', s.cx.toFixed(3) + 'deg');
-            card.style.setProperty('--tilt-y', s.cy.toFixed(3) + 'deg');
-          } else {
+      if (IS_TOUCH) {
+        tiltLoopActive = false;
+        return;
+      }
+      let stillRunning = false;
+      tiltState.forEach(function (s, card) {
+        s.cx = lerp(s.cx, s.tx, LERP_F);
+        s.cy = lerp(s.cy, s.ty, LERP_F);
+        const flat = Math.abs(s.cx) < 0.005 && Math.abs(s.cy) < 0.005 && s.tx === 0 && s.ty === 0;
+        if (!flat) {
+          card.style.setProperty('--tilt-x', s.cx.toFixed(3) + 'deg');
+          card.style.setProperty('--tilt-y', s.cy.toFixed(3) + 'deg');
+          stillRunning = true;
+        } else {
+          if (card.style.getPropertyValue('--tilt-x')) {
             card.style.removeProperty('--tilt-x');
             card.style.removeProperty('--tilt-y');
           }
-        });
+        }
+      });
+
+      if (stillRunning) {
+        requestAnimationFrame(tiltLoop);
+      } else {
+        tiltLoopActive = false;
       }
-      requestAnimationFrame(tiltLoop);
     }
 
     const ARROW_SVG = `<svg class="link-arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>`;
@@ -2408,10 +2432,11 @@
       if (!canvas) return;
       var ctx = canvas.getContext('2d');
 
-      var w = canvas.width = window.innerWidth;
-      var h = canvas.height = window.innerHeight;
+      var scale = 0.5;
+      var w = canvas.width = window.innerWidth * scale;
+      var h = canvas.height = window.innerHeight * scale;
       var chars = '01'.split('');
-      var fontSize = 14;
+      var fontSize = 10;
       var columns = w / fontSize;
       var drops = [];
       for (var x = 0; x < columns; x++) {
@@ -2419,8 +2444,7 @@
       }
 
       function draw() {
-
-        ctx.fillStyle = 'rgba(9, 10, 15, 0.1)';
+        ctx.fillStyle = 'rgba(9, 10, 15, 0.12)';
         ctx.fillRect(0, 0, w, h);
 
         ctx.fillStyle = '#38bdf8';
@@ -2428,23 +2452,22 @@
 
         for (var i = 0; i < drops.length; i++) {
           var text = chars[Math.floor(Math.random() * chars.length)];
-
           if (drops[i] >= 0) {
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
           }
 
-          if (drops[i] * fontSize > h && Math.random() > 0.975) {
+          if (drops[i] * fontSize > h && Math.random() > 0.98) {
             drops[i] = 0;
           }
           drops[i]++;
         }
       }
 
-      setInterval(draw, 33);
+      setInterval(draw, 50);
 
       window.addEventListener('resize', function() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
+        w = canvas.width = window.innerWidth * scale;
+        h = canvas.height = window.innerHeight * scale;
         columns = w / fontSize;
         drops = [];
         for (var x = 0; x < columns; x++) {
@@ -2461,6 +2484,8 @@
       initContactForm();
       initMacTerminal();
       initMatrixRain();
+
+      tiltLoopActive = true;
       requestAnimationFrame(tiltLoop);
 
       function runFinalAnimations() {

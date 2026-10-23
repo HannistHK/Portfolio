@@ -168,11 +168,15 @@
       color: var(--text-primary);
       background-color: var(--neu-bg);
       min-height: 100%;
-      min-height: 100dvh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
+    }
+
+    [data-theme="dark"] body {
+      background-color: #141624;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -191,10 +195,12 @@
 
     .blob-scene {
       position: fixed;
-      inset: 0;
+      top: -60px;
+      left: 0;
+      right: 0;
+      bottom: -160px;
       width: 100%;
-      height: 100%;
-      height: 100dvh;
+      height: calc(100% + 220px);
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
@@ -205,17 +211,11 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(50px);
+      filter: blur(90px);
       opacity: 0.55;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
       will-change: transform;
-    }
-
-    @media (max-width: 768px) {
-      .blob {
-        filter: blur(35px);
-      }
     }
 
     .blob-1 {
@@ -349,76 +349,38 @@
       100% { transform: scale(1); }
     }
 
-    /* Soft Aurora Halo (Organic & Modern Ambient Glassmorphism) */
+    /* Single Main Ring Breathing Glow (Hugging Main Ring Directly) */
     .avatar-halo {
       position: absolute;
-      inset: -20px;
+      inset: -3px;
       border-radius: 50%;
-      background: radial-gradient(
-        circle at 50% 50%,
-        rgba(99, 102, 241, 0.65) 0%,
-        rgba(6, 182, 212, 0.40) 42%,
-        rgba(99, 102, 241, 0.12) 62%,
-        transparent 72%
-      );
-      box-shadow:
-        0 0 24px rgba(99, 102, 241, 0.45),
-        0 0 48px rgba(6, 182, 212, 0.28);
-      opacity: 0.75;
       pointer-events: none;
       z-index: 0;
-      animation: aurora-pulse 12s ease-in-out infinite;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.5s ease,
-                  opacity 0.5s ease;
+      animation: aurora-pulse 8s ease-in-out infinite;
+      transition: box-shadow 0.35s ease, opacity 0.35s ease;
     }
 
     @keyframes aurora-pulse {
       0%, 100% {
-        transform: scale(0.96);
-        opacity: 0.65;
         box-shadow:
-          0 0 20px rgba(99, 102, 241, 0.38),
-          0 0 42px rgba(6, 182, 212, 0.22);
+          0 0 10px rgba(99, 102, 241, 0.40),
+          0 0 20px rgba(6, 182, 212, 0.22);
+        opacity: 0.70;
       }
       50% {
-        transform: scale(1.05);
-        opacity: 0.88;
         box-shadow:
-          0 0 28px rgba(99, 102, 241, 0.52),
-          0 0 54px rgba(6, 182, 212, 0.35);
+          0 0 18px rgba(99, 102, 241, 0.80),
+          0 0 32px rgba(6, 182, 212, 0.48);
+        opacity: 1.00;
       }
     }
 
     .avatar-wrapper:hover .avatar-halo,
     .avatar-wrapper:focus-visible .avatar-halo {
-      transform: scale(1.15);
-      opacity: 0.95;
       box-shadow:
-        0 0 35px rgba(99, 102, 241, 0.65),
-        0 0 70px rgba(6, 182, 212, 0.45);
-    }
-
-    /* Calm Static Glassmorphic Ring with Indigo-to-Cyan border */
-    .avatar-static-ring {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      background:
-        linear-gradient(var(--neu-bg), var(--neu-bg)) padding-box,
-        linear-gradient(135deg, rgba(99, 102, 241, 0.65), rgba(6, 182, 212, 0.65)) border-box;
-      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.18);
-      z-index: 1;
-      pointer-events: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
-    }
-
-    [data-theme="dark"] .avatar-static-ring {
-      background:
-        linear-gradient(#1c1f34, #1c1f34) padding-box,
-        linear-gradient(135deg, rgba(99, 102, 241, 0.75), rgba(6, 182, 212, 0.75)) border-box;
-      box-shadow: 0 4px 22px rgba(99, 102, 241, 0.25);
+        0 0 22px rgba(99, 102, 241, 0.85),
+        0 0 40px rgba(6, 182, 212, 0.60);
+      opacity: 1.00;
     }
 
     /* Interactive Terminal Charge Meter (SVG) */
@@ -434,6 +396,17 @@
       overflow: visible !important;
     }
 
+    .avatar-charge-track {
+      fill: none;
+      stroke: rgba(99, 102, 241, 0.25);
+      stroke-width: 3px;
+      transition: stroke 0.3s ease;
+    }
+
+    [data-theme="dark"] .avatar-charge-track {
+      stroke: rgba(99, 102, 241, 0.38);
+    }
+
     .avatar-charge-circle {
       fill: none;
       stroke: url(#avatarChargeGrad);
@@ -445,26 +418,22 @@
                   stroke 0.3s ease;
     }
 
-    /* Progressive energy visual states for taps 1-4 */
+    /* Progressive energy visual states for taps 1-4 directly along the main ring */
     .avatar-wrapper[data-charge="1"] .avatar-halo {
-      opacity: 0.82;
-      transform: scale(1.06);
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.60), 0 0 58px rgba(6, 182, 212, 0.42);
+      opacity: 0.85;
+      box-shadow: 0 0 18px rgba(99, 102, 241, 0.70), 0 0 30px rgba(6, 182, 212, 0.45);
     }
     .avatar-wrapper[data-charge="2"] .avatar-halo {
-      opacity: 0.90;
-      transform: scale(1.10);
-      box-shadow: 0 0 38px rgba(99, 102, 241, 0.72), 0 0 70px rgba(6, 182, 212, 0.52);
+      opacity: 0.92;
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.80), 0 0 40px rgba(6, 182, 212, 0.55);
     }
     .avatar-wrapper[data-charge="3"] .avatar-halo {
-      opacity: 0.96;
-      transform: scale(1.14);
-      box-shadow: 0 0 46px rgba(99, 102, 241, 0.82), 0 0 82px rgba(6, 182, 212, 0.62);
+      opacity: 0.98;
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.90), 0 0 50px rgba(6, 182, 212, 0.68);
     }
     .avatar-wrapper[data-charge="4"] .avatar-halo {
       opacity: 1.00;
-      transform: scale(1.18);
-      box-shadow: 0 0 55px rgba(99, 102, 241, 0.92), 0 0 96px rgba(6, 182, 212, 0.75);
+      box-shadow: 0 0 38px rgba(99, 102, 241, 1.00), 0 0 62px rgba(6, 182, 212, 0.82);
     }
 
     /* Tap 5: Matrix-Green Shockwave Flash Burst (#22c55e) */
@@ -474,7 +443,7 @@
 
     @keyframes matrix-shockwave {
       0%   { transform: scale(0.95); }
-      50%  { transform: scale(1.08); }
+      50%  { transform: scale(1.06); }
       100% { transform: scale(1); }
     }
 
@@ -483,23 +452,15 @@
       stroke-dashoffset: 0 !important;
     }
 
-    .avatar-wrapper.charged-burst .avatar-halo {
-      background: radial-gradient(
-        circle at 50% 50%,
-        rgba(34, 197, 94, 0.95) 0%,
-        rgba(34, 197, 94, 0.45) 50%,
-        transparent 75%
-      ) !important;
-      box-shadow: 0 0 60px #22c55e, 0 0 120px rgba(34, 197, 94, 0.8) !important;
-      transform: scale(1.30) !important;
-      opacity: 1 !important;
+    .avatar-wrapper.charged-burst .avatar-charge-track {
+      stroke: rgba(34, 197, 94, 0.5) !important;
     }
 
-    .avatar-wrapper.charged-burst .avatar-static-ring {
-      background:
-        linear-gradient(var(--neu-bg), var(--neu-bg)) padding-box,
-        linear-gradient(135deg, #22c55e, #4ade80) border-box !important;
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.85) !important;
+    .avatar-wrapper.charged-burst .avatar-halo {
+      box-shadow:
+        0 0 40px #22c55e,
+        0 0 80px rgba(34, 197, 94, 0.85) !important;
+      opacity: 1 !important;
     }
 
     .avatar-img {
@@ -1096,55 +1057,113 @@
     }
 
     .theme-toggle-wrap {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
       z-index: 10000;
     }
 
-    @media (min-width: 601px) {
+    @media (max-width: 600px) {
       .theme-toggle-wrap {
-        position: fixed;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+      }
+      .profile-card {
+        padding-top: 24px;
+        position: relative;
+      }
+      .page-container {
+        padding-top: 16px;
+      }
+      .secret-hint {
+        margin-top: 0;
+        margin-bottom: 4px;
       }
     }
 
-
-
-    .theme-toggle {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: none;
+    .theme-segmented-switch {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 72px;
+      height: 36px;
+      padding: 3px;
+      border-radius: 9999px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.4);
       cursor: pointer;
-      background: var(--neu-bg);
-      box-shadow: var(--neu-shadow-sm);
-      color: var(--text-secondary);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    [data-theme="dark"] .theme-segmented-switch {
+      background: rgba(26, 29, 48, 0.75);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-segmented-switch:hover {
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.22);
+    }
+
+    .theme-segmented-switch:focus-visible {
+      outline: 2px solid var(--accent-indigo);
+      outline-offset: 3px;
+    }
+
+    .switch-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.10);
+      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1;
+    }
+
+    [data-theme="dark"] .switch-thumb {
+      transform: translateX(36px);
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.6), 0 0 12px rgba(6, 182, 212, 0.4);
+    }
+
+    .switch-option {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      transition:
-        background  0.4s ease,
-        box-shadow  0.3s ease,
-        color       0.3s ease,
-        transform   0.35s var(--ease-bounce);
+      z-index: 2;
+      transition: color 0.3s ease;
     }
 
-    .theme-toggle:hover {
-      color: var(--accent-indigo);
-      transform: scale(1.10);
+    .option-light {
+      color: #f59e0b;
     }
 
-    .theme-toggle:active {
-      box-shadow: var(--neu-shadow-in);
-      transform: scale(0.94);
+    .option-dark {
+      color: var(--text-muted);
     }
 
-    .theme-toggle .icon-sun  { display: none; }
-    .theme-toggle .icon-moon { display: block; }
+    [data-theme="dark"] .option-light {
+      color: var(--text-muted);
+    }
 
-    [data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
-    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .option-dark {
+      color: #ffffff;
+    }
+    
+
 
     .page-footer {
       font-size: 0.70rem;
@@ -1155,18 +1174,20 @@
     }
 
     .secret-hint {
-      font-size: 0.75rem;
-      color: var(--text-base);
-      opacity: 0.8;
+      font-size: 0.66rem;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      opacity: 0.45;
       font-weight: 500;
       text-align: center;
       margin-top: 10px;
       margin-bottom: -10px;
       font-family: var(--font-mono);
       transition: opacity 0.3s ease, color 0.3s ease;
+      user-select: none;
     }
     .secret-hint:hover {
-      opacity: 1;
+      opacity: 0.85;
       color: var(--accent-cyan);
     }
 
@@ -1196,13 +1217,9 @@
     }
 
     @media (hover: none) {
-      .link-card {
-        transform: none !important;
-        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-      }
       .link-card:active {
-        transform: scale(0.97) !important;
-        box-shadow: var(--glass-shadow) !important;
+        transform: perspective(1000px) scale(0.97);
+        box-shadow: var(--glass-shadow);
       }
     }
 
@@ -1577,10 +1594,12 @@
 
     #matrix-canvas {
       position: fixed;
-      inset: 0;
+      top: -60px;
+      left: 0;
+      right: 0;
+      bottom: -160px;
       width: 100%;
-      height: 100%;
-      height: 100dvh;
+      height: calc(100% + 220px);
       z-index: 0;
       opacity: 0.03;
       pointer-events: none;
@@ -1595,10 +1614,12 @@
 
     .crt-overlay {
       position: fixed;
-      inset: 0;
+      top: -60px;
+      left: 0;
+      right: 0;
+      bottom: -160px;
       width: 100%;
-      height: 100%;
-      height: 100dvh;
+      height: calc(100% + 220px);
       z-index: 9998;
       pointer-events: none;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
@@ -1673,6 +1694,9 @@
     .link-card:hover .link-icon-svg {
       filter: drop-shadow(0 0 6px rgba(var(--card-glow-r,99), var(--card-glow-g,102), var(--card-glow-b,241), 0.7));
     }
+  
+    
+
   </style>
 </head>
 <body>
@@ -1693,37 +1717,38 @@
     <div class="blob blob-4"></div>
   </div>
 
-  <div class="theme-toggle-wrap">
-    <button
-      class="theme-toggle"
-      id="theme-toggle"
-      aria-label="Switch to light mode"
-      title="Toggle dark / light mode"
-    >
-
-      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-      </svg>
-
-      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-    </button>
-  </div>
-
   <main class="page-container" role="main">
 
     <p id="secret-hint" class="secret-hint"></p>
     <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
+      <div class="theme-toggle-wrap">
+    <button
+      class="theme-segmented-switch"
+      id="theme-toggle"
+      role="switch"
+      aria-checked="true"
+      aria-label="Toggle dark and light theme"
+      title="Toggle dark / light mode"
+    >
+      <div class="switch-thumb" aria-hidden="true"></div>
+      <div class="switch-option option-light" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+      </div>
+      <div class="switch-option option-dark" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </div>
+    </button>
+      </div>
 
       <div class="avatar-wrapper anim-ready anim-avatar" id="avatar-wrapper" data-delay="80" role="button" tabindex="0" aria-label="Shahzeb Faisal - Tap 5 times to launch terminal">
         <div class="avatar-halo" aria-hidden="true"></div>
-        <div class="avatar-static-ring" aria-hidden="true"></div>
         <svg class="avatar-charge-meter" viewBox="0 0 124 124" aria-hidden="true">
           <defs>
             <linearGradient id="avatarChargeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1731,6 +1756,7 @@
               <stop offset="100%" stop-color="#06b6d4" />
             </linearGradient>
           </defs>
+          <circle class="avatar-charge-track" cx="62" cy="62" r="58" />
           <circle class="avatar-charge-circle" cx="62" cy="62" r="58" />
         </svg>
         <img
@@ -2826,8 +2852,9 @@
       var ctx = canvas.getContext('2d');
 
       var scale = 0.5;
+      var screenH = Math.max(window.innerHeight, (window.screen && window.screen.height) || 0) + 260;
       var w = canvas.width = window.innerWidth * scale;
-      var h = canvas.height = window.innerHeight * scale;
+      var h = canvas.height = screenH * scale;
       var chars = '01'.split('');
       var fontSize = 10;
       var columns = Math.floor(w / fontSize);
@@ -2838,19 +2865,9 @@
 
       var lastDraw = 0;
       var interval = 50;
-      var isPageScrolling = false;
-      var scrollStopTimeout = null;
-
-      window.addEventListener('scroll', function() {
-        isPageScrolling = true;
-        clearTimeout(scrollStopTimeout);
-        scrollStopTimeout = setTimeout(function() {
-          isPageScrolling = false;
-        }, 120);
-      }, { passive: true });
 
       function render(timestamp) {
-        if (!document.hidden && !isPageScrolling) {
+        if (!document.hidden) {
           if (timestamp - lastDraw >= interval) {
             ctx.fillStyle = 'rgba(9, 10, 15, 0.12)';
             ctx.fillRect(0, 0, w, h);
@@ -2878,8 +2895,9 @@
       requestAnimationFrame(render);
 
       window.addEventListener('resize', function() {
+        screenH = Math.max(window.innerHeight, (window.screen && window.screen.height) || 0) + 260;
         w = canvas.width = window.innerWidth * scale;
-        h = canvas.height = window.innerHeight * scale;
+        h = canvas.height = screenH * scale;
         columns = Math.floor(w / fontSize);
         drops = [];
         for (var x = 0; x < columns; x++) {
@@ -2933,5 +2951,6 @@
   </script>
 
   <div class="toast" id="toast" aria-hidden="true"></div>
+
 </body>
 </html>

@@ -4,15 +4,30 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function(){
+      try {
+        var s = localStorage.getItem('sf-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', s);
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', s === 'dark' ? '#141624' : '#e0e5ec');
+      } catch (e) {}
+    })();
+  </script>
   <meta name="description" content="Shahzeb Faisal — personal portfolio and link hub. Find me on GitHub, LinkedIn, Instagram, and more." />
   <meta name="theme-color" content="#e0e5ec" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23141624'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='60' fill='%236366f1'>S</text></svg>" />
   <meta property="og:title" content="Shahzeb Faisal" />
   <meta property="og:description" content="Personal portfolio and links." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="avatar.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Shahzeb Faisal" />
+  <meta name="twitter:description" content="Personal portfolio and links." />
+  <meta name="twitter:image" content="avatar.jpg" />
   <title>Shahzeb Faisal</title>
 
-  <link rel="preload" as="image"
-    href="https://drive.google.com/thumbnail?id=1z73B4_S8Adg0LwwkuXcBYlBu2GnaHVgD&sz=w2000"
-    fetchpriority="high" />
+  <link rel="preload" as="image" href="avatar.jpg" fetchpriority="high" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,6 +43,9 @@
       --neu-shadow-out:   8px 8px 18px var(--neu-shadow-dark), -8px -8px 18px var(--neu-shadow-light);
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+      --neu-shadow:       var(--neu-shadow-out);
+      --neu-shadow-inset: var(--neu-shadow-in);
+      --text-base:        var(--text-secondary);
 
       --glass-bg:     rgba(255, 255, 255, 0.65);
       --glass-bg-hov: rgba(255, 255, 255, 0.85);
@@ -91,6 +109,8 @@
       --neu-shadow-out:   8px 8px 18px var(--neu-shadow-dark), -8px -8px 18px var(--neu-shadow-light);
       --neu-shadow-in:    inset 5px 5px 12px var(--neu-shadow-dark), inset -5px -5px 12px var(--neu-shadow-light);
       --neu-shadow-sm:    4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+      --neu-shadow:       var(--neu-shadow-out);
+      --neu-shadow-inset: var(--neu-shadow-in);
 
       --glass-bg:     rgba(30, 33, 56, 0.88);
       --glass-bg-hov: rgba(36, 40, 66, 0.94);
@@ -116,33 +136,43 @@
       --text-primary:   #ffffff;
       --text-secondary: #c2c9e0;
       --text-muted:     #94a3b8;
-
-      .blob-1 { background: radial-gradient(circle, #0f766e, #10b981); }
-      .blob-2 { background: radial-gradient(circle, #0e7490, #06b6d4); }
-      .blob-3 { background: radial-gradient(circle, #3730a3, #4f46e5); }
-      .blob-4 { background: radial-gradient(circle, #4c1d95, #8b5cf6); }
+      --text-base:        var(--text-secondary);
     }
+
+    [data-theme="dark"] .blob-1 { background: radial-gradient(circle, #0f766e, #10b981); }
+    [data-theme="dark"] .blob-2 { background: radial-gradient(circle, #0e7490, #06b6d4); }
+    [data-theme="dark"] .blob-3 { background: radial-gradient(circle, #3730a3, #4f46e5); }
+    [data-theme="dark"] .blob-4 { background: radial-gradient(circle, #4c1d95, #8b5cf6); }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
+      background-color: var(--neu-bg);
+      min-height: 100%;
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior-y: none;
+    }
+
+    [data-theme="dark"] html {
+      background-color: #141624;
+    }
+
+    html, body {
+      overflow-x: clip;
     }
 
     body {
       font-family: var(--font);
       color: var(--text-primary);
-      background: var(--neu-bg);
-      min-height: 100vh;
+      background-color: var(--neu-bg);
+      min-height: 100%;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      overflow-x: hidden;
-
-      transition: background 0.4s ease, color 0.4s ease;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -162,6 +192,9 @@
     .blob-scene {
       position: fixed;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
@@ -172,11 +205,17 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(90px);
+      filter: blur(50px);
       opacity: 0.55;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
       will-change: transform;
+    }
+
+    @media (max-width: 768px) {
+      .blob {
+        filter: blur(35px);
+      }
     }
 
     .blob-1 {
@@ -283,39 +322,189 @@
       width: 112px;
       height: 112px;
       flex-shrink: 0;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 50%;
+      outline: none;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .avatar-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      background: var(--neu-bg);
-      box-shadow: var(--neu-shadow-out);
-      z-index: 0;
+    .avatar-wrapper:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 6px;
     }
 
-    .avatar-wrapper::after {
-      content: '';
+    .avatar-wrapper:active {
+      transform: scale(0.96) !important;
+    }
+
+    .avatar-wrapper.charging-tap {
+      animation: avatar-charge-tap 0.25s ease-out;
+    }
+
+    @keyframes avatar-charge-tap {
+      0%   { transform: scale(0.96); }
+      50%  { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    /* Soft Aurora Halo (Organic & Modern Ambient Glassmorphism) */
+    .avatar-halo {
       position: absolute;
-      inset: -3px;
+      inset: -20px;
       border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        var(--accent-indigo) 0%,
-        var(--accent-cyan) 35%,
-        var(--accent-pink) 65%,
-        var(--accent-indigo) 100%
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(99, 102, 241, 0.65) 0%,
+        rgba(6, 182, 212, 0.40) 42%,
+        rgba(99, 102, 241, 0.12) 62%,
+        transparent 72%
       );
-      animation: spin-ring 5s linear infinite;
-      z-index: 1;
+      box-shadow:
+        0 0 24px rgba(99, 102, 241, 0.45),
+        0 0 48px rgba(6, 182, 212, 0.28);
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 0;
+      animation: aurora-pulse 12s ease-in-out infinite;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.5s ease,
+                  opacity 0.5s ease;
     }
 
-    @keyframes spin-ring { to { transform: rotate(360deg); } }
+    @keyframes aurora-pulse {
+      0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.65;
+        box-shadow:
+          0 0 20px rgba(99, 102, 241, 0.38),
+          0 0 42px rgba(6, 182, 212, 0.22);
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.88;
+        box-shadow:
+          0 0 28px rgba(99, 102, 241, 0.52),
+          0 0 54px rgba(6, 182, 212, 0.35);
+      }
+    }
+
+    .avatar-wrapper:hover .avatar-halo,
+    .avatar-wrapper:focus-visible .avatar-halo {
+      transform: scale(1.15);
+      opacity: 0.95;
+      box-shadow:
+        0 0 35px rgba(99, 102, 241, 0.65),
+        0 0 70px rgba(6, 182, 212, 0.45);
+    }
+
+    /* Calm Static Glassmorphic Ring with Indigo-to-Cyan border */
+    .avatar-static-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background:
+        linear-gradient(var(--neu-bg), var(--neu-bg)) padding-box,
+        linear-gradient(135deg, rgba(99, 102, 241, 0.65), rgba(6, 182, 212, 0.65)) border-box;
+      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.18);
+      z-index: 1;
+      pointer-events: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+    }
+
+    [data-theme="dark"] .avatar-static-ring {
+      background:
+        linear-gradient(#1c1f34, #1c1f34) padding-box,
+        linear-gradient(135deg, rgba(99, 102, 241, 0.75), rgba(6, 182, 212, 0.75)) border-box;
+      box-shadow: 0 4px 22px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Interactive Terminal Charge Meter (SVG) */
+    .avatar-charge-meter {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 124px;
+      height: 124px;
+      transform: rotate(-90deg);
+      pointer-events: none;
+      z-index: 2;
+      overflow: visible !important;
+    }
+
+    .avatar-charge-circle {
+      fill: none;
+      stroke: url(#avatarChargeGrad);
+      stroke-width: 3.5px;
+      stroke-linecap: round;
+      stroke-dasharray: 364.4;
+      stroke-dashoffset: 364.4;
+      transition: stroke-dashoffset 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  stroke 0.3s ease;
+    }
+
+    /* Progressive energy visual states for taps 1-4 */
+    .avatar-wrapper[data-charge="1"] .avatar-halo {
+      opacity: 0.82;
+      transform: scale(1.06);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.60), 0 0 58px rgba(6, 182, 212, 0.42);
+    }
+    .avatar-wrapper[data-charge="2"] .avatar-halo {
+      opacity: 0.90;
+      transform: scale(1.10);
+      box-shadow: 0 0 38px rgba(99, 102, 241, 0.72), 0 0 70px rgba(6, 182, 212, 0.52);
+    }
+    .avatar-wrapper[data-charge="3"] .avatar-halo {
+      opacity: 0.96;
+      transform: scale(1.14);
+      box-shadow: 0 0 46px rgba(99, 102, 241, 0.82), 0 0 82px rgba(6, 182, 212, 0.62);
+    }
+    .avatar-wrapper[data-charge="4"] .avatar-halo {
+      opacity: 1.00;
+      transform: scale(1.18);
+      box-shadow: 0 0 55px rgba(99, 102, 241, 0.92), 0 0 96px rgba(6, 182, 212, 0.75);
+    }
+
+    /* Tap 5: Matrix-Green Shockwave Flash Burst (#22c55e) */
+    .avatar-wrapper.charged-burst {
+      animation: matrix-shockwave 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes matrix-shockwave {
+      0%   { transform: scale(0.95); }
+      50%  { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .avatar-wrapper.charged-burst .avatar-charge-circle {
+      stroke: #22c55e !important;
+      stroke-dashoffset: 0 !important;
+    }
+
+    .avatar-wrapper.charged-burst .avatar-halo {
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(34, 197, 94, 0.95) 0%,
+        rgba(34, 197, 94, 0.45) 50%,
+        transparent 75%
+      ) !important;
+      box-shadow: 0 0 60px #22c55e, 0 0 120px rgba(34, 197, 94, 0.8) !important;
+      transform: scale(1.30) !important;
+      opacity: 1 !important;
+    }
+
+    .avatar-wrapper.charged-burst .avatar-static-ring {
+      background:
+        linear-gradient(var(--neu-bg), var(--neu-bg)) padding-box,
+        linear-gradient(135deg, #22c55e, #4ade80) border-box !important;
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.85) !important;
+    }
 
     .avatar-img {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       width: 112px;
       height: 112px;
       border-radius: 50%;
@@ -323,11 +512,16 @@
       object-position: center top;
       border: 4px solid var(--neu-bg);
       display: block;
+      transition: border-color 0.4s ease;
+    }
+
+    [data-theme="dark"] .avatar-img {
+      border-color: #1c1f34;
     }
 
     .avatar-initials {
       position: absolute;
-      inset: 0; z-index: 3;
+      inset: 0; z-index: 4;
       display: flex; align-items: center; justify-content: center;
       font-size: 2.4rem; font-weight: 700;
       color: var(--accent-indigo);
@@ -347,22 +541,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    .profile-location {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      background: var(--neu-bg);
-      border-radius: var(--r-full);
-      padding: 5px 14px 5px 10px;
-      box-shadow: var(--neu-shadow-sm);
-    }
-
-    .profile-location svg { opacity: 0.6; flex-shrink: 0; }
 
     .bio-wrapper {
       width: 100%;
@@ -431,58 +609,126 @@
 
     .bio-toggle-btn.active .bio-chevron { transform: rotate(180deg); }
 
-    .tech-marquee-wrapper {
+    .tech-grid-wrapper {
       width: 100%;
-      overflow: hidden;
-      margin-top: 12px;
-      padding-top: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
       border-top: 1px solid var(--glass-border);
       position: relative;
     }
 
-    .tech-marquee {
+    .tech-header {
       display: flex;
-      width: 200%;
-      animation: marquee 16s linear infinite;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 12px;
     }
 
-    .tech-marquee:hover {
-      animation-play-state: paused;
+    .tech-header-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
     }
 
-    .tech-marquee-content {
+    .tech-blobs {
       display: flex;
-      justify-content: space-around;
-      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
     }
 
-    .tech-icon {
-      width: 28px;
-      height: 28px;
-      opacity: 0.4;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      cursor: crosshair;
+    .tech-blob {
+      --blob-color: var(--blob-light, var(--accent-indigo));
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition:
+        transform 0.35s var(--ease-bounce),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease,
+        background 0.3s ease;
+      outline: none;
     }
 
-    .tech-icon:hover {
-      transform: scale(1.3);
-      opacity: 1;
+    [data-theme="dark"] .tech-blob {
+      --blob-color: var(--blob-dark, var(--accent-indigo));
     }
 
-    .tech-github:hover { color: #e6edf3; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); }
-    .tech-linux:hover { color: #facc15; filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)); }
-    .tech-debian:hover { color: #d70a53; filter: drop-shadow(0 0 8px rgba(215, 10, 83, 0.6)); }
-    .tech-cachy:hover { color: #00d2ff; filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6)); }
-    .tech-book:hover { color: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6)); }
-    .tech-antigravity:hover { color: #a855f7; filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6)); }
-    .tech-obs:hover { color: #3b82f6; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)); }
-    .tech-neofetch:hover { color: #22c55e; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)); }
-    .tech-alightmotion:hover { color: #06b6d4; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
-    .tech-tor:hover { color: #7c3aed; filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.6)); }
+    .tech-blob::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, var(--sheen-badge), transparent);
+      border-radius: inherit;
+      pointer-events: none;
+    }
 
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .tech-blob:hover,
+    .tech-blob:focus-visible {
+      transform: translateY(-3px) scale(1.14);
+      background: var(--glass-bg-hov);
+      border-color: var(--blob-color);
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.16),
+        0 0 0 1.5px var(--blob-color),
+        0 0 18px -2px var(--blob-color);
+    }
+
+    .tech-blob:active {
+      transform: translateY(0) scale(0.94);
+    }
+
+    .tech-blob-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--text-secondary);
+      transition: transform 0.3s var(--ease-bounce), color 0.3s ease, filter 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tech-blob:hover .tech-blob-icon,
+    .tech-blob:focus-visible .tech-blob-icon {
+      color: var(--blob-color);
+      transform: scale(1.12);
+      filter: drop-shadow(0 0 6px var(--blob-color));
+    }
+
+    .tech-blob.anim-ready {
+      opacity: 0;
+      transform: translateY(12px) scale(0.85);
+    }
+
+    .tech-blob.anim-in {
+      animation: blobPop 0.5s var(--ease-bounce) forwards;
+    }
+
+    @keyframes blobPop {
+      from { opacity: 0; transform: translateY(12px) scale(0.85); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 440px) {
+      .tech-blobs { gap: 8px; }
+      .tech-blob { width: 36px; height: 36px; }
+      .tech-blob-icon { width: 17px; height: 17px; }
     }
 
     .section-label {
@@ -491,8 +737,12 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-base);
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      text-shadow: 1px 1px 0 var(--neu-shadow-light);
       margin-bottom: 2px;
+    }
+
+    [data-theme="dark"] .section-label {
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
     .academic-section {
@@ -615,8 +865,12 @@
       text-transform: uppercase;
       color: var(--text-base);
       text-align: center;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      text-shadow: 1px 1px 0 var(--neu-shadow-light);
       margin-bottom: 4px;
+    }
+
+    [data-theme="dark"] .links-heading {
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
     .link-card {
@@ -854,6 +1108,8 @@
       }
     }
 
+
+
     .theme-toggle {
       width: 42px;
       height: 42px;
@@ -950,6 +1206,8 @@
       }
     }
 
+
+
     @media (max-width: 400px) {
       .page-container { padding-top: 4px; padding-bottom: 56px; gap: 20px; }
       .profile-card   { padding: 24px 16px; }
@@ -958,7 +1216,9 @@
 
     @media (prefers-reduced-motion: reduce) {
       .blob-1, .blob-2, .blob-3, .blob-4 { animation: none; }
-      .avatar-wrapper::after { animation: none; }
+      .avatar-halo { animation: none !important; }
+      .avatar-charge-circle { transition: none !important; }
+      .avatar-wrapper.charged-burst { animation: none !important; }
       .anim-ready, .anim-avatar { opacity: 0; }
       .anim-in { animation: simpleFade 0.4s ease forwards; }
       @keyframes simpleFade { to { opacity: 1; transform: none; } }
@@ -1061,6 +1321,14 @@
       margin-bottom: 4px;
       white-space: pre-wrap;
       word-wrap: break-word;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 600px) {
+      .mac-terminal-overlay { padding: 10px; }
+      .mac-window { height: 80vh; min-height: 320px; }
+      .mac-body { padding: 8px; font-size: 0.8rem; }
+      .mac-input { font-size: 0.8rem; }
     }
 
     .mac-output div {
@@ -1147,8 +1415,12 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-base);
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      text-shadow: 1px 1px 0 var(--neu-shadow-light);
       margin-bottom: 2px;
+    }
+
+    [data-theme="dark"] .contact-heading {
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
     .contact-card {
@@ -1305,10 +1577,10 @@
 
     #matrix-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
       z-index: 0;
       opacity: 0.03;
       pointer-events: none;
@@ -1323,10 +1595,10 @@
 
     .crt-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
       z-index: 9998;
       pointer-events: none;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
@@ -1446,14 +1718,25 @@
 
   <main class="page-container" role="main">
 
-    <p id="secret-hint" class="secret-hint" aria-hidden="true"></p>
+    <p id="secret-hint" class="secret-hint"></p>
     <section class="profile-card anim-ready" data-delay="0" aria-label="Profile">
 
-      <div class="avatar-wrapper anim-ready anim-avatar" data-delay="80">
+      <div class="avatar-wrapper anim-ready anim-avatar" id="avatar-wrapper" data-delay="80" role="button" tabindex="0" aria-label="Shahzeb Faisal - Tap 5 times to launch terminal">
+        <div class="avatar-halo" aria-hidden="true"></div>
+        <div class="avatar-static-ring" aria-hidden="true"></div>
+        <svg class="avatar-charge-meter" viewBox="0 0 124 124" aria-hidden="true">
+          <defs>
+            <linearGradient id="avatarChargeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <circle class="avatar-charge-circle" cx="62" cy="62" r="58" />
+        </svg>
         <img
           id="profile-avatar"
           class="avatar-img"
-          src="https://drive.google.com/thumbnail?id=1z73B4_S8Adg0LwwkuXcBYlBu2GnaHVgD&sz=w2000"
+          src="avatar.jpg"
           alt="Shahzeb's profile picture"
           onerror="
             this.style.opacity='0';
@@ -1468,16 +1751,6 @@
       </div>
 
       <h1 class="profile-name glitch-effect anim-ready" data-delay="160" data-text="Shahzeb Faisal">Shahzeb Faisal</h1>
-
-      <span class="profile-location anim-ready" data-delay="220" aria-label="Based in Lahore, Pakistan">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-          stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/>
-          <circle cx="12" cy="10" r="3"/>
-        </svg>
-        Lahore, Pakistan
-      </span>
 
       <div class="bio-wrapper anim-ready" data-delay="300">
         <div class="bio-content collapsed" id="bio-content">
@@ -1494,35 +1767,11 @@
         </button>
       </div>
 
-      <div class="tech-marquee-wrapper anim-ready" data-delay="300">
-        <div class="tech-marquee">
-
-          <div class="tech-marquee-content">
-            <svg class="tech-icon tech-github" viewBox="0 0 24 24" fill="currentColor" aria-label="GitHub"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            <svg class="tech-icon tech-linux" viewBox="0 0 24 24" fill="currentColor" aria-label="Linux"><path d="M12.002 2c-1.895 0-3.35 1.34-3.565 3.193-.058.497-.024 1.01.077 1.543C7.037 7.429 5.86 8.784 5.37 10.457c-.43 1.472-.345 3.01.11 4.417.382 1.182 1.093 2.196 2.052 2.924C7.009 18.777 6.47 19.98 6.55 21.05c.038.514.288.95.73 1.18.44.23.978.2 1.432-.08.97-.597 2.11-1.07 3.29-1.39 1.18.32 2.32.793 3.29 1.39.454.28.992.31 1.432.08.442-.23.692-.666.73-1.18.08-1.07-.459-2.273-.982-3.252.959-.728 1.67-1.742 2.052-2.924.455-1.407.54-2.945.11-4.417-.49-1.673-1.667-3.028-3.144-3.721.101-.533.135-1.046.077-1.543C15.352 3.34 13.897 2 12.002 2z"/></svg>
-            <svg class="tech-icon tech-debian" viewBox="0 0 24 24" fill="currentColor" aria-label="Debian"><path d="M12.44 2.5a7.83 7.83 0 00-6.1 2.37 9.17 9.17 0 00-2.45 6.4 8.78 8.78 0 002.04 5.92A7.36 7.36 0 0011.62 19.5c1.47.1 2.94-.13 4.25-.67A9.45 9.45 0 0020.3 14a8.62 8.62 0 00-.73-7 6.64 6.64 0 00-4.4-3.5 5.57 5.57 0 00-4.7 1.25 4.38 4.38 0 00-1.42 3.6c.1 1.08.6 2 1.45 2.6a2.95 2.95 0 002.5.54 2.45 2.45 0 001.65-1.1c.3-.5.4-1.1.2-1.6a1.53 1.53 0 00-1.2-1 1.26 1.26 0 00-1.1.34 1.15 1.15 0 00-.28 1c0 .17.1.32.22.42a.57.57 0 00.5.15.54.54 0 00.37-.2.6.6 0 00-.06-.44.25.25 0 00-.2-.14c-.07 0-.15.03-.2.1 0 0 .15-.22.38-.2.24.03.46.2.5.5.07.45-.16.86-.53 1.1-.38.25-.86.32-1.3.18a3.17 3.17 0 01-1.85-2.2 4.14 4.14 0 011.08-3.37 5.3 5.3 0 014.28-1.58 6.42 6.42 0 014.2 2.9 8.16 8.16 0 01.96 6.1c-1 3.2-3.88 5.6-7.23 6-2.58.3-5.2-.68-6.97-2.6A9.46 9.46 0 013 8.35a8.7 8.7 0 015.65-8A10.87 10.87 0 0112.44 2.5z"/></svg>
-            <svg class="tech-icon tech-cachy" viewBox="0 0 24 24" fill="currentColor" aria-label="CachyOS"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a7 7 0 016.93 6H15.8a3.99 3.99 0 00-7.6 0H5.07A7 7 0 0112 5zm-7 7c0-.34.03-.67.07-1h3.13a4 4 0 000 2H5.07c-.04-.33-.07-.66-.07-1zm7 7a7 7 0 01-6.93-6h3.06a3.99 3.99 0 007.6 0h3.13A7 7 0 0112 19z"/></svg>
-            <svg class="tech-icon tech-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Literature"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            <svg class="tech-icon tech-antigravity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Antigravity"><path d="M12 3l9 16H3l9-16z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1"/></svg>
-            <svg class="tech-icon tech-obs" viewBox="0 0 24 24" fill="currentColor" aria-label="OBS Studio"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7 0 1.9-.76 3.63-2 4.89L14.5 13h2.5c0-2.76-2.24-5-5-5V5.5c.33 0 .66.03 1 .07zm-7 7c0-3.87 3.13-7 7-7v2.5c-2.76 0-5 2.24-5 5h-2.5c.04-.34.07-.67.07-1zm7 7c-3.87 0-7-3.13-7-7 0-1.9.76-3.63 2-4.89L9.5 11H7c0 2.76 2.24 5 5 5v2.5c-.33 0-.66-.03-1-.07z"/></svg>
-            <svg class="tech-icon tech-neofetch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Neofetch"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="8 10 11 13 8 16"/><line x1="13" y1="16" x2="16" y2="16"/></svg>
-            <svg class="tech-icon tech-alightmotion" viewBox="0 0 24 24" fill="currentColor" aria-label="Alight Motion"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l7 4.5-7 4.5z"/></svg>
-            <svg class="tech-icon tech-tor" viewBox="0 0 24 24" fill="currentColor" aria-label="Tor Project"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 017.93 7h-2.02A6 6 0 0012 6V4zm-7.93 7A8 8 0 0112 4v2a6 6 0 00-5.91 5H4.07zm0 2h2.02A6 6 0 0012 18v2a8 8 0 01-7.93-7zm9.93 7v-2a6 6 0 005.91-5h2.02a8 8 0 01-7.93 7z"/></svg>
-          </div>
-
-          <div class="tech-marquee-content">
-            <svg class="tech-icon tech-github" viewBox="0 0 24 24" fill="currentColor" aria-label="GitHub"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            <svg class="tech-icon tech-linux" viewBox="0 0 24 24" fill="currentColor" aria-label="Linux"><path d="M12.002 2c-1.895 0-3.35 1.34-3.565 3.193-.058.497-.024 1.01.077 1.543C7.037 7.429 5.86 8.784 5.37 10.457c-.43 1.472-.345 3.01.11 4.417.382 1.182 1.093 2.196 2.052 2.924C7.009 18.777 6.47 19.98 6.55 21.05c.038.514.288.95.73 1.18.44.23.978.2 1.432-.08.97-.597 2.11-1.07 3.29-1.39 1.18.32 2.32.793 3.29 1.39.454.28.992.31 1.432.08.442-.23.692-.666.73-1.18.08-1.07-.459-2.273-.982-3.252.959-.728 1.67-1.742 2.052-2.924.455-1.407.54-2.945.11-4.417-.49-1.673-1.667-3.028-3.144-3.721.101-.533.135-1.046.077-1.543C15.352 3.34 13.897 2 12.002 2z"/></svg>
-            <svg class="tech-icon tech-debian" viewBox="0 0 24 24" fill="currentColor" aria-label="Debian"><path d="M12.44 2.5a7.83 7.83 0 00-6.1 2.37 9.17 9.17 0 00-2.45 6.4 8.78 8.78 0 002.04 5.92A7.36 7.36 0 0011.62 19.5c1.47.1 2.94-.13 4.25-.67A9.45 9.45 0 0020.3 14a8.62 8.62 0 00-.73-7 6.64 6.64 0 00-4.4-3.5 5.57 5.57 0 00-4.7 1.25 4.38 4.38 0 00-1.42 3.6c.1 1.08.6 2 1.45 2.6a2.95 2.95 0 002.5.54 2.45 2.45 0 001.65-1.1c.3-.5.4-1.1.2-1.6a1.53 1.53 0 00-1.2-1 1.26 1.26 0 00-1.1.34 1.15 1.15 0 00-.28 1c0 .17.1.32.22.42a.57.57 0 00.5.15.54.54 0 00.37-.2.6.6 0 00-.06-.44.25.25 0 00-.2-.14c-.07 0-.15.03-.2.1 0 0 .15-.22.38-.2.24.03.46.2.5.5.07.45-.16.86-.53 1.1-.38.25-.86.32-1.3.18a3.17 3.17 0 01-1.85-2.2 4.14 4.14 0 011.08-3.37 5.3 5.3 0 014.28-1.58 6.42 6.42 0 014.2 2.9 8.16 8.16 0 01.96 6.1c-1 3.2-3.88 5.6-7.23 6-2.58.3-5.2-.68-6.97-2.6A9.46 9.46 0 013 8.35a8.7 8.7 0 015.65-8A10.87 10.87 0 0112.44 2.5z"/></svg>
-            <svg class="tech-icon tech-cachy" viewBox="0 0 24 24" fill="currentColor" aria-label="CachyOS"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a7 7 0 016.93 6H15.8a3.99 3.99 0 00-7.6 0H5.07A7 7 0 0112 5zm-7 7c0-.34.03-.67.07-1h3.13a4 4 0 000 2H5.07c-.04-.33-.07-.66-.07-1zm7 7a7 7 0 01-6.93-6h3.06a3.99 3.99 0 007.6 0h3.13A7 7 0 0112 19z"/></svg>
-            <svg class="tech-icon tech-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Literature"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            <svg class="tech-icon tech-antigravity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Antigravity"><path d="M12 3l9 16H3l9-16z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1"/></svg>
-            <svg class="tech-icon tech-obs" viewBox="0 0 24 24" fill="currentColor" aria-label="OBS Studio"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7 0 1.9-.76 3.63-2 4.89L14.5 13h2.5c0-2.76-2.24-5-5-5V5.5c.33 0 .66.03 1 .07zm-7 7c0-3.87 3.13-7 7-7v2.5c-2.76 0-5 2.24-5 5h-2.5c.04-.34.07-.67.07-1zm7 7c-3.87 0-7-3.13-7-7 0-1.9.76-3.63 2-4.89L9.5 11H7c0 2.76 2.24 5 5 5v2.5c-.33 0-.66-.03-1-.07z"/></svg>
-            <svg class="tech-icon tech-neofetch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Neofetch"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="8 10 11 13 8 16"/><line x1="13" y1="16" x2="16" y2="16"/></svg>
-            <svg class="tech-icon tech-alightmotion" viewBox="0 0 24 24" fill="currentColor" aria-label="Alight Motion"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l7 4.5-7 4.5z"/></svg>
-            <svg class="tech-icon tech-tor" viewBox="0 0 24 24" fill="currentColor" aria-label="Tor Project"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 017.93 7h-2.02A6 6 0 0012 6V4zm-7.93 7A8 8 0 0112 4v2a6 6 0 00-5.91 5H4.07zm0 2h2.02A6 6 0 0012 18v2a8 8 0 01-7.93-7zm9.93 7v-2a6 6 0 005.91-5h2.02a8 8 0 01-7.93 7z"/></svg>
-          </div>
+      <div class="tech-grid-wrapper anim-ready" data-delay="300">
+        <div class="tech-header">
+          <span class="tech-header-title">Stack & Interests</span>
         </div>
+        <div class="tech-blobs" id="tech-grid" role="list" aria-label="Technologies and interests"></div>
       </div>
 
     </section>
@@ -1623,6 +1872,16 @@
   (function () {
     'use strict';
 
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
     const LINKS_DATA = [
       {
         id: 'link-instagram', label: 'Instagram', sublabel: '@shahzebfaysal',
@@ -1633,7 +1892,7 @@
         iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
       },
       {
-        id: 'link-snapchat', label: 'Snapchat', sublabel: '@shahzeb69420',
+        id: 'link-snapchat', label: 'Snapchat', sublabel: '@shahzebfaysal',
         href: 'https://www.snapchat.com/add/shahzeb69420?share_id=8G37QGAC-ws&locale=en-US', target: '_blank',
         ariaLabel: 'Snapchat profile — opens in new tab',
         iconStyle: 'fill-only',
@@ -1757,6 +2016,8 @@
       }
     }
 
+
+
     const ARROW_SVG = `<svg class="link-arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>`;
 
     function extractSvgPaths(str) {
@@ -1793,6 +2054,57 @@
       });
 
       section.querySelectorAll('.link-card').forEach(registerTiltCard);
+
+      var discordCard = document.getElementById('link-discord');
+      if (discordCard) {
+        discordCard.addEventListener('click', function (e) {
+          e.preventDefault();
+          var username = 'shahzeb.athari';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(username).then(function () {
+              showToast('Copied Discord username: ' + username);
+            }).catch(function () {
+              showToast('Discord username: ' + username);
+            });
+          } else {
+            showToast('Discord username: ' + username);
+          }
+        });
+      }
+    }
+
+    const INTEREST_CHIPS = [
+      { label: 'GitHub',        light: '#24292f', dark: '#e6edf3', svg: '<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>', fill: true },
+      { label: 'Linux',         light: '#b45309', dark: '#facc15', svg: '<path d="M12.002 2c-1.895 0-3.35 1.34-3.565 3.193-.058.497-.024 1.01.077 1.543C7.037 7.429 5.86 8.784 5.37 10.457c-.43 1.472-.345 3.01.11 4.417.382 1.182 1.093 2.196 2.052 2.924C7.009 18.777 6.47 19.98 6.55 21.05c.038.514.288.95.73 1.18.44.23.978.2 1.432-.08.97-.597 2.11-1.07 3.29-1.39 1.18.32 2.32.793 3.29 1.39.454.28.992.31 1.432.08.442-.23.692-.666.73-1.18.08-1.07-.459-2.273-.982-3.252.959-.728 1.67-1.742 2.052-2.924.455-1.407.54-2.945.11-4.417-.49-1.673-1.667-3.028-3.144-3.721.101-.533.135-1.046.077-1.543C15.352 3.34 13.897 2 12.002 2z"/>', fill: true },
+      { label: 'Debian',        light: '#be123c', dark: '#f43f5e', svg: '<path d="M12.44 2.5a7.83 7.83 0 00-6.1 2.37 9.17 9.17 0 00-2.45 6.4 8.78 8.78 0 002.04 5.92A7.36 7.36 0 0011.62 19.5c1.47.1 2.94-.13 4.25-.67A9.45 9.45 0 0020.3 14a8.62 8.62 0 00-.73-7 6.64 6.64 0 00-4.4-3.5 5.57 5.57 0 00-4.7 1.25 4.38 4.38 0 00-1.42 3.6c.1 1.08.6 2 1.45 2.6a2.95 2.95 0 002.5.54 2.45 2.45 0 001.65-1.1c.3-.5.4-1.1.2-1.6a1.53 1.53 0 00-1.2-1 1.26 1.26 0 00-1.1.34 1.15 1.15 0 00-.28 1c0 .17.1.32.22.42a.57.57 0 00.5.15.54.54 0 00.37-.2.6.6 0 00-.06-.44.25.25 0 00-.2-.14c-.07 0-.15.03-.2.1 0 0 .15-.22.38-.2.24.03.46.2.5.5.07.45-.16.86-.53 1.1-.38.25-.86.32-1.3.18a3.17 3.17 0 01-1.85-2.2 4.14 4.14 0 011.08-3.37 5.3 5.3 0 014.28-1.58 6.42 6.42 0 014.2 2.9 8.16 8.16 0 01.96 6.1c-1 3.2-3.88 5.6-7.23 6-2.58.3-5.2-.68-6.97-2.6A9.46 9.46 0 013 8.35a8.7 8.7 0 015.65-8A10.87 10.87 0 0112.44 2.5z"/>', fill: true },
+      { label: 'CachyOS',       light: '#0284c7', dark: '#00d2ff', svg: '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a7 7 0 016.93 6H15.8a3.99 3.99 0 00-7.6 0H5.07A7 7 0 0112 5zm-7 7c0-.34.03-.67.07-1h3.13a4 4 0 000 2H5.07c-.04-.33-.07-.66-.07-1zm7 7a7 7 0 01-6.93-6h3.06a3.99 3.99 0 007.6 0h3.13A7 7 0 0112 19z"/>', fill: true },
+      { label: 'Literature',    light: '#b45309', dark: '#fbbf24', svg: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>', fill: false },
+      { label: 'Antigravity',   light: '#7c3aed', dark: '#c084fc', svg: '<path d="M12 3l9 16H3l9-16z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1"/>', fill: false },
+      { label: 'OBS Studio',    light: '#1d4ed8', dark: '#60a5fa', svg: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7 0 1.9-.76 3.63-2 4.89L14.5 13h2.5c0-2.76-2.24-5-5-5V5.5c.33 0 .66.03 1 .07zm-7 7c0-3.87 3.13-7 7-7v2.5c-2.76 0-5 2.24-5 5h-2.5c.04-.34.07-.67.07-1zm7 7c-3.87 0-7-3.13-7-7 0-1.9.76-3.63 2-4.89L9.5 11H7c0 2.76 2.24 5 5 5v2.5c-.33 0-.66-.03-1-.07z"/>', fill: true },
+      { label: 'Terminal',      light: '#15803d', dark: '#4ade80', svg: '<rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="8 10 11 13 8 16"/><line x1="13" y1="16" x2="16" y2="16"/>', fill: false },
+      { label: 'Alight Motion', light: '#0e7490', dark: '#22d3ee', svg: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l7 4.5-7 4.5z"/>', fill: true },
+      { label: 'Tor Project',   light: '#6d28d9', dark: '#a78bfa', svg: '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 017.93 7h-2.02A6 6 0 0012 6V4zm-7.93 7A8 8 0 0112 4v2a6 6 0 00-5.91 5H4.07zm0 2h2.02A6 6 0 0012 18v2a8 8 0 01-7.93-7zm9.93 7v-2a6 6 0 005.91-5h2.02a8 8 0 01-7.93 7z"/>', fill: true },
+    ];
+
+    function renderInterestChips() {
+      var grid = document.getElementById('tech-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      INTEREST_CHIPS.forEach(function (chip, i) {
+        var delay = 320 + i * 40;
+        var strokeAttrs = chip.fill
+          ? 'fill="currentColor"'
+          : 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+
+        grid.insertAdjacentHTML('beforeend',
+          '<div class="tech-blob anim-ready" data-delay="' + delay + '" ' +
+            'style="--blob-light:' + chip.light + ';--blob-dark:' + chip.dark + ';" ' +
+            'title="' + chip.label + '" aria-label="' + chip.label + '" role="listitem" tabindex="0">' +
+            '<svg class="tech-blob-icon" viewBox="0 0 24 24" ' + strokeAttrs + ' aria-hidden="true">' + chip.svg + '</svg>' +
+          '</div>'
+        );
+      });
     }
 
     function initAnimations() {
@@ -1811,6 +2123,8 @@
         if (ini) ini.classList.add('visible');
       }
     }
+
+
 
     function initBioToggle() {
       var btn  = document.getElementById('bio-toggle-btn');
@@ -1856,6 +2170,10 @@
             theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
           );
         }
+        var metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) {
+          metaTheme.setAttribute('content', theme === 'dark' ? '#141624' : '#e0e5ec');
+        }
         localStorage.setItem('sf-theme', theme);
       }
 
@@ -1869,31 +2187,78 @@
       }
     }
 
+
+
     function initMacTerminal() {
       var terminal = document.getElementById('mac-terminal');
       var closeBtn = document.getElementById('mac-close');
       var macForm  = document.getElementById('mac-form');
       var macInput = document.getElementById('mac-input');
       var macOutput = document.getElementById('mac-output');
-      var avatar   = document.getElementById('profile-avatar');
+      var avatarWrap   = document.getElementById('avatar-wrapper') || document.querySelector('.avatar-wrapper');
+      var chargeCircle = avatarWrap ? avatarWrap.querySelector('.avatar-charge-circle') : null;
+      var CIRCUMFERENCE = 364.4;
+      var tapCount = 0;
+      var tapTimer = null;
 
       var hintEl = document.getElementById('secret-hint');
       if (hintEl) {
         hintEl.textContent = IS_TOUCH ? "Hint: Tap the avatar 5 times" : "Hint: Press ` or Ctrl+Alt+T";
       }
 
-      var tapCount = 0;
-      var tapTimer;
+      function resetCharge() {
+        tapCount = 0;
+        if (!avatarWrap || !chargeCircle) return;
+        avatarWrap.removeAttribute('data-charge');
+        avatarWrap.classList.remove('charging-tap', 'charged-burst');
+        chargeCircle.style.strokeDashoffset = CIRCUMFERENCE;
+      }
 
-      if (avatar) {
-        avatar.addEventListener('click', function() {
-          tapCount++;
-          clearTimeout(tapTimer);
-          if (tapCount >= 5) {
+      function updateChargeVisuals(count) {
+        if (!avatarWrap || !chargeCircle) return;
+        avatarWrap.setAttribute('data-charge', count.toString());
+
+        // Retrigger subtle tactile tap micro-bounce
+        avatarWrap.classList.remove('charging-tap');
+        void avatarWrap.offsetWidth;
+        avatarWrap.classList.add('charging-tap');
+
+        // Progressively fill: 0% -> 25% -> 50% -> 75% -> 100%
+        var percent = Math.min(count, 4) * 0.25;
+        var offset = CIRCUMFERENCE * (1 - percent);
+        chargeCircle.style.strokeDashoffset = offset;
+      }
+
+      function handleAvatarTap() {
+        if (terminal && terminal.classList.contains('open')) return;
+        tapCount++;
+        clearTimeout(tapTimer);
+
+        if (tapCount >= 5) {
+          // Tap 5: Matrix green shockwave flash burst (#22c55e)!
+          if (avatarWrap && chargeCircle) {
+            avatarWrap.setAttribute('data-charge', '5');
+            chargeCircle.style.strokeDashoffset = '0';
+            avatarWrap.classList.add('charged-burst');
+          }
+          setTimeout(function() {
             openTerminal();
-            tapCount = 0;
-          } else {
-            tapTimer = setTimeout(function() { tapCount = 0; }, 2000);
+            setTimeout(resetCharge, 350);
+          }, 280);
+        } else {
+          updateChargeVisuals(tapCount);
+          tapTimer = setTimeout(function() {
+            resetCharge();
+          }, 2000);
+        }
+      }
+
+      if (avatarWrap) {
+        avatarWrap.addEventListener('click', handleAvatarTap);
+        avatarWrap.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleAvatarTap();
           }
         });
       }
@@ -1918,6 +2283,38 @@
       var hasBooted = false;
       var isRoot = false;
       var awaitingSudo = false;
+      var bootInterval = null;
+      var cmdHistory = [];
+      var historyIdx = -1;
+
+      macInput.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (cmdHistory.length === 0) return;
+          if (historyIdx === -1) {
+            historyIdx = cmdHistory.length - 1;
+          } else if (historyIdx > 0) {
+            historyIdx--;
+          }
+          macInput.value = cmdHistory[historyIdx] || '';
+          setTimeout(function() {
+            macInput.setSelectionRange(macInput.value.length, macInput.value.length);
+          }, 0);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (historyIdx === -1) return;
+          if (historyIdx < cmdHistory.length - 1) {
+            historyIdx++;
+            macInput.value = cmdHistory[historyIdx];
+          } else {
+            historyIdx = -1;
+            macInput.value = '';
+          }
+          setTimeout(function() {
+            macInput.setSelectionRange(macInput.value.length, macInput.value.length);
+          }, 0);
+        }
+      });
 
       function openTerminal() {
         terminal.classList.add('open');
@@ -1936,13 +2333,14 @@
           var i = 0;
           var bootContainer = document.createElement('div');
           macOutput.appendChild(bootContainer);
-          var bootInterval = setInterval(function() {
+          bootInterval = setInterval(function() {
             if (i < bootMsgs.length) {
               bootContainer.innerHTML += bootMsgs[i] + "<br>";
               macOutput.parentElement.scrollTop = macOutput.parentElement.scrollHeight;
               i++;
             } else {
               clearInterval(bootInterval);
+              bootInterval = null;
               setTimeout(function() {
                 var dateStr = new Date().toString().split(' ').slice(0, 4).join(' ');
                 bootContainer.innerHTML += "<br>Last login: " + dateStr + " on tty1<br>Type 'help' to see available commands.<br>";
@@ -1960,6 +2358,11 @@
       function closeTerminal() {
         terminal.classList.remove('open');
         macInput.blur();
+        if (bootInterval) {
+          clearInterval(bootInterval);
+          bootInterval = null;
+          macInput.disabled = false;
+        }
       }
 
       var commands = {
@@ -2235,6 +2638,10 @@
           }
 
           if (!cmd) return;
+          if (!awaitingSudo) {
+            cmdHistory.push(cmd);
+            historyIdx = -1;
+          }
 
           var cmdLine = document.createElement('div');
           var currentPrompt = isRoot ? "<span class=\"term-red\">root@shahzeb #</span>" : "guest@shahzeb ~ %";
@@ -2284,6 +2691,8 @@
         });
       }
     }
+
+
 
     function runPreloader(onComplete) {
       var overlay = document.getElementById('biometric-preloader');
@@ -2384,8 +2793,9 @@
           return;
         }
 
+        var btnText = submitBtn.querySelector('span');
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Sending...';
+        if (btnText) btnText.textContent = 'Sending...';
 
         var formData = new FormData(form);
 
@@ -2398,28 +2808,19 @@
             form.reset();
             showToast('Message sent successfully!');
           } else {
-            showToast('Oops! There was a problem.');
+            showToast('Oops! There was a problem sending.');
           }
         }).catch(function(error) {
-          form.reset();
-          showToast('Message sent successfully!');
+          showToast('Failed to send. Please check your connection.');
         }).finally(function() {
           submitBtn.disabled = false;
-          submitBtn.innerText = 'Send Message';
+          if (btnText) btnText.textContent = 'Send Message';
         });
       });
-
-      function showToast(msg) {
-        if(!toast) return;
-        toast.innerText = msg;
-        toast.classList.add('show');
-        setTimeout(function() {
-          toast.classList.remove('show');
-        }, 3000);
-      }
     }
 
     function initMatrixRain() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var canvas = document.getElementById('matrix-canvas');
       if (!canvas) return;
       var ctx = canvas.getContext('2d');
@@ -2429,38 +2830,57 @@
       var h = canvas.height = window.innerHeight * scale;
       var chars = '01'.split('');
       var fontSize = 10;
-      var columns = w / fontSize;
+      var columns = Math.floor(w / fontSize);
       var drops = [];
       for (var x = 0; x < columns; x++) {
         drops[x] = Math.random() * -100;
       }
 
-      function draw() {
-        ctx.fillStyle = 'rgba(9, 10, 15, 0.12)';
-        ctx.fillRect(0, 0, w, h);
+      var lastDraw = 0;
+      var interval = 50;
+      var isPageScrolling = false;
+      var scrollStopTimeout = null;
 
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = fontSize + 'px monospace';
+      window.addEventListener('scroll', function() {
+        isPageScrolling = true;
+        clearTimeout(scrollStopTimeout);
+        scrollStopTimeout = setTimeout(function() {
+          isPageScrolling = false;
+        }, 120);
+      }, { passive: true });
 
-        for (var i = 0; i < drops.length; i++) {
-          var text = chars[Math.floor(Math.random() * chars.length)];
-          if (drops[i] >= 0) {
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      function render(timestamp) {
+        if (!document.hidden && !isPageScrolling) {
+          if (timestamp - lastDraw >= interval) {
+            ctx.fillStyle = 'rgba(9, 10, 15, 0.12)';
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = fontSize + 'px monospace';
+
+            for (var i = 0; i < drops.length; i++) {
+              var text = chars[Math.floor(Math.random() * chars.length)];
+              if (drops[i] >= 0) {
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+              }
+
+              if (drops[i] * fontSize > h && Math.random() > 0.98) {
+                drops[i] = 0;
+              }
+              drops[i]++;
+            }
+            lastDraw = timestamp;
           }
-
-          if (drops[i] * fontSize > h && Math.random() > 0.98) {
-            drops[i] = 0;
-          }
-          drops[i]++;
         }
+        requestAnimationFrame(render);
       }
 
-      setInterval(draw, 50);
+      requestAnimationFrame(render);
 
       window.addEventListener('resize', function() {
         w = canvas.width = window.innerWidth * scale;
         h = canvas.height = window.innerHeight * scale;
-        columns = w / fontSize;
+        columns = Math.floor(w / fontSize);
         drops = [];
         for (var x = 0; x < columns; x++) {
           drops[x] = Math.random() * -100;
@@ -2470,6 +2890,7 @@
 
     function boot() {
       initTheme();
+      renderInterestChips();
       renderLinks();
       initAvatarFallback();
       initBioToggle();
@@ -2499,6 +2920,8 @@
         runPreloader(runFinalAnimations);
       }
     }
+
+
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', boot);
